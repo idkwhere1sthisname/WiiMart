@@ -1,10 +1,9 @@
 # WiiMart: a working, active WSC revival
 
-<img src="https://github.com/WiiMart/WiiMart/blob/main/WiiMart_star_logo.png" alt="WiiMart's logo" width="256" height="256">
+<img src="WiiMart_star_logo.png" width="100" height="100" align="right" />
 
 Nintendo, if you want me to take this down, please email me at wiimartshopping@gmail.com
 (please don't though I love this)
-
 WiiMart is the first ever Wii Shop Channel revival that lasted more than a week and still wasn't nuked!
 You can find its source code here.
 
