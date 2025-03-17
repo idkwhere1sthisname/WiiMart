@@ -537,7 +537,7 @@ function initPage()
 <!--  Technology, Inc.                                       -->
 <!--  -----------------------------------------------------  -->
 <script language="JavaScript">MM_preloadImages('/oss/oss/common/images//banner/under_banner_b.gif');</script>
-<div id="underButtonL" style="display:none">
+<div id="underButtonL">
     <div id="underbannershadowL" class="buttonBannerShadow">
    	  <img src="/oss/oss/common/images//banner/under_banner_shadow.gif" width="211" height="75" />
    	</div>
@@ -545,14 +545,13 @@ function initPage()
     	<img src="/oss/oss/common/images//banner/under_banner_a.gif" width="187" height="55" id="underImgL" />
     </div>
     <div id="underspacerL" class="buttonSpacer">
-	  <a href="" id="underlinkL">
+	  <a href="javascript:showBack()" id="underlinkL">
     	<img id="underimageL" src="/oss/oss/common/images//spacer.gif" width="187" height="55" border="0"  
     	onmouseover="MM_swapImage('underImgL','','/oss/oss/common/images//banner/under_banner_b.gif',1); snd.playSE( cSE_Forcus );" 
     	onmouseout="MM_swapImgRestore()"/>
       </a>	
     </div>
-    <div id="underwordL" align="center" class="buttonTextBlackM buttonWord">
-    </div>
+    <div id="underwordL" align="center" class="buttonTextBlackM buttonWord"><table width="100%" height="100%"><tr><td align="center" valign="middle">Back</tr></td></table></div>
 </div>
 
 <div id="underButtonR" style="display:none">
