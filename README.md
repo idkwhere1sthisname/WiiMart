@@ -1,6 +1,6 @@
 # WiiMart: a working, active WSC revival
 
-[image](wiimart_star_logo.png)
+<img src="wiimart_star_logo.png" alt="WiiMart's logo">
 
 Nintendo, if you want me to take this down, please email me at wiimartshopping@gmail.com
 (please don't though I love this)
