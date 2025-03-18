@@ -975,7 +975,7 @@ function onBuyButtonPressed(titleId, itemId, sd)
     }
 
     var parentalControl = '';
-	var downloadTitleUrl = 'B_09.jsp';
+	var downloadTitleUrl = 'B_08.jsp';
 	var nextUrl = getCautionUrl();
 	if(nextUrl == "") {
 		nextUrl = downloadTitleUrl;
