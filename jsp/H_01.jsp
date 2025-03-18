@@ -859,13 +859,13 @@ function initPage()
 
     <div id="aabannerspace">
         <a href="#" onmouseover="snd.playSE( cSE_Forcus );" onclick="snd.playSE(cSE_Decide);">
-          <img src="/img//spacer.gif" width="151" height="42" border="0" id="Image1" 
-           onmouseover="MM_swapImage('Image11','','/img/aa_banner_b.gif',1)" 
+          <img src="/oss/oss/common/images/banner//spacer.gif" width="151" height="42" border="0" id="Image1" 
+           onmouseover="MM_swapImage('Image11','','/oss/oss/common/images/banner/aa_banner_b.gif',1)" 
            onmouseout="MM_swapImgRestore()" />
         </a>
       </div>
       <div id="aabanner">
-        <img src="/img/aa_banner_a.gif" width="151" height="42" id="Image11" />
+        <img src="/oss/oss/common/images/banner/aa_banner_a.gif" width="151" height="42" id="Image11" />
       </div>
     <div id="cost">
           <div align="right" class="contentsBlack">
@@ -876,10 +876,10 @@ function initPage()
             <div align="center">null</div> <!-- first balanceAfterPurchase -->
           </div>
         </div>
-    <img src="/img/account_activity.png" width="555" height="42" />
+    <img src="/oss/oss/common/images/banner/account_activity.png" width="555" height="42" />
       </div>
       <div id="aabannershadow" style="position:absolute; left:245px; top:132px; width:170px; height:58px; z-index:78">
-      <img src="/img/under_banner_shadow.gif" width="170" height="58" />
+      <img src="/oss/oss/common/images/banner/under_banner_shadow.gif" width="170" height="58" />
     </div>    
       <div id="row02">
         <div class="contentsBlack" id="date">
@@ -898,13 +898,13 @@ function initPage()
 
     <div id="aabannerspace">
         <a href="#" onmouseover="snd.playSE( cSE_Forcus );" onclick="snd.playSE(cSE_Decide);">
-          <img src="/img//spacer.gif" width="151" height="42" border="0" id="Image2" 
-           onmouseover="MM_swapImage('Image12','','/img/aa_banner_b.gif',1)" 
+          <img src="/oss/oss/common/images/banner//spacer.gif" width="151" height="42" border="0" id="Image2" 
+           onmouseover="MM_swapImage('Image12','','/oss/oss/common/images/banner/aa_banner_b.gif',1)" 
            onmouseout="MM_swapImgRestore()" />
         </a>
       </div>
       <div id="aabanner">
-        <img src="/img/aa_banner_a.gif" width="151" height="42" id="Image12" />
+        <img src="/oss/oss/common/images/banner/aa_banner_a.gif" width="151" height="42" id="Image12" />
       </div>
     <div id="cost">
           <div align="right" class="contentsBlack">
@@ -918,10 +918,10 @@ function initPage()
             <div align="center">null</div>
           </div>
         </div>
-    <img src="/img/account_activity.png" width="555" height="42" />
+    <img src="/oss/oss/common/images/banner/account_activity.png" width="555" height="42" />
       </div>
       <div id="aabannershadow" style="position:absolute; left:245px; top:191px; width:170px; height:58px; z-index:78">
-      <img src="/img/under_banner_shadow.gif" width="170" height="58" />
+      <img src="/oss/oss/common/images/banner/under_banner_shadow.gif" width="170" height="58" />
     </div>    
       <div id="row03">
         <div class="contentsBlack" id="date">
@@ -940,13 +940,13 @@ function initPage()
 
     <div id="aabannerspace">
         <a href="#" onmouseover="snd.playSE( cSE_Forcus );" onclick="snd.playSE(cSE_Decide);">
-          <img src="/img//spacer.gif" width="151" height="42" border="0" id="Image3" 
-           onmouseover="MM_swapImage('Image13','','/img/aa_banner_b.gif',1)" 
+          <img src="/oss/oss/common/images/banner//spacer.gif" width="151" height="42" border="0" id="Image3" 
+           onmouseover="MM_swapImage('Image13','','/oss/oss/common/images/banner/aa_banner_b.gif',1)" 
            onmouseout="MM_swapImgRestore()" />
         </a>
       </div>
       <div id="aabanner">
-        <img src="/img/aa_banner_a.gif" width="151" height="42" id="Image13" />
+        <img src="/oss/oss/common/images/banner/aa_banner_a.gif" width="151" height="42" id="Image13" />
       </div>
     <div id="cost">
           <div align="right" class="contentsBlack">
@@ -960,10 +960,10 @@ function initPage()
             <div align="center">null</div>
           </div>
         </div>
-    <img src="/img/account_activity.png" width="555" height="42" />
+    <img src="/oss/oss/common/images/banner/account_activity.png" width="555" height="42" />
       </div>
       <div id="aabannershadow" style="position:absolute; left:245px; top:250px; width:170px; height:58px; z-index:78">
-      <img src="/img/under_banner_shadow.gif" width="170" height="58" />
+      <img src="/oss/oss/common/images/banner/under_banner_shadow.gif" width="170" height="58" />
     </div>    
     <div id="row04">
         <div class="contentsBlack" id="date">
@@ -982,13 +982,13 @@ function initPage()
 
     <div id="aabannerspace">
         <a href="#" onmouseover="snd.playSE( cSE_Forcus );" onclick="snd.playSE(cSE_Decide);">
-          <img src="/img//spacer.gif" width="151" height="42" border="0" id="Image4" 
-           onmouseover="MM_swapImage('Image14','','/img/aa_banner_b.gif',1)" 
+          <img src="/oss/oss/common/images/banner//spacer.gif" width="151" height="42" border="0" id="Image4" 
+           onmouseover="MM_swapImage('Image14','','/oss/oss/common/images/banner/aa_banner_b.gif',1)" 
            onmouseout="MM_swapImgRestore()" />
         </a>
       </div>
       <div id="aabanner">
-        <img src="/img/aa_banner_a.gif" width="151" height="42" id="Image14" />
+        <img src="/oss/oss/common/images/banner/aa_banner_a.gif" width="151" height="42" id="Image14" />
       </div>
     <div id="cost">
           <div align="right" class="contentsBlack">
@@ -1002,10 +1002,10 @@ function initPage()
             <div align="center">null</div>
           </div>
         </div>
-    <img src="/img/account_activity.png" width="555" height="42" />
+    <img src="/oss/oss/common/images/banner/account_activity.png" width="555" height="42" />
       </div>
       <div id="aabannershadow" style="position:absolute; left:245px; top:309px; width:170px; height:58px; z-index:78">
-      <img src="/img/under_banner_shadow.gif" width="170" height="58" />
+      <img src="/oss/oss/common/images/banner/under_banner_shadow.gif" width="170" height="58" />
     </div>   
 </div>
 <% } else { %>
@@ -1046,13 +1046,13 @@ function initPage()
 
     <div id="aabannerspace">
         <a href="#" onmouseover="snd.playSE( cSE_Forcus );" onclick="snd.playSE(cSE_Decide);">
-          <img src="/img//spacer.gif" width="151" height="42" border="0" id="Image1" 
-           onmouseover="MM_swapImage('Image11','','/img/aa_banner_b.gif',1)" 
+          <img src="/oss/oss/common/images/banner//spacer.gif" width="151" height="42" border="0" id="Image1" 
+           onmouseover="MM_swapImage('Image11','','/oss/oss/common/images/banner/aa_banner_b.gif',1)" 
            onmouseout="MM_swapImgRestore()" />
         </a>
       </div>
       <div id="aabanner">
-        <img src="/img/aa_banner_a.gif" width="151" height="42" id="Image11" />
+        <img src="/oss/oss/common/images/banner/aa_banner_a.gif" width="151" height="42" id="Image11" />
       </div>
     <div id="cost">
           <div align="right" class="contentsBlack">
@@ -1063,10 +1063,10 @@ function initPage()
             <div align="center">null</div> <!-- first balanceAfterPurchase -->
           </div>
         </div>
-    <img src="/img/account_activity.png" width="555" height="42" />
+    <img src="/oss/oss/common/images/banner/account_activity.png" width="555" height="42" />
       </div>
       <div id="aabannershadow" style="position:absolute; left:245px; top:132px; width:170px; height:58px; z-index:78">
-      <img src="/img/under_banner_shadow.gif" width="170" height="58" />
+      <img src="/oss/oss/common/images/banner/under_banner_shadow.gif" width="170" height="58" />
     </div>    
       <div id="row02">
         <div class="contentsBlack" id="date">
@@ -1085,13 +1085,13 @@ function initPage()
 
     <div id="aabannerspace">
         <a href="#" onmouseover="snd.playSE( cSE_Forcus );" onclick="snd.playSE(cSE_Decide);">
-          <img src="/img//spacer.gif" width="151" height="42" border="0" id="Image2" 
-           onmouseover="MM_swapImage('Image12','','/img/aa_banner_b.gif',1)" 
+          <img src="/oss/oss/common/images/banner//spacer.gif" width="151" height="42" border="0" id="Image2" 
+           onmouseover="MM_swapImage('Image12','','/oss/oss/common/images/banner/aa_banner_b.gif',1)" 
            onmouseout="MM_swapImgRestore()" />
         </a>
       </div>
       <div id="aabanner">
-        <img src="/img/aa_banner_a.gif" width="151" height="42" id="Image12" />
+        <img src="/oss/oss/common/images/banner/aa_banner_a.gif" width="151" height="42" id="Image12" />
       </div>
     <div id="cost">
           <div align="right" class="contentsBlack">
@@ -1105,10 +1105,10 @@ function initPage()
             <div align="center">null</div>
           </div>
         </div>
-    <img src="/img/account_activity.png" width="555" height="42" />
+    <img src="/oss/oss/common/images/banner/account_activity.png" width="555" height="42" />
       </div>
       <div id="aabannershadow" style="position:absolute; left:245px; top:191px; width:170px; height:58px; z-index:78">
-      <img src="/img/under_banner_shadow.gif" width="170" height="58" />
+      <img src="/oss/oss/common/images/banner/under_banner_shadow.gif" width="170" height="58" />
     </div>    
       <div id="row03">
         <div class="contentsBlack" id="date">
@@ -1127,13 +1127,13 @@ function initPage()
 
     <div id="aabannerspace">
         <a href="#" onmouseover="snd.playSE( cSE_Forcus );" onclick="snd.playSE(cSE_Decide);">
-          <img src="/img//spacer.gif" width="151" height="42" border="0" id="Image3" 
-           onmouseover="MM_swapImage('Image13','','/img/aa_banner_b.gif',1)" 
+          <img src="/oss/oss/common/images/banner//spacer.gif" width="151" height="42" border="0" id="Image3" 
+           onmouseover="MM_swapImage('Image13','','/oss/oss/common/images/banner/aa_banner_b.gif',1)" 
            onmouseout="MM_swapImgRestore()" />
         </a>
       </div>
       <div id="aabanner">
-        <img src="/img/aa_banner_a.gif" width="151" height="42" id="Image13" />
+        <img src="/oss/oss/common/images/banner/aa_banner_a.gif" width="151" height="42" id="Image13" />
       </div>
     <div id="cost">
           <div align="right" class="contentsBlack">
@@ -1147,10 +1147,10 @@ function initPage()
             <div align="center">null</div>
           </div>
         </div>
-    <img src="/img/account_activity.png" width="555" height="42" />
+    <img src="/oss/oss/common/images/banner/account_activity.png" width="555" height="42" />
       </div>
       <div id="aabannershadow" style="position:absolute; left:245px; top:250px; width:170px; height:58px; z-index:78">
-      <img src="/img/under_banner_shadow.gif" width="170" height="58" />
+      <img src="/oss/oss/common/images/banner/under_banner_shadow.gif" width="170" height="58" />
     </div>    
     <div id="row04">
         <div class="contentsBlack" id="date">
@@ -1169,13 +1169,13 @@ function initPage()
 
     <div id="aabannerspace">
         <a href="#" onmouseover="snd.playSE( cSE_Forcus );" onclick="snd.playSE(cSE_Decide);">
-          <img src="/img//spacer.gif" width="151" height="42" border="0" id="Image4" 
-           onmouseover="MM_swapImage('Image14','','/img/aa_banner_b.gif',1)" 
+          <img src="/oss/oss/common/images/banner//spacer.gif" width="151" height="42" border="0" id="Image4" 
+           onmouseover="MM_swapImage('Image14','','/oss/oss/common/images/banner/aa_banner_b.gif',1)" 
            onmouseout="MM_swapImgRestore()" />
         </a>
       </div>
       <div id="aabanner">
-        <img src="/img/aa_banner_a.gif" width="151" height="42" id="Image14" />
+        <img src="/oss/oss/common/images/banner/aa_banner_a.gif" width="151" height="42" id="Image14" />
       </div>
     <div id="cost">
           <div align="right" class="contentsBlack">
@@ -1189,10 +1189,10 @@ function initPage()
             <div align="center">null</div>
           </div>
         </div>
-    <img src="/img/account_activity.png" width="555" height="42" />
+    <img src="/oss/oss/common/images/banner/account_activity.png" width="555" height="42" />
       </div>
       <div id="aabannershadow" style="position:absolute; left:245px; top:309px; width:170px; height:58px; z-index:78">
-      <img src="/img/under_banner_shadow.gif" width="170" height="58" />
+      <img src="/oss/oss/common/images/banner/under_banner_shadow.gif" width="170" height="58" />
     </div>   
 </div>
 <% } %>
