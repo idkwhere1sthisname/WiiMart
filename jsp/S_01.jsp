@@ -242,6 +242,8 @@ function initPageCommon()
 
 	iasUrl = 'https://ias.blinklab.com/oss/ias/services/IdentityAuthenticationSOAP';
 
+	casUrl = null;
+
 	ccsUrl = 'http://ccs.cdn.blinklab.com/ccs/download';
 
 	ucsUrl = 'https://ccs.blinklab.com/ccs/download';
@@ -487,11 +489,36 @@ function initPage()
 <!-- End ICR Demo -->
 
 </div>
+<!--
+<div id="catalogWiiU" style="position:absolute;top:0px;">
+
+<!-- Delete Usage Record 
+<div id="recordWiiU" style="position: absolute;top:185px;left:48px;"> 
+  <img src="/oss/oss/common/images//banner/record_a.gif" name="Image10WiiU" border="0" id="Image10WiiU" />
+  <img id="recordSpacer" onmouseout="MM_swapImgRestore()" src='/oss/oss/common/images//spacer.gif'
+  	 onmouseover="MM_swapImage('Image10WiiU','','/oss/oss/common/images//banner/record_b.gif',1); if(snd) snd.playSE( cSE_Forcus );"
+  	 onclick='javascript:showPage("S_08.jsp"); if(snd) snd.playSE( cSE_Decide );' />
+  <div id="usageRecordTxt">
+  <div class="headerBlueM" id="text04-01"><table height="100%"><tr><td align="left" valign="middle">Remove WiiMart Account</td></tr></table></div>
+  </div>
+</div>
+
+<!-- Show Gamecard input screen 
+<div id="gamecardWiiU" style="position: absolute;top:95px;left:48px;">
+  <img src="/oss/oss/common/images//banner/gamecard_a.gif" name="Image13WiiU" border="0" id="Image13WiiU" />
+  <img id="gamecardSpacer" onmouseout="MM_swapImgRestore()" src='/oss/oss/common/images//spacer.gif'
+  	 onmouseover="MM_swapImage('Image13WiiU','','/oss/oss/common/images//banner/gamecard_b.gif',1); if(snd) snd.playSE( cSE_Forcus );"
+  	 onclick='javascript:showGamecardScreen(); if(snd) snd.playSE( cSE_Decide );' />
+  <div id="gamecardTitleTxt">
+  <div class="headerBlueM" id="text04-01"><table height="100%"><tr><td align="left" valign="middle">Wii Download Ticket</td></tr></table></div>
+  </div>
+</div>-->
+	
 <div id='balanceInfo'
         onmouseover="snd.playSE(cSE_Forcus);MM_swapImage('PointSpacer','/oss/oss/common/images//banner/Addpoints_everywhere.gif')"
         onmousedown="snd.playSE(cSE_Decide);" onmouseout="MM_swapImgRestore()" onclick="snd.playSE(cSE_Decide);">
         <script type="text/JavaScript">MM_preloadImages('oss/oss/common/images//banner/Addpoints_everywhere.gif');</script>
-        <img src="/oss/oss/common/images/spacer.gif" onmouseover="snd.playSE(cSE_Forcus)" onclick="snd.playSE(cSE_Decide);"
+        <img src="/oss/oss/common/images/spacer.gif" onmouseover="snd.playSE(cSE_Forcus)" onclick="snd.playSE(cSE_Decide);showPoints();"
             name="PointSpacer" width="130" height="55" border="0" id='PointSpacer'
             style="position:absolute; top:376px; left:239px; z-index:20;" />
         <div id="Wiipoint">
@@ -509,7 +536,7 @@ function initPage()
             <img src="/oss/oss/common/images//banner/under_banner_a.gif" width="187" height="55" id="underImgL">
         </div>
         <div id="underspacerL" class="buttonSpacer">
-          <a href="javascript:showBack();" id="underlinkL">
+          <a href="javascript:showHome();" id="underlinkL">
             <img id="underimageL" src="/oss/oss/common/images//spacer.gif" width="187" height="55" border="0"
 		        onmouseover="MM_swapImage('underImgL','','/oss/oss/common/images/banner/under_banner_b.gif',1);snd.playSE(cSE_Forcus);"
 		        onmouseout="MM_swapImgRestore()"
