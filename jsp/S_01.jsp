@@ -368,7 +368,7 @@ function initPage()
 		font-weight: bold;
 	}	
 </style>
-<script type="text/javascript>window.onload = shop.endWaiting();</script>
+<script type="text/javascript">window.onload = shop.endWaiting();</script>
 <title>WiiMart</title>
 </head>
 <body onload="initPage();" style="overflow:hidden" onkeypress="kdown();">
