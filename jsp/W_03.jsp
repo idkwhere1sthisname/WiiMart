@@ -712,6 +712,11 @@ body {
 
 </style>
 <script type="text/javascript">
+	function showHelpShop() {
+		showPage("M_01.jsp?titleId=0001000248414241");
+	}
+</script>
+<script type="text/javascript">
 	
 function initPage()
 {
@@ -744,7 +749,7 @@ function initPage()
         }
     
         if (isShoppingManualEnabled == "true") {
-        setUnderButtonR(true, "Shopping Guide", "javascript:showHelp()", "wiiSelectSound()");
+        setUnderButtonR(true, "Shopping Guide", "javascript:showHelpShop()", "wiiSelectSound()");
     } else {
         setUnderButtonR(false);
     }
