@@ -711,7 +711,7 @@ body {
 }
 
 </style>
-<script type="text/javascript>
+<script type="text/javascript">
 	function showHelpShop() {
 		showPage("M_01.jsp?titleId=0001000248414241");
 	}
