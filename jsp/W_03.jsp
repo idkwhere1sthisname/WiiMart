@@ -741,7 +741,7 @@ function initPage()
     showElement("WW_on_spacer");
 
 
-    setUnderButtonL(true, "Wii Menu", "javascript:showWiiMenu()", "wiiSelectSound()");
+    setUnderButtonL(true, shop.menuBtn, "javascript:showWiiMenu()", "wiiSelectSound()");
     
     var isShoppingManualEnabled = "true";
         if (ecSupportsSession()) {
