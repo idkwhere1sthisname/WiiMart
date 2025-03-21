@@ -1,6 +1,6 @@
 <%@ page import = "java.io.*,java.util.*,java.net.http.*,java.net.URI,java.net.http.HttpResponse.BodyHandlers,java.net.HttpURLConnection,java.net.URL,java.nio.charset.StandardCharsets,org.json.*,javafx.scene.web.*" %>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
-<%@
+<%
 	String page = request.getParameter("p");
 	if (page != null) {
 		page = page.replaceAll("&", "&amp")
