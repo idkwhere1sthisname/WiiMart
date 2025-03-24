@@ -5,7 +5,7 @@
 Nintendo, if you want me to take this down, please email me at wiimartshopping@gmail.com
 (please don't though I love this)
 WiiMart is the first ever Wii Shop Channel revival that lasted more than a week and still wasn't nuked!
-You can find its source code here.
+## This repository contains the source code of the backend.
 
 # Download
 The cIOSes are [here](https://wiimart.github.io/cIOS/) while WiiMart's WAD [here](https://wiimart.github.io/wad/). In the meantime, [join the Discord!](https://dsc.gg/WiiMart)
@@ -31,6 +31,5 @@ Install both the WiiMart WAD and the patched IOS WAD (for Wii). Install by going
 
 So far, getting the shop on a blank NAND has been unsuccesful.
 
-<br />
 
 Pages managed by [LNLenost](https://github.com/LNLenost)
