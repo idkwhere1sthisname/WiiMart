@@ -1,5 +1,24 @@
-<%@ page import = "java.io.*,java.util.*" %>
+<%@ page import = "java.io.*,java.util.*,java.sql.*" %>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
+<%
+String url = "jdbc:postgresql://127.0.0.1/wiisoap";
+Properties props = new Properties();
+props.setProperty("user", "wiisoap");
+props.setProperty("password", "wiisoap");
+//props.setProperty("ssl", "true");
+Connection conn = DriverManager.getConnection(url, props);
+String updateSQL = "SELECT altregion FROM public.userbase WHERE serial_number = ?";
+PreparedStatement pst = conn.prepareStatement(updateSQL);
+pst.setString(1, request.getParameter("Serial"));
+
+ResultSet rs = pst.executeQuery();
+String altRegion = "";
+while (rs.next()) {
+	altRegion = rs.getString("altregion");
+}
+conn.close();
+%>
+<script>trace("altRegion: <%= altRegion %>")</script>
 <a href="https://oss-auth.blinklab.com/oss/serv/debug.jsp">debug</a>
 <!--                                                         -->
 <!--  This software contains confidential information and    -->
@@ -144,7 +163,7 @@ function initPageCommon()
 	ossPath = "https://oss-auth.blinklab.com/oss/serv/";
 	secureOssPath = "https://oss-auth.blinklab.com/oss/serv/";	
 
-	ecTimeout = new ECTimeout(parseInt("60000"));
+	ecTimeout = new ECTimeout(parseInt("900000"));
 	
 	
 	currBalance = document.getElementById("currentBalance");
@@ -529,7 +548,7 @@ function checkRegistered()
     trace("checkRegisterNeeded after: " + checkRegisterNeeded);
     //TESTING
     //Force WSC to check registration status
-    //checkRegisterNeeded = true;
+    checkRegisterNeeded = true;
     if (checkRegisterNeeded) {        
         // No account id - Ask server if registered
         checkRegistration();
@@ -648,8 +667,8 @@ function OnSetTask()
     try {
     	var objDlTask = new wiiDlTask();
 	    //var strTaskUrl = "http://ccs.cdn.blinklab.com/ccs/download/0001000248414241/dynamicBanner_en_US";
-	var strTaskUrl = "http://65.19.191.149/bnr";	
-var nTaskInterval = 1440;
+		var strTaskUrl = "http://ccs.larsenv.com/bnr";	
+		var nTaskInterval = 1440;
 	    trace("Adding download task: " + strTaskUrl);
 	    objDlTask.addDownloadTask(strTaskUrl, nTaskInterval); 
     } catch (err) {
@@ -659,6 +678,10 @@ var nTaskInterval = 1440;
 
 function initPage()
 {
+	var altRegion = "<%= altRegion %>";
+	if (altRegion != "N/A") {
+		ec.setSessionValue("altRegion", altRegion);
+	}
 	trace("initPage");
     MM_preloadImages('/oss/oss/common/images//banner/under_banner_b.gif');
     var ok;
@@ -748,8 +771,8 @@ function initPage()
 
 <div class="titleBlueL" id="text01-01">
   WiiMart</div>
-<div align="center" class="titleBlueL" id="text02-01"><script>document.write(shop.connecting)</script>
-<!--  -----------------------------------------------------  -->
+<div align="center" class="titleBlueL" id="text02-01">
+Connecting. Please wait...<!--  -----------------------------------------------------  -->
 <!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
 <!--  All Rights Reserved.                                   -->
 <!--                                                         -->

@@ -1,44 +1,62 @@
-<%@ page import = "java.io.*,java.util.*" %>
-<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %><a href="https://oss-auth.blinklab.com/oss/serv/debug.jsp">debug</a>
+<%@ page import = "java.io.*,java.util.*,java.net.http.*,java.net.URI,java.net.URLEncoder,java.net.URLDecoder,java.net.http.HttpResponse.BodyHandlers,java.net.HttpURLConnection,java.net.URL,java.nio.charset.StandardCharsets,org.json.*,java.util.stream.Collectors" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
+<a href="https://oss-auth.blinklab.com/oss/serv/debug.jsp">debug</a>
+<script>debugger</script>
+<%
+String region3Letter = request.getParameter("region") == null ? "USA" : request.getParameter("region");
+String language = request.getParameter("language") == null ? "en" : request.getParameter("language");
+
+String targetURL = "http://127.0.0.1:8082/W_01titles?region=" + region3Letter + "&language=" + language;
 
 
+StringBuilder res = new StringBuilder();
+String games = "";
+try {
+    URL url = new URL(targetURL);
+    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+    connection.setRequestMethod("GET");
 
-<!--  -----------------------------------------------------  -->
-<!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
-<!--  All Rights Reserved.                                   -->
-<!--                                                         -->
-<!--  This software contains confidential information and    -->
-<!--  trade secrets of Acer Cloud Technology, Inc.           -->
-<!--  Use, disclosure or reproduction is prohibited without  -->
-<!--  the prior express written permission of Acer Cloud     -->
-<!--  Technology, Inc.                                       -->
-<!--  -----------------------------------------------------  -->
-<!--  -----------------------------------------------------  -->
-<!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
-<!--  All Rights Reserved.                                   -->
-<!--                                                         -->
-<!--  This software contains confidential information and    -->
-<!--  trade secrets of Acer Cloud Technology, Inc.           -->
-<!--  Use, disclosure or reproduction is prohibited without  -->
-<!--  the prior express written permission of Acer Cloud     -->
-<!--  Technology, Inc.                                       -->
-<!--  -----------------------------------------------------  -->
+    int responseCode = connection.getResponseCode();
+    BufferedReader reader;
+
+    if (responseCode == HttpURLConnection.HTTP_OK) {
+        reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+	String line;
+	while ((line = reader.readLine()) != null) {
+	    res.append(line);
+	}
+	reader.close();
+	games = res.toString();
+    } else if (responseCode == 500) {
+	games = "[{ id: '', title1: '', title2: '', console: '', controllers: '', region: '', language: '', attributes: '', date: '', added: '', publisher: '', genre: '', points: '', players: '', rating: '', ratingdetails: '', thumbnail: '', size: '', titleVersion: -1, page: -1 }]";
+    } else {
+        reader = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
+    }
+
+} catch (Exception e) {
+	e.printStackTrace();
+	res.append("Error: ").append(e.getMessage());
+}
+%>
+<script>console.log(`games: <%= games %>`)</script>
+<%
+JSONArray g = null;
+// Parse JSON response
+try {
+    g = new JSONArray(games);
+} catch (Exception e) {
+    g = new JSONArray("[{ id: '', title1: '', title2: '', console: '', controllers: '', region: '', language: '', attributes: '', date: '', added: '', publisher: '', genre: '', points: '', players: '', rating: '', ratingdetails: '', thumbnail: '', size: '', titleVersion: -1, page: -1 }]");
+}
+
+%>
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <!-- Flush buffer before setting locale to ensure encoding is preserved -->
 <html>
 <head>
-  <!--  -----------------------------------------------------  -->
-<!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
-<!--  All Rights Reserved.                                   -->
-<!--                                                         -->
-<!--  This software contains confidential information and    -->
-<!--  trade secrets of Acer Cloud Technology, Inc.           -->
-<!--  Use, disclosure or reproduction is prohibited without  -->
-<!--  the prior express written permission of Acer Cloud     -->
-<!--  Technology, Inc.                                       -->
-<!--  -----------------------------------------------------  -->
+  
+
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 <link rel="shortcut icon" href="/oss/favicon.ico" /> 
 <link href="/oss/oss/common/css/oss.css" rel="stylesheet" type="text/css" />
@@ -130,13 +148,13 @@ function initPageCommon()
 	ec.cancelOperation();
 	
 
-	ecsUrl = 'https://oss-auth.blinklab.com/oss/ecs/services/ECommerceSOAP';
+	ecsUrl = 'https://oss-auth.blinklab.com/ecs/services/ECommerceSOAP';
 
-	iasUrl = 'https://oss-auth.blinklab.com/oss/ias/services/IdentityAuthenticationSOAP';
+	iasUrl = 'https://oss-auth.blinklab.com/ias/services/IdentityAuthenticationSOAP';
 
-	ccsUrl = 'https://oss-auth.blinklab.com/oss/ccs/download';
+	ccsUrl = 'http://ccs.cdn.blinklab.com/ccs/download';
 
-	ucsUrl = 'https://oss-auth.blinklab.com/oss/ccs/download';
+	ucsUrl = 'https://ccs.larsenv.com/ccs/download';
 	
 
 	ec.setWebSvcUrls(ecsUrl, iasUrl);
@@ -170,7 +188,7 @@ function initPageCommon()
 
 	
 	MM_preloadImages('/oss/oss/common/images//banner/under_banner_a.gif');
-	var supportsCreditCard = 'false';
+	var supportsCreditCard = 'true';
 	if (ecSupportsSession()) {
         	ec.setSessionValue("supportsCreditCard", supportsCreditCard);
     	}
@@ -186,16 +204,8 @@ function initPageCommon()
 	}
 }
 
-<!--  -----------------------------------------------------  -->
-<!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
-<!--  All Rights Reserved.                                   -->
-<!--                                                         -->
-<!--  This software contains confidential information and    -->
-<!--  trade secrets of Acer Cloud Technology, Inc.           -->
-<!--  Use, disclosure or reproduction is prohibited without  -->
-<!--  the prior express written permission of Acer Cloud     -->
-<!--  Technology, Inc.                                       -->
-<!--  -----------------------------------------------------  -->
+
+
 
 
 // Takes a progress object and returns the OSS error message to be displayed to the user
@@ -215,7 +225,7 @@ function getOssErrorMsg(progress)
 	a[-(EC_ERROR_NET_NA)] = "There was a network error. Please check your Internet settings and your network configuration.<BR><BR>Visit support.nintendo.com for assistance.";
 	a[-(EC_ERROR_ECARD)] = "The Wii Points Card activation number you entered is incorrect.<BR><BR>Visit support.nintendo.com for assistance.";
 	a[-(EC_ERROR_REGISTER)] = "The Wii Number you entered is incorrect.<BR><BR>Visit support.nintendo.com for assistance.";
-	a[-(EC_ERROR_ALREADY_OWN)] = "An error has occurred that cannot be resolved at this time. Please try again later.<BR><BR>Visit support.nintendo.com for assistance if this continues.";
+	a[-(EC_ERROR_ALREADY_OWN)] = "An error has occurred1 that cannot be resolved at this time. Please try again later.<BR><BR>Visit support.nintendo.com for assistance if this continues.";
 	msg = a[-status];
 
     if (status == EC_ERROR_WS_REPORT) {
@@ -231,13 +241,13 @@ function getOssErrorMsg(progress)
     		} else if (nhttpStatus == 0) {
     		    msg = "There was a network error. Please check your Internet settings and your network configuration.<BR><BR>Visit support.nintendo.com for assistance.";
     		} else if (nhttpStatus != 0) {
-    		    msg = "An error has occurred that cannot be resolved at this time. Please try again later.<BR><BR>Visit support.nintendo.com for assistance if this continues.";
+    		    msg = "An error has occurred2 that cannot be resolved at this time. Please try again later.<BR><BR>Visit support.nintendo.com for assistance if this continues.";
     		}
     	}
     }
         
     if (msg == null || msg == '') {
-    	msg = "An error has occurred that cannot be resolved at this time. Please try again later.<BR><BR>Visit support.nintendo.com for assistance if this continues.";
+    	msg = "An error has occurred3 that cannot be resolved at this time. Please try again later.<BR><BR>Visit support.nintendo.com for assistance if this continues.";
 	}
 	return msg;
 }
@@ -273,26 +283,26 @@ function getWebServiceErrorMsg(errCode, errInfo)
 	// ECS Errors
 	a[617] = "The Wii Points Card activation number you entered is incorrect.<BR><BR>Visit support.nintendo.com for assistance.";
 	a[618] = "This Wii Points Card cannot be used in your country.<BR><BR>Visit support.nintendo.com for assistance.";
-	a[621] = "An error has occurred that cannot be resolved at this time. Please try again later.<BR><BR>Visit support.nintendo.com for assistance if this continues.";
+	a[621] = "An error has occurred4 that cannot be resolved at this time. Please try again later.<BR><BR>Visit support.nintendo.com for assistance if this continues.";
 	a[623]	= "You have downloaded this title before, and your trial period has expired. You cannot redownload it.<BR><BR>Visit support.nintendo.com for assistance.";
-	a[642] = "An error has occurred that cannot be resolved at this time. Please try again later.<BR><BR>Visit support.nintendo.com for assistance if this continues.";
-	a[643] = "An error has occurred that cannot be resolved at this time. Please try again later.<BR><BR>Visit support.nintendo.com for assistance if this continues.";
+	a[642] = "An error has occurred5 that cannot be resolved at this time. Please try again later.<BR><BR>Visit support.nintendo.com for assistance if this continues.";
+	a[643] = "An error has occurred6 that cannot be resolved at this time. Please try again later.<BR><BR>Visit support.nintendo.com for assistance if this continues.";
 	a[644] = "Credit cards cannot be used on this console.<BR><BR>Please visit support.nintendo.com for assistance.";
-	a[645] = "An error has occurred that cannot be resolved at this time. Please try again later.<BR><BR>Visit support.nintendo.com for assistance if this continues.";
+	a[645] = "An error has occurred7 that cannot be resolved at this time. Please try again later.<BR><BR>Visit support.nintendo.com for assistance if this continues.";
 	
 	// ECS Gift Errors
-	a[646] = "An error has occurred that cannot be resolved at this time. Please try again later.<BR><BR>Visit support.nintendo.com for assistance if this continues.";
-	a[621] = "An error has occurred that cannot be resolved at this time. Please try again later.<BR><BR>Visit support.nintendo.com for assistance if this continues.";
-	a[626] = "An error has occurred that cannot be resolved at this time. Please try again later.<BR><BR>Visit support.nintendo.com for assistance if this continues.";
-	a[625] = "An error has occurred that cannot be resolved at this time. Please try again later.<BR><BR>Visit support.nintendo.com for assistance if this continues.";
+	a[646] = "An error has occurred8 that cannot be resolved at this time. Please try again later.<BR><BR>Visit support.nintendo.com for assistance if this continues.";
+	a[621] = "An error has occurred9 that cannot be resolved at this time. Please try again later.<BR><BR>Visit support.nintendo.com for assistance if this continues.";
+	a[626] = "An error has occurred10 that cannot be resolved at this time. Please try again later.<BR><BR>Visit support.nintendo.com for assistance if this continues.";
+	a[625] = "An error has occurred11 that cannot be resolved at this time. Please try again later.<BR><BR>Visit support.nintendo.com for assistance if this continues.";
 	
 	// ETS Errors
-	a[705] = "An error has occurred that cannot be resolved at this time. Please try again later.<BR><BR>Visit support.nintendo.com for assistance if this continues.";
-	a[706] = "An error has occurred that cannot be resolved at this time. Please try again later.<BR><BR>Visit support.nintendo.com for assistance if this continues.";
-	a[707] = "An error has occurred that cannot be resolved at this time. Please try again later.<BR><BR>Visit support.nintendo.com for assistance if this continues.";
+	a[705] = "An error has occurred12 that cannot be resolved at this time. Please try again later.<BR><BR>Visit support.nintendo.com for assistance if this continues.";
+	a[706] = "An error has occurred13 that cannot be resolved at this time. Please try again later.<BR><BR>Visit support.nintendo.com for assistance if this continues.";
+	a[707] = "An error has occurred14 that cannot be resolved at this time. Please try again later.<BR><BR>Visit support.nintendo.com for assistance if this continues.";
 	
 	// PAS Errors
-	a[810]	= "An error has occurred while redeeming your Wii Download Ticket.<BR><BR>Visit support.nintendo.com for assistance.";
+	a[810]	= "An error has occurred15 while redeeming your Wii Download Ticket.<BR><BR>Visit support.nintendo.com for assistance.";
 	a[811]	= "The Wii Points Card you entered has expired.";
 	//a[812]	= "???OSS_ERROR_ECARD_NOT_USABLE???";
 	//a[813]	= "???OSS_ERROR_ECARD_NOT_USABLE???";
@@ -307,9 +317,9 @@ function getWebServiceErrorMsg(errCode, errInfo)
 
 	// IAS Errors 
 	a[901]	= "The Wii Number you entered is incorrect.<BR><BR>Visit support.nintendo.com for assistance.";
-	a[903]	= "An error has occurred that cannot be resolved at this time. Please try again later.<BR><BR>Visit support.nintendo.com for assistance if this continues.";
-	a[928] = "An error has occurred that cannot be resolved at this time. Please try again later.<BR><BR>Visit support.nintendo.com for assistance if this continues.";
-	a[958]	= "An error has occurred that cannot be resolved at this time. Please try again later.<BR><BR>Visit support.nintendo.com for assistance if this continues.";
+	a[903]	= "An error has occurred16 that cannot be resolved at this time. Please try again later.<BR><BR>Visit support.nintendo.com for assistance if this continues.";
+	a[928] = "An error has occurred17 that cannot be resolved at this time. Please try again later.<BR><BR>Visit support.nintendo.com for assistance if this continues.";
+	a[958]	= "An error has occurred18 that cannot be resolved at this time. Please try again later.<BR><BR>Visit support.nintendo.com for assistance if this continues.";
 	a[942] = "Unable to confirm the Username at this time. Please try again later.<BR><BR>Visit support.nintendo.com for assistance if this continues.";
 	a[943]	= "An error occurred while linking the Username. Please check the Username and password and try again.<BR><BR>If you have forgotten your Username or password, please visit club.nintendo.com.";
 
@@ -413,7 +423,7 @@ function needSyncEticket(progress)
 //-->
 
 </script>
-<title>Welcome to the WiiMart</title>
+<title>Welcome to WiiMart</title>
 <style type="text/css">
   /* W_01: Welcome Page */
 .invisible {
@@ -932,16 +942,8 @@ function needSyncEticket(progress)
 </style>
 
 
-<!--  -----------------------------------------------------  -->
-<!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
-<!--  All Rights Reserved.                                   -->
-<!--                                                         -->
-<!--  This software contains confidential information and    -->
-<!--  trade secrets of Acer Cloud Technology, Inc.           -->
-<!--  Use, disclosure or reproduction is prohibited without  -->
-<!--  the prior express written permission of Acer Cloud     -->
-<!--  Technology, Inc.                                       -->
-<!--  -----------------------------------------------------  -->
+
+
 <script type="text/JavaScript">
 <!--
 
@@ -982,18 +984,9 @@ function isICRExpired(){
 //-->
 </script>
 
-<!--  -----------------------------------------------------  -->
-<!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
-<!--  All Rights Reserved.                                   -->
-<!--                                                         -->
-<!--  This software contains confidential information and    -->
-<!--  trade secrets of Acer Cloud Technology, Inc.           -->
-<!--  Use, disclosure or reproduction is prohibited without  -->
-<!--  the prior express written permission of Acer Cloud     -->
-<!--  Technology, Inc.                                       -->
-<!--  -----------------------------------------------------  -->
-<script type="text/JavaScript">
-<!--
+
+
+<script type="text/javascript">
 function TitleInfo()
 {
 }
@@ -1352,6 +1345,74 @@ function initRecommendedTitles()
   var recList = new Array();
   var title;
   
+      title = new TitleInfo();
+      title.titleId = '000100014642324A';
+
+      title.nameFirstLine = 'Super Mario Bros. 2:';
+      title.nameSecondLine = 'The Lost Levels';
+
+	  title.titleImage = null;
+    
+      title.titleImage = '/oss/ccs/000100014642324A/FFFD0001';
+      MM_preloadImages('/oss/ccs/000100014642324A/FFFD0001');
+    
+      title.isNew = 'true';
+      title.price = '500';
+      title.titleLicense = getTitleLicense(title.titleId);
+
+      recList[1] = title;
+  
+      title = new TitleInfo();
+      title.titleId = '000100014A385745';
+
+      title.nameFirstLine = 'Super Mario All-Stars';
+      title.nameSecondLine = '+ Super Mario World';
+
+	  title.titleImage = null;
+    
+      title.titleImage = '/oss/ccs/000100014A385745/FFFD0001';
+      MM_preloadImages('/oss/ccs/000100014A385745/FFFD0001');
+    
+      title.isNew = 'true';
+      title.price = '800';
+      title.titleLicense = getTitleLicense(title.titleId);
+
+      recList[2] = title;
+  
+      title = new TitleInfo();
+      title.titleId = '000100014F484243';
+
+      title.nameFirstLine = 'The Homebrew Channel';
+      title.nameSecondLine = 'Open Source Edition';
+
+	  title.titleImage = null;
+    
+      title.titleImage = '/oss/ccs/000100014A385745/FFFD0001';
+      MM_preloadImages('/oss/ccs/000100014A385745/FFFD0001');
+    
+      title.isNew = 'false';
+      title.price = '0';
+      title.titleLicense = getTitleLicense(title.titleId);
+
+      recList[3] = title;
+  
+      title = new TitleInfo();
+      title.titleId = '000100014E414C45';
+
+      title.nameFirstLine = 'Mii Channel';
+      title.nameSecondLine = 'Custom Symbol';
+
+	  title.titleImage = null;
+    
+      title.titleImage = '/oss/ccs/000100014A385745/FFFD0001';
+      MM_preloadImages('/oss/ccs/000100014A385745/FFFD0001');
+    
+      title.isNew = 'false';
+      title.price = '1000';
+      title.titleLicense = getTitleLicense(title.titleId);
+
+      recList[4] = title;
+  
   return recList;
 }
 
@@ -1360,6 +1421,74 @@ function inittitlelist1()
   var recList = new Array();
   var title;
   
+      title = new TitleInfo();
+      title.titleId = '0001000157505345';
+
+      title.nameFirstLine = 'Pokémon Rumble';
+      title.nameSecondLine = '';
+
+	  title.titleImage = null;
+    
+      title.titleImage = '/oss/ccs/0001000157505345/FFFD0001';
+      MM_preloadImages('/oss/ccs/0001000157505345/FFFD0001');
+    
+      title.isNew = 'false';
+      title.price = '1500';
+      title.titleLicense = getTitleLicense(title.titleId);
+
+      recList[1] = title;
+  
+      title = new TitleInfo();
+      title.titleId = '0001000157424D45';
+
+      title.nameFirstLine = 'My Pokémon Ranch';
+      title.nameSecondLine = '';
+
+	  title.titleImage = null;
+    
+      title.titleImage = '/oss/ccs/0001000157424D45/FFFD0000';
+      MM_preloadImages('/oss/ccs/0001000157424D45/FFFD0000');
+    
+      title.isNew = 'false';
+      title.price = '1000';
+      title.titleLicense = getTitleLicense(title.titleId);
+
+      recList[2] = title;
+  
+      title = new TitleInfo();
+      title.titleId = '000100014E414B45';
+
+      title.nameFirstLine = 'Pokémon Snap';
+      title.nameSecondLine = '';
+
+	  title.titleImage = null;
+    
+      title.titleImage = '/oss/ccs/000100014E414B45/FFFD0000';
+      MM_preloadImages('/oss/ccs/000100014E414B45/FFFD0000');
+    
+      title.isNew = 'false';
+      title.price = '1000';
+      title.titleLicense = getTitleLicense(title.titleId);
+
+      recList[3] = title;
+  
+      title = new TitleInfo();
+      title.titleId = '000100014E414E45';
+
+      title.nameFirstLine = 'Pokémon Puzzle';
+      title.nameSecondLine = '';
+
+	  title.titleImage = null;
+    
+      title.titleImage = '/oss/ccs/000100014E414E45/FFFD0000';
+      MM_preloadImages('/oss/ccs/000100014E414E45/FFFD0000');
+    
+      title.isNew = 'false';
+      title.price = '1000';
+      title.titleLicense = getTitleLicense(title.titleId);
+
+      recList[4] = title;
+  
   return recList;
 }
 function inittitlelist2()
@@ -1367,6 +1496,74 @@ function inittitlelist2()
   var recList = new Array();
   var title;
   
+      title = new TitleInfo();
+      title.titleId = '000100014E414245';
+
+      title.nameFirstLine = 'Mario Kart 64';
+      title.nameSecondLine = '';
+
+	  title.titleImage = null;
+    
+      title.titleImage = '/oss/ccs/000100014E414245/FFFD0000';
+      MM_preloadImages('/oss/ccs/000100014E414245/FFFD0000');
+    
+      title.isNew = 'false';
+      title.price = '1000';
+      title.titleLicense = getTitleLicense(title.titleId);
+
+      recList[1] = title;
+  
+      title = new TitleInfo();
+      title.titleId = '0001000146435745';
+
+      title.nameFirstLine = 'Super Mario Bros. 3';
+      title.nameSecondLine = '';
+
+	  title.titleImage = null;
+    
+      title.titleImage = '/oss/ccs/0001000146435745/FFFD0004';
+      MM_preloadImages('/oss/ccs/0001000146435745/FFFD0004');
+    
+      title.isNew = 'false';
+      title.price = '500';
+      title.titleLicense = getTitleLicense(title.titleId);
+
+      recList[2] = title;
+  
+      title = new TitleInfo();
+      title.titleId = '0001000146414D45';
+
+      title.nameFirstLine = 'Wario&#39;s Woods';
+      title.nameSecondLine = '';
+
+	  title.titleImage = null;
+    
+      title.titleImage = '/oss/ccs/0001000146414D45/FFFD0004';
+      MM_preloadImages('/oss/ccs/0001000146414D45/FFFD0004');
+    
+      title.isNew = 'false';
+      title.price = '500';
+      title.titleLicense = getTitleLicense(title.titleId);
+
+      recList[3] = title;
+  
+      title = new TitleInfo();
+      title.titleId = '000100014D414845';
+
+      title.nameFirstLine = 'Sonic The Hedgehog';
+      title.nameSecondLine = '';
+
+	  title.titleImage = null;
+    
+      title.titleImage = '/oss/ccs/000100014D414845/FFFD0000';
+      MM_preloadImages('/oss/ccs/000100014D414845/FFFD0000');
+    
+      title.isNew = 'false';
+      title.price = '800';
+      title.titleLicense = getTitleLicense(title.titleId);
+
+      recList[4] = title;
+
   return recList;
 }
 function inittitlelist3()
@@ -1374,12 +1571,148 @@ function inittitlelist3()
   var recList = new Array();
   var title;
   
+      title = new TitleInfo();
+      title.titleId = '0001000157505345';
+
+      title.nameFirstLine = 'Pokémon Rumble';
+      title.nameSecondLine = '';
+
+	  title.titleImage = null;
+    
+      title.titleImage = '/oss/ccs/0001000157505345/FFFD0001';
+      MM_preloadImages('/oss/ccs/0001000157505345/FFFD0001');
+    
+      title.isNew = 'false';
+      title.price = '1500';
+      title.titleLicense = getTitleLicense(title.titleId);
+
+      recList[1] = title;
+  
+      title = new TitleInfo();
+      title.titleId = '0001000157474F45';
+
+      title.nameFirstLine = 'World of Goo';
+      title.nameSecondLine = '';
+
+	  title.titleImage = null;
+    
+      title.titleImage = '/oss/ccs/0001000157474F45/FFFD0001';
+      MM_preloadImages('/oss/ccs/0001000157474F45/FFFD0001');
+    
+      title.isNew = 'false';
+      title.price = '1500';
+      title.titleLicense = getTitleLicense(title.titleId);
+
+      recList[2] = title;
+  
+      title = new TitleInfo();
+      title.titleId = '0001000157545045';
+
+      title.nameFirstLine = 'Tetris Party';
+      title.nameSecondLine = '';
+
+	  title.titleImage = null;
+    
+      title.titleImage = '/oss/ccs/0001000157545045/FFFD0001';
+      MM_preloadImages('/oss/ccs/0001000157545045/FFFD0001');
+    
+      title.isNew = 'false';
+      title.price = '1200';
+      title.titleLicense = getTitleLicense(title.titleId);
+
+      recList[3] = title;
+  
+      title = new TitleInfo();
+      title.titleId = '0001000157444D45';
+
+      title.nameFirstLine = 'Dr. Mario Online Rx';
+      title.nameSecondLine = '';
+
+	  title.titleImage = null;
+    
+      title.titleImage = '/oss/ccs/0001000157444D45/FFFD0000';
+      MM_preloadImages('/oss/ccs/0001000157444D45/FFFD0000');
+    
+      title.isNew = 'false';
+      title.price = '1000';
+      title.titleLicense = getTitleLicense(title.titleId);
+
+      recList[4] = title;
+
   return recList;
 }
 function inittitlelist4()
 {
   var recList = new Array();
   var title;
+  
+      title = new TitleInfo();
+      title.titleId = '0001000158484145';
+
+      title.nameFirstLine = 'Pokémon Rumble';
+      title.nameSecondLine = 'Demo';
+      MM_preloadImages('/oss/ccs/0001000158484145/FFFD0001');
+	  title.titleImage = null;
+    
+      title.titleImage = '/oss/ccs/0001000158484145/FFFD0001';
+
+    
+      title.isNew = 'false';
+      title.price = '0';
+      title.titleLicense = getTitleLicense(title.titleId);
+
+      recList[1] = title;
+  
+      title = new TitleInfo();
+      title.titleId = '0001000158494A45';
+
+      title.nameFirstLine = 'FAST - Racing League';
+      title.nameSecondLine = 'Demo';
+      MM_preloadImages('/oss/ccs/0001000158494A45/FFFD0001');
+	  title.titleImage = null;
+    
+      title.titleImage = '/oss/ccs/0001000158494A45/FFFD0001';
+
+    
+      title.isNew = 'false';
+      title.price = '0';
+      title.titleLicense = getTitleLicense(title.titleId);
+
+      recList[2] = title;
+  
+      title = new TitleInfo();
+      title.titleId = '00010001584A4945';
+
+      title.nameFirstLine = '2 Fast 4 Gnomz';
+      title.nameSecondLine = 'Demo';
+      MM_preloadImages('/oss/ccs/00010001584A4945/FFFD0001');
+	  title.titleImage = null;
+    
+      title.titleImage = '/oss/ccs/00010001584A4945/FFFD0001';
+
+    
+      title.isNew = 'false';
+      title.price = '0';
+      title.titleLicense = getTitleLicense(title.titleId);
+
+      recList[3] = title;
+  
+      title = new TitleInfo();
+      title.titleId = '0001000158493245';
+
+      title.nameFirstLine = 'Kyotokei';
+      title.nameSecondLine = 'Demo';
+      MM_preloadImages('/oss/ccs/0001000158493245/FFFD0001');
+	  title.titleImage = null;
+    
+      title.titleImage = '/oss/ccs/0001000158493245/FFFD0001';
+
+    
+      title.isNew = 'false';
+      title.price = '0';
+      title.titleLicense = getTitleLicense(title.titleId);
+
+      recList[4] = title;
   
   return recList;
 }
@@ -2367,17 +2700,38 @@ function add_scroll_counter()
       <div id="details04" class="posTitleDetails" nowrap><span class="style13"></span></div>
   </div>
 </div>
-
 <div id="info01n" align="center">
         <script language="JavaScript">if ('[NEW]Reminder: Wii Shop Closes Jan. 30, 2019'.indexOf('[NEW]', 0) != -1) {document.write('<img src="/oss/oss/common/images//banner/NEW_en.gif"> ');};</script>
       </div>
       <div id="info01">
         <div nowrap align="left" class="txt_info">
-          <script language="JavaScript">document.write('[NEW] Welcome to the WiiMart Revival Project!'.replace('[NEW]', ''));</script>
+          <script language="JavaScript">document.write('Catalog updated! Games added March 26.'.replace('[NEW]', ''));</script>
         </div>
       </div>
       <div id="infoShadow01"><img src="/oss/oss/common/images//spacer.gif" border="0" name="info01s" /></div>
-      <div id="infoSpacer01"><a href="javascript:showPage('W_02.jsp?p=1')"><img src="/oss/oss/common/images//spacer.gif" width="514" height="25" border="0" onMouseDown="MM_swapImage('info01s','','/oss/oss/common/images//banner/GifA_News_Press.png',1);" onMouseUp="MM_swapImage('info01s','','/oss/oss/common/images//banner/GifA_News_Over.png',1)" onClick="snd.playSE(cSE_Decide);" onmouseover="snd.playSE( cSE_Forcus ); MM_swapImage('info01s','','/oss/oss/common/images//banner/GifA_News_Over.png',1);move_fleeze_cursor();" onMouseOut="MM_swapImage('info01s','','/oss/oss/common/images//banner/GifA_News_noAction.png',1);" /></a></div>
+      <div id="infoSpacer01"><a href="javascript:showPage('W_02.jsp?p=3')"><img src="/oss/oss/common/images//spacer.gif" width="514" height="25" border="0" onMouseDown="MM_swapImage('info01s','','/oss/oss/common/images//banner/GifA_News_Press.png',1);" onMouseUp="MM_swapImage('info01s','','/oss/oss/common/images//banner/GifA_News_Over.png',1)" onClick="snd.playSE(cSE_Decide);" onmouseover="snd.playSE( cSE_Forcus ); MM_swapImage('info01s','','/oss/oss/common/images//banner/GifA_News_Over.png',1);move_fleeze_cursor();" onMouseOut="MM_swapImage('info01s','','/oss/oss/common/images//banner/GifA_News_noAction.png',1);" /></a></div>
+
+      <div id="info02n" align="center">
+        <!--<script language="JavaScript">if ('[NEW]Reminder: Wii Shop Closes Jan. 30, 2019'.indexOf('[NEW]', 0) != -1) {document.write('<img src="/oss/oss/common/images//banner/NEW_en.gif"> ');};</script>-->
+      </div>
+      <div id="info02">
+        <div nowrap align="left" class="txt_info">
+          <script language="JavaScript">document.write('[NEW] Welcome to WiiMart!'.replace('[NEW]', ''));</script>
+        </div>
+      </div>
+      <div id="infoShadow02"><img src="/oss/oss/common/images//spacer.gif" border="0" name="info02s" /></div>
+      <div id="infoSpacer02"><a href="javascript:showPage('W_02.jsp?p=1')"><img src="/oss/oss/common/images//spacer.gif" width="514" height="25" border="0" onMouseDown="MM_swapImage('info02s','','/oss/oss/common/images//banner/GifA_News_Press.png',1);" onMouseUp="MM_swapImage('info02s','','/oss/oss/common/images//banner/GifA_News_Over.png',1)" onClick="snd.playSE(cSE_Decide);" onmouseover="snd.playSE( cSE_Forcus ); MM_swapImage('info02s','','/oss/oss/common/images//banner/GifA_News_Over.png',1);move_fleeze_cursor();" onMouseOut="MM_swapImage('info02s','','/oss/oss/common/images//banner/GifA_News_noAction.png',1);" /></a></div>
+
+      <!--<div id="info03n" align="center">
+        <script language="JavaScript">if ('[NEW]Reminder: Wii Shop Closes Jan. 30, 2019'.indexOf('[NEW]', 0) != -1) {document.write('<img src="/oss/oss/common/images//banner/NEW_en.gif"> ');};</script>
+      </div>
+      <div id="info03">
+        <div nowrap align="left" class="txt_info">
+          <script language="JavaScript">document.write('[NEW] Catalog fully updated!'.replace('[NEW]', ''));</script>
+        </div>
+      </div>
+      <div id="infoShadow03"><img src="/oss/oss/common/images//spacer.gif" border="0" name="info03s" /></div>
+      <div id="infoSpacer03"><a href="javascript:showPage('W_02.jsp?p=3')"><img src="/oss/oss/common/images//spacer.gif" width="514" height="25" border="0" onMouseDown="MM_swapImage('info03s','','/oss/oss/common/images//banner/GifA_News_Press.png',1);" onMouseUp="MM_swapImage('info03s','','/oss/oss/common/images//banner/GifA_News_Over.png',1)" onClick="snd.playSE(cSE_Decide);" onmouseover="snd.playSE( cSE_Forcus ); MM_swapImage('info03s','','/oss/oss/common/images//banner/GifA_News_Over.png',1);move_fleeze_cursor();" onMouseOut="MM_swapImage('info03s','','/oss/oss/common/images//banner/GifA_News_noAction.png',1);" /></a></div>-->
     <div id="SofList01"><img src="/oss/oss/common/images//banner/GifA_SoftList_noAction.png" name="SofList"/></div>
 <div id="txtSoftList" align="center">
     <span class="style1">WiiMart</span>
@@ -2402,7 +2756,7 @@ function add_scroll_counter()
 
 
 
-<div id="icrButton">
+<!--<div id="icrButton">
             <div class="bannerShopwithCss"> <img src="/oss/oss/common/images//banner/icr_in_welcome_a_E.png" width="231" height="64" border="0" name="GoIcr">
             </div>
             <div class="cssStyle" id="txtGoIcr">
@@ -2436,14 +2790,14 @@ function add_scroll_counter()
                     <img src="/oss/oss/common/images//spacer.gif" width="302" height="64" border="0">
                 </a>
             </div>
-        </div>
+        </div>-->
 <div id="banner">
             <img src="/oss/oss/common/images//banner/GifA_GoShop_noAction.png" border="0" name=GoShop>
         </div>
         <div class="style5" id="txtGoShopping" align="center">
             Start Shopping</div>
         <div id="bannerspacer">
-            <a href="javascript:showPage('W_03.jsp')" 
+            <a href="/oss/serv/W_03.jsp" 
             onClick="snd.playSE(cSE_Decide);" 
             onMouseOver="snd.playSE( cSE_Forcus ); MM_swapImage('GoShop','','/oss/oss/common/images//banner/GifA_GoShop_Over.png',1);move_fleeze_cursor();" 
             onMouseOut="MM_swapImage('GoShop','','/oss/oss/common/images//banner/GifA_GoShop_noAction.png',1);">
@@ -2452,6 +2806,7 @@ function add_scroll_counter()
         </div>
     <div id="layer"></div>
 <div id="layer2"></div>
-
+<button onclick="replacePage('W_03.jsp')">sdf</button>
 </body>
 </html>
+

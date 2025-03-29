@@ -1,70 +1,28 @@
-<%@ page import = "java.io.*,java.util.*,javax.servlet.*" %>
-<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %><a href="https://oss-auth.blinklab.com/oss/serv/debug.jsp">debug</a>
-
-
-
-<%
-    String param = request.getParameter("titleId");
-    RequestDispatcher dispatcher = request.getRequestDispatcher("/serv/titleId/" + param + "/B_28.jsp");
-    dispatcher.forward(request, response);
-%>
-<!--  -----------------------------------------------------  -->
-<!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
-<!--  All Rights Reserved.                                   -->
-<!--                                                         -->
-<!--  This software contains confidential information and    -->
-<!--  trade secrets of Acer Cloud Technology, Inc.           -->
-<!--  Use, disclosure or reproduction is prohibited without  -->
-<!--  the prior express written permission of Acer Cloud     -->
-<!--  Technology, Inc.                                       -->
-<!--  -----------------------------------------------------  -->
-<!--  -----------------------------------------------------  -->
-<!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
-<!--  All Rights Reserved.                                   -->
-<!--                                                         -->
-<!--  This software contains confidential information and    -->
-<!--  trade secrets of Acer Cloud Technology, Inc.           -->
-<!--  Use, disclosure or reproduction is prohibited without  -->
-<!--  the prior express written permission of Acer Cloud     -->
-<!--  Technology, Inc.                                       -->
-<!--  -----------------------------------------------------  -->
-<!--  -----------------------------------------------------  -->
-<!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
-<!--  All Rights Reserved.                                   -->
-<!--                                                         -->
-<!--  This software contains confidential information and    -->
-<!--  trade secrets of Acer Cloud Technology, Inc.           -->
-<!--  Use, disclosure or reproduction is prohibited without  -->
-<!--  the prior express written permission of Acer Cloud     -->
-<!--  Technology, Inc.                                       -->
-<!--  -----------------------------------------------------  -->
+<%@ page import = "java.io.*,java.util.*" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
+<a href="https://oss-auth.blinklab.com/oss/serv/debug.jsp">debug</a>
+<a href="javascript:location.reload();">reload page</a>
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <!-- Flush buffer before setting locale to ensure encoding is preserved -->
-<!-- Title name -->
-<!-- Controller image and message -->
-<!-- Release Date -->	
-<!-- Number of players -->
-<!-- Title Rating Images -->
+<!-- 
+    optionCount:  Number of purchase point options available
+    optionWidth:  Width of each option
+    optionHeight: Height of each option
+    spaceBetween: Space between each option
+    fullWidth:    Total space to use
+    startLeft:    Furthest left location
+ -->
 <html>
 <head>
-  <!--  -----------------------------------------------------  -->
-<!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
-<!--  All Rights Reserved.                                   -->
-<!--                                                         -->
-<!--  This software contains confidential information and    -->
-<!--  trade secrets of Acer Cloud Technology, Inc.           -->
-<!--  Use, disclosure or reproduction is prohibited without  -->
-<!--  the prior express written permission of Acer Cloud     -->
-<!--  Technology, Inc.                                       -->
-<!--  -----------------------------------------------------  -->
+<title>WiiMart</title>
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 <link rel="shortcut icon" href="/oss/favicon.ico" /> 
 <link href="/oss/oss/common/css/oss.css" rel="stylesheet" type="text/css" />
 <link href="/oss/oss/common/css/error.css" rel="stylesheet" type="text/css" />
-<script type="text/JavaScript">
-<!--
+<script type="text/javascript">
+
 	var ecCheck = false;
 	var errorCheck = false;
 	var buttonsCheck = false;
@@ -83,10 +41,8 @@
 <SCRIPT language="JavaScript" src="/oss/oss/common/js//shop.js"></SCRIPT>
 <SCRIPT language="JavaScript" src="/oss/oss/common/js//oss.js"></SCRIPT>
 
-<script type="text/JavaScript">
-<!--
+<script type="text/javascript">
 var testMode = 'false';
-
 function getMethod()
 {
 	return 'GET';	
@@ -169,7 +125,7 @@ function initPageCommon()
 	ossPath = "https://oss-auth.blinklab.com/oss/serv/";
 	secureOssPath = "https://oss-auth.blinklab.com/oss/serv/";	
 
-	ecTimeout = new ECTimeout(parseInt("900000"));
+	ecTimeout = new ECTimeout(parseInt("60000"));
 	
 	
 	currBalance = document.getElementById("currentBalance");
@@ -205,17 +161,6 @@ function initPageCommon()
 	   	wiiEnableHRP();
 	}
 }
-
-<!--  -----------------------------------------------------  -->
-<!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
-<!--  All Rights Reserved.                                   -->
-<!--                                                         -->
-<!--  This software contains confidential information and    -->
-<!--  trade secrets of Acer Cloud Technology, Inc.           -->
-<!--  Use, disclosure or reproduction is prohibited without  -->
-<!--  the prior express written permission of Acer Cloud     -->
-<!--  Technology, Inc.                                       -->
-<!--  -----------------------------------------------------  -->
 
 
 // Takes a progress object and returns the OSS error message to be displayed to the user
@@ -433,200 +378,282 @@ function needSyncEticket(progress)
 //-->
 
 </script>
-<title>Selection Confirmation</title>
 <style type="text/css">
-  /* B_08:  Caution Items */
-
-
+  /* For P_06:  Purchase Point Options */
 #text01-01 {
 	position:absolute;
 	left:29px;
 	top:28px;
 	width:442px;
 	height:28px;
-	z-index:32;
-}
-#text02-01 {
-	position:absolute;
-	left:64px;
-	top:142px;
-	width:480px;
-	height:18px;
-	z-index:37
-}
-#text03-01 {
-	position:absolute;
-	left:64px;
-	top:216px;
-	width:480px;
-	height:60px;
-	z-index:38;
-	line-height:20px;
-}
-#text04-01 {
-	position:absolute;
-	left:64px;
-	top:300px;
-	width:480px;
-	height:60px;
-	z-index:38;
-	line-height:20px;
-}
-#text04-02 {
-	position:absolute;
-	left:64px;
-	top:216px;
-	width:480px;
-	height:144px;
-	z-index:38;
-	line-height:20px;
-}
-#cautionArea {
-	position:absolute;
-	left:64px;
-	top:137px;
-	width:490px;
-	height:227px;
-	z-index:38;
-	line-height:20px;
-	overflow:auto;
-}
-#frame {
-	position:absolute;
-	left:34px;
-	top:84px;
-	width:540px;
-	height:275px;
-	z-index:27;
-}
-#GC {
-	position:absolute;
-	left:343px;
-	top:160px;
-	width:60px;
-	height:60px;
-	z-index:36;
-}
-#controller {
-	position:absolute;
-	left:64px;
-	top:164px;
-	width:480px;
-	height:51px;
 	z-index:35;
 }
-
-#TitleName1stline {
+#text02-01 {	
 	position:absolute;
-	left:64px;
-	top:87px;
-	width:480px;
-	overflow:hidden;
-	z-index:34
+	left:34px;
+	top:115px;
+	width:540px;
+	z-index:27;
+}
+#text_AU_lower {
+	position:absolute;
+	left:34px;
+	top:280px;
+	width:540px;
+	z-index:27;
 }
 
-#TitleName2stline {
+#pointsUnavailable{
 	position:absolute;
-	left:64px;
-	top:110px;
-	width:480px;
-	z-index:33;
+	left:36px;
+	top:88px;
+	width:540px;
+	height:277px;
 }
-body {
-	background-repeat: no-repeat;
+.pointOption{
+	position:absolute;
+	top:165px;
+	width:122px;
+	height:105px;
 }
+.ptSpacer {
+	position:absolute;
+	left:0px;
+	width:100%;
+	height:100%;
+	z-index:20;
+}
+.ptShadow {
+	position:absolute;
+	left:-8%;
+	right:-8%;
+	top:-13px ;
+	width:139px;
+	height:130px;
+	z-index:15;
+}
+.ptImg {
+	position:absolute;
+	left:0px;
+	width:100%;
+	height:100%;
+	z-index:16;
+}
+.ptValue {
+	position:absolute;
+	text-align:center;
+	top:5%;
+	left:5%;
+	width:90%;
+	z-index:19;
+}
+.wiiPtWords{
+	position:absolute;
+	text-align:center;
+	left:5%;
+	top:38%;
+	width:90%;
+	z-index:18;
+}
+.ptCost{
+	position:absolute;
+	text-align:center;
+	left:5%;
+	width:95%;
+	top:65%;
+	z-index:18;
+}
+.addpoints {
+	color:#8C8C8C;
+	font-size:32px;
+}
+#warningMsg {
+	position:absolute;
+	left:36px;
+	top:270px;
+	width:540px;
+	height:105px;
+	z-index:20;
+}
+
+
 </style>
-<script type="text/JavaScript">
-<!--
+<script type="text/javascript">
+
+var availableSpaces = 4;
+var regionSelections = new Array();
+
+var maxBalance = null;
+var currBalance;
+
+function showHome_TWN(replace) {
+    var giftStatus = null;
+    if (ecSupportsSession()) {
+        giftStatus = ec.getSessionValue("giftStatus");
+    }
+    var r = ec.getDeviceInfo ();
+    if (typeof(r) == "object") {
+        if(giftStatus == "receiving"){
+            goGiftLoop();
+        } else if(r.country == 'TW' && r.region == 'TWN'){
+            showPage("W_03.jsp", replace);
+        } else {
+            showPage("P_01.jsp?back", replace);
+        }
+    }
+}
+
+function RegionSelection()
+{
+    this.region = null;
+}
+
+function fillPoints()
+{
+	var ctr = 0, nRegions = 0;
+	var regionSelection;
+	var country = 'US';
+	
+
+	regionSelection = new RegionSelection();
+    regionSelection.region = "USA";
+	regionSelections[ctr] = regionSelection;
+	ctr++;
+
+	regionSelection = new RegionSelection();
+	regionSelection.region = "EUR";
+	regionSelections[ctr] = regionSelection;
+	ctr++;
+
+	regionSelection = new RegionSelection();
+    regionSelection.region = "JPN"
+	regionSelections[ctr] = regionSelection;
+	ctr++;
+
+	regionSelection = new RegionSelection();
+    regionSelection.region = "KOR"
+	regionSelections[ctr] = regionSelection;
+	ctr++;
+
+	nRegions = ctr;
+	
+    for (ctr = 0; ctr < nRegions; ctr++)
+    {
+		var regionName = "region0" + (ctr+1);
+        regionSelection = regionSelections[ctr];
+        if(document.getElementById(regionName)) {
+            var region = regionSelection.region;
+  	        	    
+            var ptValue = document.getElementById(regionName + "Value");
+            var ptCost = document.getElementById(regionName + "Cost");
+            var ptCurrency = document.getElementById(regionName + "Currency");
+						
+            // should all exist; but checking doesn't hurt anyone
+            var amountStr = regionSelection.region;
+            //if (ptValue) ptValue.innerHTML = region;
+            if (ptCost) ptCost.innerHTML = region;
+
+
+			var regionDeviceInfo = ec.getDeviceInfo().region;
+			trace("current region in device info: " + regionDeviceInfo);
+            // gray out img if that region is the same as the current one
+			if (ec.getSessionValue("altRegion") != null) {
+				if(ec.getSessionValue("altRegion") == region) {
+                	var warningMsg = "warningMsg";
+                	trace("disabling ptSpacer " + regionName + "Spacer");
+
+					showElement(regionName + "SpacerDisabled");
+					hideElement(regionName + "SpacerEnabled");
+                	showElement(warningMsg);
+            	} else {
+					showElement(regionName + "SpacerEnabled");
+					hideElement(regionName + "SpacerDisabled");
+            	}
+			} else {
+				if(regionDeviceInfo == region) {
+                	var warningMsg = "warningMsg";
+                	trace("disabling ptSpacer " + regionName + "Spacer");
+
+					showElement(regionName + "SpacerDisabled");
+					hideElement(regionName + "SpacerEnabled");
+                	showElement(warningMsg);
+            	} else {
+					showElement(regionName + "SpacerEnabled");
+					hideElement(regionName + "SpacerDisabled");
+            	}
+			}
+        }
+        showElement(regionName);
+    }
+
+    // Now hide images on the page that do not have options associated with them
+    if (nRegions == 0) {
+        // no pricings
+        showElement('pointsUnavailable');
+        hideElement('text02-01');
+        hideElement('text_AU_lower');
+    }
+	
+}
+
 function initPage()
 {
 	initPageCommon();
-	MM_preloadImages('/oss/oss/common/images//banner/help_b.gif','/oss/oss/common/images//banner/top_b.gif','/oss/oss/common/images//banner/under_banner_b.gif');
+	currBalance = getBalance();
+	disableWiiPointButton();
+	MM_preloadImages('/oss/oss/common/images//banner/under_banner_b.gif',
+				'/oss/oss/common/images//banner/help_b.gif',
+				'/oss/oss/common/images//banner/top_b.gif',
+				'/oss/oss/common/images//banner/add_points_b.gif',
+				'/oss/oss/common/images/banner/point_gray.png');
+	setUnderButtonL(true, "Back", "javascript:showHome()", "wiiCancelSound()");		
 	
-	if (ecSupportsSession()) {
-		var giftStatus = ec.getSessionValue("giftStatus");
-		trace("giftStatus: " + giftStatus);
-		var transId = ec.getSessionValue("transId");
-		trace("transId: " + transId);
-		var useCampaignCode = ec.getSessionValue("useCampaignCode");
-		trace("useCampaignCode: " + useCampaignCode);
-		/* var redownloadFlag = ec.getSessionValue("redownloadFlag");
-		trace("redownloadFlag: "+redownloadFlag); */
-		var hasCautionItem3 = 'false';
-		var genreWifiPay = "true";
-		var wifiIndicator = parseInt('1');
-		trace("wifiIndicator: "+wifiIndicator);
-		if (genreWifiPay == "true") {
-			if (wifiIndicator == WIFI_PARTIALLY_CHARGED) {
-				if (document.getElementById("wifiPartiallyCharged") != null)
-					document.getElementById("wifiPartiallyCharged").style.display='';
-			} else if (wifiIndicator == WIFI_ALL_CHARGED) {
-				if (document.getElementById("wifiAllCharged") != null)
-					document.getElementById("wifiAllCharged").style.display='';
-			} else if (wifiIndicator == WIFI_FREE_INPUT) {
-				if (document.getElementById("wifiInputText") != null)
-					document.getElementById("wifiInputText").style.display='';
-			}
-		}
-		
-		if (giftStatus == "sending") {
-			setUnderButtonL(true, "Back", "javascript:showBack()", "snd.playSE(cSE_Cancel)");
 
-			if (hasCautionItem3 == "true") {
-				setUnderButtonR(true, "OK", "javascript:showPage('B_29.jsp?titleId=000100057752584A&itemId=&campaignCode=&SD=')", "snd.playSE(cSE_Decide)");
-			} else {
-				setUnderButtonR(true, "OK", "javascript:showPage('B_18.jsp?titleId=000100057752584a&itemId=&SD=')", "snd.playSE(cSE_Decide)");
-			}
-		} else if (giftStatus == "receiving") {
-			// setUnderButtonL(true, "Back", "javascript:showGiftTrans("+transId+")", "snd.playSE(cSE_Cancel)");
-			if (hasCautionItem3 == "true") {
-				setUnderButtonR(true, "OK", "javascript:showPage('B_29.jsp?titleId=000100057752584A&itemId=&campaignCode=&SD=')", "snd.playSE(cSE_Decide)");
-			} else {
-				setUnderButtonR(true, "OK", "javascript:showPage('B_09.jsp?titleId=000100057752584A&SD=')", "snd.playSE(cSE_Decide)");
-			}
-			document.getElementById("constElements").style.display='none';
-			document.getElementById("giftline").style.display='';
-			document.getElementById("giftcurrentBalance").innerHTML = getBalance();
-		/* } else if (redownloadFlag == "true") {
-			setUnderButtonL(true, "Back", "javascript:showGiftTrans("+transId+")", "snd.playSE(cSE_Cancel)");
-			setUnderButtonR(true, "OK", "javascript:showPage('B_09.jsp?titleId=000100057752584A&SD=')", "snd.playSE(cSE_Decide)");
-		*/
-		} else {
-			setUnderButtonL(true, "Back", "javascript:showBack()", "snd.playSE(cSE_Cancel)");
-			if (useCampaignCode == "true") {
-				disableWiiPointButton();
-			}
-			if (hasCautionItem3 == "true") {
-				setUnderButtonR(true, "OK", "javascript:showPage('B_29.jsp?titleId=000100057752584A&itemId=&campaignCode=&SD=')", "snd.playSE(cSE_Decide)");
-			} else {
-				setUnderButtonR(true, "OK", "javascript:showPage('B_09.jsp?titleId=000100057752584A&SD=')", "snd.playSE(cSE_Decide)");
-			}
-		}
-	}		
+	maxBalance = 20000;
+	//document.getElementById("warnMaximumPoints").innerHTML = maxBalance;
+
+	fillPoints();
+
+    
+        hideElement("text_AU_lower");
+      
 }
 
-var scroll_step = 30;
-function kdown()
+function changeregion(index)
 {
-    var _code = event.keyCode;
-	var _obj = document.getElementById('cautionArea');
-	switch(_code)
-	{
-	    case 175:    //up
-		case  38:
-		    _obj.scrollTop -= scroll_step;
-			break;
-		case 176:    //down
-		case  40:
-		    _obj.scrollTop += scroll_step;
-		    break;
+	var newRegion = regionSelections[index].region;
+	trace("new region: " + newRegion);
+	next(index);
+}
+
+function next(selection)
+{	
+	var theBool = selection < 0 || selection >= regionSelections.length;
+	trace(theBool);
+	if(theBool) {
+		return;
+	}
+	else {
+		wiiSelectSound();
+		var form = document.createElement("form");
+		form.action = getSecureUrl("changeRegion.jsp");
+//		form.method = "post";
+		form.id = "purchasePointsForm";
+		form.innerHTML = "";
+		form.innerHTML += '<div id="commonFields"></div>';
+		form.innerHTML += '<input type="hidden" name="regionToChange" value="' + regionSelections[selection].region + '"/>';
+		form.innerHTML += '</div>';
+		document.body.appendChild(form);
+
+		initCommonFields("commonFields");
+		form.submit();
 	}
 }
 //-->
 </script>
 </head>
 
-<body onkeypress="kdown();" onload="initPage(); cautionArea.focus();var shop = new wiiShop();var unused = shop.connecting;">
+<body onload="initPage();var shop = new wiiShop();var unused = shop.connecting;">
 <!--  -----------------------------------------------------  -->
 <!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
 <!--  All Rights Reserved.                                   -->
@@ -740,48 +767,83 @@ function kdown()
 </div>
 
 
-<div style="position:absolute; left:0px; top:0px; width:1px; height:1px; z-index:6;">
-  <img src="/oss/oss/common/images//spacer.gif" name="ktouch" width="1" height="1" border="0" id="ktouch"/>
+<div id="text01-01" class="titleBlackL">Region Change</div>
+
+<div id="text02-01" align="center" class="contentsBlackM">Please select the region you would like to change to.</div>
+
+<div id='region01' style='display:none; left: 34.0px;' class='pointOption'>
+	<img src='/oss/oss/common/images//banner/add_points_a.gif' id='region01Img' class="ptImg"/>
+	<img class="ptShadow" src='/oss/oss/common/images//banner/banner03_shadow.gif' border='0' id='region01Shadow' />
+	
+	<img class="ptSpacer" style='display:none' src='/oss/oss/common/images//spacer.gif' border="0" id='region01SpacerEnabled'
+	onmouseover="MM_swapImage('region01Img','','/oss/oss/common/images//banner/add_points_b.gif',1); wiiFocusSound();"
+	onmouseout="MM_swapImgRestore()" onclick='changeregion(1-1)'>
+
+	<img class="ptSpacer" style='display:none' src='/oss/oss/common/images//banner/point_gray.png' border="0" id='region01SpacerDisabled'>
+	
+	<span class="ptValue addpoints" id='region01Value'></span>
+	<span class="wiiPtWords contentsGray bold">Region</span>
+	<span class="ptCost contentsBlackM"><span id='region01Cost'></span>
+	<span id='region01Currency'></span></span>
+      </div>
+    <div id='region02' style='display:none; left: 174.0px;' class='pointOption'>
+	<img src='/oss/oss/common/images//banner/add_points_a.gif' id='region02Img' class="ptImg"/>
+	<img class="ptShadow" src='/oss/oss/common/images//banner/banner03_shadow.gif' border='0' id='region02Shadow' />
+	
+	<img class="ptSpacer" style='display:none' src='/oss/oss/common/images//spacer.gif' border="0" id='region02SpacerEnabled'
+	onmouseover="MM_swapImage('region02Img','','/oss/oss/common/images//banner/add_points_b.gif',1); wiiFocusSound();"
+	onmouseout="MM_swapImgRestore()" onclick='changeregion(2-1)'>
+
+	<img class="ptSpacer" style='display:none' src='/oss/oss/common/images//banner/point_gray.png' border="0" id='region02SpacerDisabled'>
+	
+	<span class="ptValue addpoints" id='region02Value'></span>
+	<span class="wiiPtWords contentsGray bold">Region</span>
+	<span class="ptCost contentsBlackM"><span id='region02Cost'></span>
+	<span id='region02Currency'></span></span>
+      </div>
+    <div id='region03' style='display:none; left: 314.0px;' class='pointOption'>
+	<img src='/oss/oss/common/images//banner/add_points_a.gif' id='region03Img' class="ptImg"/>
+	<img class="ptShadow" src='/oss/oss/common/images//banner/banner03_shadow.gif' border='0' id='region03Shadow' />
+	
+	<img class="ptSpacer" style='display:none' src='/oss/oss/common/images//spacer.gif' border="0" id='region03SpacerEnabled'
+	onmouseover="MM_swapImage('region03Img','','/oss/oss/common/images//banner/add_points_b.gif',1); wiiFocusSound();"
+	onmouseout="MM_swapImgRestore()" onclick='changeregion(3-1)'>
+
+	<img class="ptSpacer" style='display:none' src='/oss/oss/common/images//banner/point_gray.png' border="0" id='region03SpacerDisabled'>
+	
+	<span class="ptValue addpoints" id='region03Value'></span>
+	<span class="wiiPtWords contentsGray bold">Region</span>
+	<span class="ptCost contentsBlackM"><span id='region03Cost'></span>
+	<span id='region03Currency'></span></span>
+      </div>
+    <div id='region04' style='display:none; left: 454.0px;' class='pointOption'>
+	<img src='/oss/oss/common/images//banner/add_points_a.gif' id='region04Img' class="ptImg"/>
+	<img class="ptShadow" src='/oss/oss/common/images//banner/banner03_shadow.gif' border='0' id='region04Shadow' />
+	
+	<img class="ptSpacer" style='display:none' src='/oss/oss/common/images//spacer.gif' border="0" id='region04SpacerEnabled'
+	onmouseover="MM_swapImage('region04Img','','/oss/oss/common/images//banner/add_points_b.gif',1); wiiFocusSound();"
+	onmouseout="MM_swapImgRestore()" onclick='changeregion(4-1)'>
+
+	<img class="ptSpacer" style='display:none' src='/oss/oss/common/images//banner/point_gray.png' border="0" id='region04SpacerDisabled'>
+	
+	<span class="ptValue addpoints" id='region04Value'></span>
+	<span class="wiiPtWords contentsGray bold">Region</span>
+	<span class="ptCost contentsBlackM"><span id='region04Cost'></span>
+	<span id='region04Currency'></span></span>
+      </div>
+    <div id="text_AU_lower" class="contentsBlackS">
+Please note that your credit card provider may impose a foreign transaction fee on this purchase. Please contact your provider for details.
 </div>
 
-<div id="giftline" style="display: none;">
-  <div class="dot" id="line02">･･･････････････････････････････････････････････････････････････････････････</div>
-  <div class="dot" id="line01">･･･････････････････････････････････････････････････････････････････････････</div>
-  <div id="Wiipoint">
-    <div align="center" class="buttonTextBlackM">Wii Points</div>
-  </div>
-  <div id="point">
-    <div align="center" class="wiiPoint"><span id="giftcurrentBalance"></span></div>
-  </div>
-</div>
-<div id="text01-01">
-  <div align="left" class="titleBlackL">Selection Confirmation</div>
-</div>
-<div id="frame">
-  <div align="center" ><img src="/oss/oss/common/images//banner/Purchasing_frame01.gif" width="500" height="280" /> </div>
-</div>
-<div id="TitleName1stline" nowrap>
-  <div align="center" class="contentsBlueM">ロックマン10 追加コンテンツ</div>
-</div>
-<div style="position:absolute; left:64px; top:137px; width:480px; height:1px; z-index:39;"><img src="/oss/oss/common/images//banner/Purchasing_line01.gif" width="480" height="1" /></div>
-<div style="position:absolute; left:64px; top:363px; width:480px; height:1px; z-index:39;"><img src="/oss/oss/common/images//banner/Purchasing_line01.gif" width="480" height="1" /></div>
-<div id="cautionArea">
-  <div align="center" style="height:300px;">
-    <div id="wifiPartiallyCharged" style="padding:7px; display:none" align="center">
-      <img src="/oss/oss/common/images//banner/B_28_WIFIPAY_J.gif" width="429" height="75" />
-      <div align="center" style="position:absolute; left:77px; top:12px; width:348px; height:65px;" class="contentsOrangeM"><table height="100%"><tr><td align="left" valign="middle">Wii Points are required to access portions of the additional content or services associated with this game.</td></tr></table></div>
-    </div>
-    <div id="wifiAllCharged" style="padding:7px; display:none" align="center">
-      <img src="/oss/oss/common/images//banner/B_28_WIFIPAY_J.gif" width="429" height="75" />
-      <div align="center" style="position:absolute; left:77px; top:12px; width:348px; height:65px;" class="contentsOrangeM"><table height="100%"><tr><td align="left" valign="middle">Wii Points are required to access<BR>the additional content or services associated with this game.</td></tr></table></div>
-    </div>
-    <div id="wifiInputText" style="padding:7px; display:none" align="center">
-      <img src="/oss/oss/common/images//banner/B_28_WIFIPAY_J.gif" width="429" height="75" />
-      <div align="center" style="position:absolute; left:77px; top:12px; width:348px; height:65px;" class="contentsOrangeM"><table height="100%"><tr><td align="left" valign="middle"></td></tr></table></div>
-    </div>
-  <table align="center" cellpadding="4"><tr><td align="left"><span class="contentsBlackS"></span></td></tr></table>
-  </div>
-</div>
+<div id="errorMsg">
+	<div align="center" id="warningMsg" style="display:none" class="contentsBlackM"><table height="100%"><tr><td align="left" valign="middle">
+	    The greyed out region is the region you are already in. <span id="warnMaximumPoints"></span></td></tr></table></div>
+	
+	<div align="center" id="pointsUnavailable" style="display:none" class="contentsBlackM"><table height="100%"><tr><td align="left" valign="middle">
+	    Credit cards cannot be used at this time.</td></tr></table></div>
+
+	</div>
 
 </body>
+
 </html>

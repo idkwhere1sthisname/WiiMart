@@ -1,66 +1,82 @@
-<%@ page import = "java.io.*,java.util.*" %>
-<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %><a href="https://oss-auth.blinklab.com/oss/serv/debug.jsp">debug</a>
+<%@ page import = "java.io.*,java.util.*,java.sql.*" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
+<%
+    String currRegion = request.getParameter("region") == null ? "" : request.getParameter("region");
+    String regionToChange = request.getParameter("regionToChange") == null ? "" : request.getParameter("regionToChange");
+    %>
+    <script>console.log('<%= regionToChange %>')</script>
+    <%
+    String serial = request.getParameter("serialNo") == null ? "" : request.getParameter("serialNo");
+    String altRegion = regionToChange;
+    switch (regionToChange) {
+        case "EUR":
+            regionToChange = "Europe";
+            break;
+        case "USA":
+            regionToChange = "United States";
+            break;
+        case "JPN":
+            regionToChange = "Japan";
+            break;
+        case "KOR":
+            regionToChange = "Korea";
+            break;
+    }
+    switch (currRegion) {
+        case "EUR":
+            currRegion = "Europe";
+            break;
+        case "USA":
+            currRegion = "United States";
+            break;
+        case "JPN":
+            currRegion = "Japan";
+            break;
+        case "KOR":
+            currRegion = "Korea";
+            break;
+    }
+    String url = "jdbc:postgresql://127.0.0.1/wiisoap";
+    Properties props = new Properties();
+    props.setProperty("user", "wiisoap");
+    props.setProperty("password", "wiisoap");
+    //props.setProperty("ssl", "true");
+    Connection conn = DriverManager.getConnection(url, props);
+    String updateSQL = "UPDATE public.userbase SET altregion = ? WHERE serial_number = ?";
+    PreparedStatement pst = conn.prepareStatement(updateSQL);
+    pst.setString(1, altRegion);
+    pst.setString(2, serial);
 
-
-
-<!--  -----------------------------------------------------  -->
-<!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
-<!--  All Rights Reserved.                                   -->
-<!--                                                         -->
-<!--  This software contains confidential information and    -->
-<!--  trade secrets of Acer Cloud Technology, Inc.           -->
-<!--  Use, disclosure or reproduction is prohibited without  -->
-<!--  the prior express written permission of Acer Cloud     -->
-<!--  Technology, Inc.                                       -->
-<!--  -----------------------------------------------------  -->
-<!--  -----------------------------------------------------  -->
-<!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
-<!--  All Rights Reserved.                                   -->
-<!--                                                         -->
-<!--  This software contains confidential information and    -->
-<!--  trade secrets of Acer Cloud Technology, Inc.           -->
-<!--  Use, disclosure or reproduction is prohibited without  -->
-<!--  the prior express written permission of Acer Cloud     -->
-<!--  Technology, Inc.                                       -->
-<!--  -----------------------------------------------------  -->
-<!--  -----------------------------------------------------  -->
-<!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
-<!--  All Rights Reserved.                                   -->
-<!--                                                         -->
-<!--  This software contains confidential information and    -->
-<!--  trade secrets of Acer Cloud Technology, Inc.           -->
-<!--  Use, disclosure or reproduction is prohibited without  -->
-<!--  the prior express written permission of Acer Cloud     -->
-<!--  Technology, Inc.                                       -->
-<!--  -----------------------------------------------------  -->
+	int rowsAffected = pst.executeUpdate();
+	pst.close();
+	conn.close();
+%>
+<script>
+    console.log("Changing to <%= regionToChange %> from <%= currRegion %>")
+</script>
+<a href="https://oss-auth.blinklab.com/oss/serv/debug.jsp">debug</a>
+<a href="javascript:location.reload();">reload page</a>
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <!-- Flush buffer before setting locale to ensure encoding is preserved -->
-<!-- Title name -->
-<!-- Controller image and message -->
-<!-- Release Date -->	
-<!-- Number of players -->
-<!-- Title Rating Images -->
-<!-- Use bilingual icons if language is french or country is canada -->
-		<html>
+<!-- 
+    optionCount:  Number of purchase point options available
+    optionWidth:  Width of each option
+    optionHeight: Height of each option
+    spaceBetween: Space between each option
+    fullWidth:    Total space to use
+    startLeft:    Furthest left location
+ -->
+<html>
 <head>
-  <!--  -----------------------------------------------------  -->
-<!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
-<!--  All Rights Reserved.                                   -->
-<!--                                                         -->
-<!--  This software contains confidential information and    -->
-<!--  trade secrets of Acer Cloud Technology, Inc.           -->
-<!--  Use, disclosure or reproduction is prohibited without  -->
-<!--  the prior express written permission of Acer Cloud     -->
-<!--  Technology, Inc.                                       -->
-<!--  -----------------------------------------------------  -->
+<title>WiiMart</title>
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 <link rel="shortcut icon" href="/oss/favicon.ico" /> 
 <link href="/oss/oss/common/css/oss.css" rel="stylesheet" type="text/css" />
 <link href="/oss/oss/common/css/error.css" rel="stylesheet" type="text/css" />
-<script type="text/JavaScript">
-<!--
+<script type="text/javascript">
+
 	var ecCheck = false;
 	var errorCheck = false;
 	var buttonsCheck = false;
@@ -79,10 +95,8 @@
 <SCRIPT language="JavaScript" src="/oss/oss/common/js//shop.js"></SCRIPT>
 <SCRIPT language="JavaScript" src="/oss/oss/common/js//oss.js"></SCRIPT>
 
-<script type="text/JavaScript">
-<!--
+<script type="text/javascript">
 var testMode = 'false';
-
 function getMethod()
 {
 	return 'GET';	
@@ -165,7 +179,7 @@ function initPageCommon()
 	ossPath = "https://oss-auth.blinklab.com/oss/serv/";
 	secureOssPath = "https://oss-auth.blinklab.com/oss/serv/";	
 
-	ecTimeout = new ECTimeout(parseInt("900000"));
+	ecTimeout = new ECTimeout(parseInt("60000"));
 	
 	
 	currBalance = document.getElementById("currentBalance");
@@ -201,17 +215,6 @@ function initPageCommon()
 	   	wiiEnableHRP();
 	}
 }
-
-<!--  -----------------------------------------------------  -->
-<!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
-<!--  All Rights Reserved.                                   -->
-<!--                                                         -->
-<!--  This software contains confidential information and    -->
-<!--  trade secrets of Acer Cloud Technology, Inc.           -->
-<!--  Use, disclosure or reproduction is prohibited without  -->
-<!--  the prior express written permission of Acer Cloud     -->
-<!--  Technology, Inc.                                       -->
-<!--  -----------------------------------------------------  -->
 
 
 // Takes a progress object and returns the OSS error message to be displayed to the user
@@ -429,15 +432,376 @@ function needSyncEticket(progress)
 //-->
 
 </script>
-<title>M_01.title</title>
+<style type="text/css">
+  /* For P_06:  Purchase Point Options */
+#text01-01 {
+	position:absolute;
+	left:29px;
+	top:28px;
+	width:442px;
+	height:28px;
+	z-index:35;
+}
+#text02-01 {	
+	position:absolute;
+	left:34px;
+	top:115px;
+	width:540px;
+	z-index:27;
+}
+#text_AU_lower {
+	position:absolute;
+	left:34px;
+	top:280px;
+	width:540px;
+	z-index:27;
+}
+
+#pointsUnavailable{
+	position:absolute;
+	left:36px;
+	top:88px;
+	width:540px;
+	height:277px;
+}
+.pointOption{
+	position:absolute;
+	top:165px;
+	width:122px;
+	height:105px;
+}
+.ptSpacer {
+	position:absolute;
+	left:0px;
+	width:100%;
+	height:100%;
+	z-index:20;
+}
+.ptShadow {
+	position:absolute;
+	left:-8%;
+	right:-8%;
+	top:-13px ;
+	width:139px;
+	height:130px;
+	z-index:15;
+}
+.ptImg {
+	position:absolute;
+	left:0px;
+	width:100%;
+	height:100%;
+	z-index:16;
+}
+.ptValue {
+	position:absolute;
+	text-align:center;
+	top:5%;
+	left:5%;
+	width:90%;
+	z-index:19;
+}
+.wiiPtWords{
+	position:absolute;
+	text-align:center;
+	left:5%;
+	top:38%;
+	width:90%;
+	z-index:18;
+}
+.ptCost{
+	position:absolute;
+	text-align:center;
+	left:5%;
+	width:95%;
+	top:65%;
+	z-index:18;
+}
+.addpoints {
+	color:#8C8C8C;
+	font-size:32px;
+}
+#warningMsg {
+	position:absolute;
+	left:36px;
+	top:270px;
+	width:540px;
+	height:105px;
+	z-index:20;
+}
+
+
+</style>
+<script type="text/javascript">
+
+var availableSpaces = 4;
+var regionSelections = new Array();
+
+var maxBalance = null;
+var currBalance;
+
+function showHome_TWN(replace) {
+    var giftStatus = null;
+    if (ecSupportsSession()) {
+        giftStatus = ec.getSessionValue("giftStatus");
+    }
+    var r = ec.getDeviceInfo ();
+    if (typeof(r) == "object") {
+        if(giftStatus == "receiving"){
+            goGiftLoop();
+        } else if(r.country == 'TW' && r.region == 'TWN'){
+            showPage("W_03.jsp", replace);
+        } else {
+            showPage("P_01.jsp?back", replace);
+        }
+    }
+}
+
+function RegionSelection()
+{
+    this.region = null;
+}
+
+function fillPoints()
+{
+	var ctr = 0, nRegions = 0;
+	var regionSelection;
+	var country = 'US';
+	
+
+	regionSelection = new RegionSelection();
+    regionSelection.region = "USA";
+	regionSelections[ctr] = regionSelection;
+	ctr++;
+
+	regionSelection = new RegionSelection();
+	regionSelection.region = "EUR";
+	regionSelections[ctr] = regionSelection;
+	ctr++;
+
+	regionSelection = new RegionSelection();
+    regionSelection.region = "JPN"
+	regionSelections[ctr] = regionSelection;
+	ctr++;
+
+	regionSelection = new RegionSelection();
+    regionSelection.region = "KOR"
+	regionSelections[ctr] = regionSelection;
+	ctr++;
+
+	nRegions = ctr;
+	
+    for (ctr = 0; ctr < nRegions; ctr++)
+    {
+		var regionName = "region0" + (ctr+1);
+        regionSelection = regionSelections[ctr];
+        if(document.getElementById(regionName)) {
+            var region = regionSelection.region;
+  	        	    
+            var ptValue = document.getElementById(regionName + "Value");
+            var ptCost = document.getElementById(regionName + "Cost");
+            var ptCurrency = document.getElementById(regionName + "Currency");
+						
+            // should all exist; but checking doesn't hurt anyone
+            var amountStr = regionSelection.region;
+            //if (ptValue) ptValue.innerHTML = region;
+            if (ptCost) ptCost.innerHTML = region;
+
+
+			var regionDeviceInfo = ec.getDeviceInfo().region;
+			trace("current region in device info: " + regionDeviceInfo);
+            // gray out img if that region is the same as the current one
+            if(regionDeviceInfo == region) {
+                var warningMsg = "warningMsg";
+                trace("disabling ptSpacer " + regionName + "Spacer");
+
+				showElement(regionName + "SpacerDisabled");
+				hideElement(regionName + "SpacerEnabled");
+                showElement(warningMsg);
+            } else {
+				showElement(regionName + "SpacerEnabled");
+				hideElement(regionName + "SpacerDisabled");
+            }
+        }
+        showElement(regionName);
+    }
+
+    // Now hide images on the page that do not have options associated with them
+    if (nRegions == 0) {
+        // no pricings
+        showElement('pointsUnavailable');
+        hideElement('text02-01');
+        hideElement('text_AU_lower');
+    }
+	
+}
+
+function initPage()
+{
+	initPageCommon();
+	currBalance = getBalance();
+	ec.setSessionValue("altRegion", "<%= altRegion %>");
+	MM_preloadImages('/oss/oss/common/images//banner/under_banner_b.gif',
+				'/oss/oss/common/images//banner/help_b.gif',
+				'/oss/oss/common/images//banner/top_b.gif',
+				'/oss/oss/common/images//banner/add_points_b.gif',
+				'/oss/oss/common/images/banner/point_gray.png');
+    setUnderButton(true, "Let's shop!", "javascript:showPage('W_03.jsp');", "snd.playSE(cSE_Decide)")
+      
+}
+
+function changeregion(index)
+{
+	var newRegion = regionSelections[index].region;
+	trace("new region: " + newRegion);
+	//next(index);
+}
+
+function next(selection)
+{	
+	var theBool = selection < 0 || selection >= regionSelections.length;
+	trace(theBool);
+	if(theBool) {
+		return;
+	}
+	else {
+		wiiSelectSound();
+		var form = document.createElement("form");
+		form.action = getSecureUrl("changeRegion.jsp");
+//		form.method = "post";
+		form.id = "purchasePointsForm";
+		form.innerHTML = "";
+		form.innerHTML += '<div id="commonFields"></div>';
+		form.innerHTML += '<input type="hidden" name="pointsValue" value="' + regionSelections[selection].points + '"/>';
+		form.innerHTML += '</div>';
+		document.body.appendChild(form);
+
+		initCommonFields("commonFields");
+		form.submit();
+	}
+}
+//-->
+</script>
 </head>
-<% String titleId = request.getParameter("titleId"); %>
-<body onload="initPageCommon();goodsfree2.focus();var shop = new wiiShop();var unused = shop.connecting;">
-<div id="goodsfree2" style="position:absolute; left:0px; top:0px; width:608px; height:456px; z-index:31; overflow:auto;">
-	<%
-		String url = "/oss/oss/ext/manual/" + titleId + "/html/index.html?language=en&country=US&countryRegion=USA&region=USA&titleId=" + titleId;
-	%>
-  <iframe name="manualFrame" src="/oss/oss/ext/manual/<%= titleId %>/FFFD1AAA/html/index.html?language=en&country=US&countryRegion=USA&region=USA&titleId=<%= titleId %>" frameborder="0" scrolling="Auto" width="608" height="456"></iframe>
+
+<body onload="initPage();var shop = new wiiShop();var unused = shop.connecting;">
+<!--  -----------------------------------------------------  -->
+<!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
+<!--  All Rights Reserved.                                   -->
+<!--                                                         -->
+<!--  This software contains confidential information and    -->
+<!--  trade secrets of Acer Cloud Technology, Inc.           -->
+<!--  Use, disclosure or reproduction is prohibited without  -->
+<!--  the prior express written permission of Acer Cloud     -->
+<!--  Technology, Inc.                                       -->
+<!--  -----------------------------------------------------  -->
+<div id="constElements">
+  <div id="tophelpshadow"><img src="/oss/oss/common/images//banner/top_help_shadow01.gif" width="132" height="75" /></div>
+  <div id="help">
+    <img src="/oss/oss/common/images//banner/help_a.gif" name="ManualImage"
+     width="52" height="55" border="0" id="ManualImageID"  onmouseout="MM_swapImgRestore()" 
+     onmouseover="MM_swapImage('ManualImage','','/oss/oss/common/images//banner/help_b.gif',1); wiiFocusSound();"
+     onclick="showHelp(); wiiSelectSound();"/>
+    <img src="/oss/oss/common/images//banner/help_gray.gif" 
+     width="52" height="55" border="0" id="ManualGrayImageID" style="display:none" />
+    <img src="/oss/oss/common/images//spacer.gif" name="HelpSpacer" width="52" height="55" border="0"
+     id='HelpSpacer' style="position:absolute; top:0px; left:0px; display:none"/>
+  </div>
+
+  <div id="top">
+    <img src="/oss/oss/common/images//banner/top_a.gif" name="TopImage" 
+     width="52" height="55" border="0" id="TopImageID" onmouseout="MM_swapImgRestore()" 
+     onmouseover="MM_swapImage('TopImage','','/oss/oss/common/images//banner/top_b.gif',1); wiiFocusSound();"
+     onclick="showHome(); wiiCancelSound();"/>
+    <img src="/oss/oss/common/images//banner/top_gray.gif" 
+     width="52" height="55" border="0" id="TopGrayImageID" style="display:none" />
+    <img src="/oss/oss/common/images//spacer.gif" name="MainSpacer" width="52" height="55" border="0"
+     id='MainSpacer' style="position:absolute; top:0px; left:0px; display:none"/>
+  </div>
+  
+  <div class="dot" id="line01">･･･････････････････････････････････････････････････････････&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;･･</div>
+  <div class="dot" id="line02">･･･････････････････････････････････････････････････････････････････････････</div>
+  <div class="dot" id="upperLineLong" style="display:none">･･･････････････････････････････････････････････････････････････････････････</div>
+  
+  <div id='balanceInfo' onclick="showPoints(); wiiSelectSound();" 
+   onmouseover="MM_swapImage('PointSpacer','','/oss/oss/common/images//banner/Addpoints_everywhere.gif',1);wiiFocusSound();" 
+   onmouseout="MM_swapImgRestore();">
+    <script type="text/JavaScript">MM_preloadImages('/oss/oss/common/images//banner/Addpoints_everywhere.gif');</script>
+    <img src="/oss/oss/common/images//spacer.gif" name="PointSpacer" width="130" height="55" border="0"
+     id='PointSpacer' style="position:absolute; top:376px; left:239px; z-index:20;"/>
+    <div id="Wiipoint">
+      <div align="center" class="buttonTextBlackM">Wii Points</div>
+    </div>
+    <div id="point" class="wiiPoint"><span id="currentBalance"></span></div>
+  </div>
 </div>
+<!--  -----------------------------------------------------  -->
+<!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
+<!--  All Rights Reserved.                                   -->
+<!--                                                         -->
+<!--  This software contains confidential information and    -->
+<!--  trade secrets of Acer Cloud Technology, Inc.           -->
+<!--  Use, disclosure or reproduction is prohibited without  -->
+<!--  the prior express written permission of Acer Cloud     -->
+<!--  Technology, Inc.                                       -->
+<!--  -----------------------------------------------------  -->
+<script language="JavaScript">MM_preloadImages('/oss/oss/common/images//banner/under_banner_b.gif');</script>
+<div id="underButtonL" style="display:none">
+    <div id="underbannershadowL" class="buttonBannerShadow">
+   	  <img src="/oss/oss/common/images//banner/under_banner_shadow.gif" width="211" height="75" />
+   	</div>
+    <div id="underbannerL" class="buttonBanner">
+    	<img src="/oss/oss/common/images//banner/under_banner_a.gif" width="187" height="55" id="underImgL" />
+    </div>
+    <div id="underspacerL" class="buttonSpacer">
+	  <a href="" id="underlinkL">
+    	<img id="underimageL" src="/oss/oss/common/images//spacer.gif" width="187" height="55" border="0"  
+    	onmouseover="MM_swapImage('underImgL','','/oss/oss/common/images//banner/under_banner_b.gif',1); snd.playSE( cSE_Forcus );" 
+    	onmouseout="MM_swapImgRestore()"/>
+      </a>	
+    </div>
+    <div id="underwordL" align="center" class="buttonTextBlackM buttonWord">
+    </div>
+</div>
+
+<div id="underButtonR" style="display:none">
+    <div id="underbannershadowR" class="buttonBannerShadow">
+   	  <img src="/oss/oss/common/images//banner/under_banner_shadow.gif" width="211" height="75" />
+   	</div>
+    <div id="underbannerR" class="buttonBanner">
+    	<img src="/oss/oss/common/images//banner/under_banner_a.gif" width="187" height="55" id="underImgR" />
+    </div>
+    <div id="underspacerR" class="buttonSpacer">
+	  <a href="" id="underlinkR">
+    	<img id="underimageR" src="/oss/oss/common/images//spacer.gif" width="187" height="55" border="0"  
+    	onmouseover="MM_swapImage('underImgR','','/oss/oss/common/images//banner/under_banner_b.gif',1); snd.playSE( cSE_Forcus ); " 
+    	onmouseout="MM_swapImgRestore()"/>
+      </a>	
+    </div>
+    <div id="underwordR" align="center" class="buttonTextBlackM buttonWord">
+    </div>
+</div>
+
+<div id="underButton" style="display:none">
+    <div id="underbannershadow" class="buttonBannerShadow">
+    	<img src="/oss/oss/common/images//banner/under_banner_shadow.gif" width="211" height="75" /></div>
+    <div id="underbanner" class="buttonBanner">
+    	<img src="/oss/oss/common/images//banner/under_banner_a.gif" width="187" height="55" id="underImg" /></div>
+    <div id="underspacer" class="buttonSpacer">
+	<a href="" id="underlink">
+    	<img id="underimage" src="/oss/oss/common/images//spacer.gif" width="187" height="55" border="0" 
+    	onmouseover="MM_swapImage('underImg','','/oss/oss/common/images//banner/under_banner_b.gif',1); snd.playSE( cSE_Forcus );" 
+    	onmouseout="MM_swapImgRestore()">
+    	</a>
+    </div>
+    <div id="underword" align="center" class="buttonTextBlackM buttonWord"></div>
+</div>
+
+
+<div id="text01-01" class="titleBlackL">Region Change</div>
+<div class="titleBlackL" id="text02-01" style="text-align: center;">
+    You're region is now <%= regionToChange %>!
+    </div>
 </body>
+
 </html>

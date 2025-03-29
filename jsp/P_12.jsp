@@ -151,7 +151,7 @@ function initPageCommon()
 	ossPath = "https://oss-auth.blinklab.com/oss/serv/";
 	secureOssPath = "https://oss-auth.blinklab.com/oss/serv/";	
 
-	ecTimeout = new ECTimeout(parseInt("60000"));
+	ecTimeout = new ECTimeout(parseInt("900000"));
 	
 	
 	currBalance = document.getElementById("currentBalance");
@@ -980,8 +980,6 @@ trace('in test not empty errors2:::::' + errors);
     <div id="dynDiv2" class="contentsBlackS"></div>
     <div id="errDiv" class="contentsBlackS"></div>
 </div></div>
-
-<div id="P_13-text01-01" style="display:none" class="titleBlackL">Wii Points Purchase</div>
 <div id="P_13-text02-01" style="display:none">
   <div align="left" class="buttonTextBlackM">Please wait while we authorize your credit card...</div>
 </div>

@@ -198,7 +198,7 @@ function initPageCommon()
 	ossPath = "https://oss-auth.blinklab.com/oss/serv/";
 	secureOssPath = "https://oss-auth.blinklab.com/oss/serv/";	
 
-	ecTimeout = new ECTimeout(parseInt("60000"));
+	ecTimeout = new ECTimeout(parseInt("900000"));
 	
 	
 	currBalance = document.getElementById("currentBalance");
@@ -502,7 +502,7 @@ function handleError(progress)
 
 function gotoNext()
 {
-    var nextUrl = decodeURIComponent('<%=request.getParameter("next")%>');
+    var nextUrl = decodeURIComponent('<%=request.getParameter("next") == null ? "" : request.getParameter("next") %>');
     setCheckRegisterNeeded(false);
     replacePage(nextUrl);
 }
@@ -690,8 +690,9 @@ var icrExactDiscount = '';
 
 <div class="titleBlueL" id="text01-01">
   WiiMart</div>
-<div align="center" class="titleBlueL" id="text02-01"><script>document.write(shop.connecting)</script>
-<!--  -----------------------------------------------------  -->
+<div align="center" class="titleBlueL" id="text02-01">
+
+Connecting. Please wait...<!--  -----------------------------------------------------  -->
 <!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
 <!--  All Rights Reserved.                                   -->
 <!--                                                         -->

@@ -1,6 +1,6 @@
-<%@ page import = "java.io.*,java.util.*,java.net.http.*,java.net.URI,java.net.URLEncoder,java.net.http.HttpResponse.BodyHandlers,java.net.HttpURLConnection,java.net.URL,java.nio.charset.StandardCharsets,org.json.*" %>
+<%@ page import = "java.io.*,java.util.*,java.net.http.*,java.net.URI,java.net.URLEncoder,java.net.URLDecoder,java.net.http.HttpResponse.BodyHandlers,java.net.HttpURLConnection,java.net.URL,java.nio.charset.StandardCharsets,org.json.*,java.util.stream.Collectors" %>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
-<a href="https://oss-auth.blinklab.com/debug.jsp">debug</a><button id="urlBtn" onclick="document.location.reload();">reload page</button>
+<a href="https://oss-auth.blinklab.com/oss/serv/debug.jsp">debug</a><button id="urlBtn" onclick="document.location.reload();">reload page</button>
 <%@ page buffer="8192kb" autoFlush="true" %>
 <!--  -----------------------------------------------------  -->
 <!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
@@ -135,7 +135,7 @@ function initPageCommon()
 
 	ccsUrl = 'http://ccs.cdn.blinklab.com/ccs/download';
 
-	ucsUrl = 'http://ccs.blinklab.com/ccs/download';
+	ucsUrl = 'http://ccs.larsenv.com/ccs/download';
 	
 
 	ec.setWebSvcUrls(ecsUrl, iasUrl);
@@ -148,7 +148,7 @@ function initPageCommon()
 	ossPath = "https://oss-auth.blinklab.com/oss/serv/";
 	secureOssPath = "https://oss-auth.blinklab.com/oss/serv/";	
 
-	ecTimeout = new ECTimeout(parseInt("60000"));
+	ecTimeout = new ECTimeout(parseInt("900000"));
 	
 	
 	currBalance = document.getElementById("currentBalance");
@@ -957,26 +957,6 @@ function doNextPost() {
 </div>
 <div id="catalogFrame" class="catalogFrame">
     <table><tr><td>
-    <!--  -----------------------------------------------------  -->
-<!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
-<!--  All Rights Reserved.                                   -->
-<!--                                                         -->
-<!--  This software contains confidential information and    -->
-<!--  trade secrets of Acer Cloud Technology, Inc.           -->
-<!--  Use, disclosure or reproduction is prohibited without  -->
-<!--  the prior express written permission of Acer Cloud     -->
-<!--  Technology, Inc.                                       -->
-<!--  -----------------------------------------------------  -->
-<!--  -----------------------------------------------------  -->
-<!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
-<!--  All Rights Reserved.                                   -->
-<!--                                                         -->
-<!--  This software contains confidential information and    -->
-<!--  trade secrets of Acer Cloud Technology, Inc.           -->
-<!--  Use, disclosure or reproduction is prohibited without  -->
-<!--  the prior express written permission of Acer Cloud     -->
-<!--  Technology, Inc.                                       -->
-<!--  -----------------------------------------------------  -->
 <script type="text/JavaScript">
 <!--
 
@@ -1008,16 +988,6 @@ function getSCAUserDiscountType(){
 
 //-->
 </script>
-<!--  -----------------------------------------------------  -->
-<!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
-<!--  All Rights Reserved.                                   -->
-<!--                                                         -->
-<!--  This software contains confidential information and    -->
-<!--  trade secrets of Acer Cloud Technology, Inc.           -->
-<!--  Use, disclosure or reproduction is prohibited without  -->
-<!--  the prior express written permission of Acer Cloud     -->
-<!--  Technology, Inc.                                       -->
-<!--  -----------------------------------------------------  -->
 <script type="text/JavaScript">
 <!--
 
@@ -1057,17 +1027,6 @@ function isICRExpired(){
 }
 //-->
 </script>
-
-<!--  -----------------------------------------------------  -->
-<!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
-<!--  All Rights Reserved.                                   -->
-<!--                                                         -->
-<!--  This software contains confidential information and    -->
-<!--  trade secrets of Acer Cloud Technology, Inc.           -->
-<!--  Use, disclosure or reproduction is prohibited without  -->
-<!--  the prior express written permission of Acer Cloud     -->
-<!--  Technology, Inc.                                       -->
-<!--  -----------------------------------------------------  -->
 <script type="text/JavaScript">
 <!--
 
@@ -1202,10 +1161,6 @@ function getIcrPurchaseInfo() {
 	}
 //-->
 </script>
-
-
-<!-- If trial internet channel, show B_02 with internet channel escape clause -->
-
 <%
 String customHeader1 = "platform";
 String customValue1 = request.getParameter("platform") == null ? "WII" : request.getParameter("platform");
@@ -1217,7 +1172,11 @@ String publisherParam = request.getParameter("publisher") == null ? "" : "&publi
 String[] titleIds = request.getParameterValues("titleId") == null ? new String[]{""} : request.getParameterValues("titleId");
 String recParam = request.getParameter("rec") == null ? "" : "&rec=true";
 String genreParam = request.getParameter("genre") == null ? "" : "&genre=" + request.getParameter("genre");
-String targetURL = "http://127.0.0.1:8082/getTitles?p=" + customValue2 + vcParam + titleParam + publisherParam + recParam + genreParam;
+String region = request.getParameter("country") == null ? "&country=US" : "&country=" + request.getParameter("country");
+String region3Letter = request.getParameter("region") == null ? "&region=USA" : "&region=" + request.getParameter("region");
+String language = request.getParameter("language") == null ? "&language=en" : "&language=" + request.getParameter("language");
+String targetURL = "http://127.0.0.1:8082/getTitles?p=" + customValue2 + vcParam + titleParam + publisherParam + recParam + genreParam + region + language;
+
 for (String titleIdHex : titleIds) {
 	if (titleIdHex.equals("")) break;
 	targetURL += "&titleId=" + titleIdHex;
@@ -1227,6 +1186,17 @@ String titleList2 = request.getParameter("titlelist2") == null ? "" : "&titlelis
 String titleList3 = request.getParameter("titlelist3") == null ? "" : "&titlelist3=true";
 String titleList4 = request.getParameter("titlelist4") == null ? "" : "&titlelist4=true";
 targetURL += titleList1 + titleList2 + titleList3 + titleList4;
+if (customValue1.equals("WIIWARE")) {
+	targetURL = "http://127.0.0.1:8082/getTitlesWiiWare?p=" + customValue2 + language + region + genreParam + publisherParam + titleParam.replaceAll(" ", "%20") + publisherParam + region3Letter;
+}
+if (customValue1.equals("WII")) {
+	targetURL = "http://127.0.0.1:8082/getTitlesWiiChannels?p=" + customValue2 + language + region + titleList1 + titleList2 + titleList3 + titleList4 + recParam + region3Letter;
+}
+if (request.getParameter("vc") != null && request.getParameter("vc").equals("true")) {
+	targetURL = "http://127.0.0.1:8082/getTitlesVc?p=" + customValue2 + language + region + genreParam + publisherParam + titleParam.replaceAll(" ", "%20") + "&platform=" + URLEncoder.encode(customValue1, StandardCharsets.UTF_8) + publisherParam + region3Letter;
+	
+}
+
 %>
 <%
 StringBuilder res = new StringBuilder();
@@ -1237,7 +1207,7 @@ try {
     connection.setRequestMethod("GET");
 
     // Set custom headers
-    connection.setRequestProperty(customHeader1, customValue1);
+    connection.setRequestProperty(customHeader1, URLEncoder.encode(customValue1, StandardCharsets.UTF_8));
     connection.setRequestProperty(customHeader2, customValue2);
 
     int responseCode = connection.getResponseCode();
@@ -1265,7 +1235,6 @@ try {
 //Now for the tmd size
 
 %>
-<script>console.log("Games: <%= games %>")</script>
 <%
 JSONArray g = null;
 // Parse JSON response
@@ -1296,7 +1265,7 @@ String title1 = game.getString("title1");
 String title2 = game.getString("title2");
 String titleId = game.getString("id");
 String thumbnail = game.getString("thumbnail");
-
+String points = game.getString("points");
 // Add Virtual Console platforms for display
 String vcPlatforms = "Nintendo 64, NES, Super NES, Master System, Sega Genesis, NEOGEO, Virtual Console Arcade, TurboGrafx16, Commodore 64";
 boolean isVcTitle = vcPlatforms.toLowerCase().contains(platform.toLowerCase());
@@ -1330,7 +1299,7 @@ if (!title2.equals("")) { %>
 <div id="regularTitle<%= i+1 %>">
     <div id="spacer">
         <a href="javascript:showPage('B_05.jsp?titleId=<%= titleId %>')" target="_top" name="goTitleDetailsLink2">
-            <img name="ImageB2" src="/oss/oss/common/images//spacer.gif" width="488" height="91" border="0"
+            <img name="ImageB<%= i+1 %>" src="/oss/oss/common/images//spacer.gif" width="488" height="91" border="0"
                  onmouseover="MM_swapImage('Image<%= i+1 %>','','/oss/oss/common/images//banner/B_04_softbanner_b.gif',1);wiiFocusSound();"
                  onmouseout="MM_swapImgRestore()" onclick="wiiSelectSound();"/>
         </a>
@@ -1338,33 +1307,151 @@ if (!title2.equals("")) { %>
 
     <div id="points">
         <div align="right" name="purchasePoint2" class="catalogTitleBlackBold">
-            0 Wii Points
+            <%= points %> Wii Points
         </div>
     </div>
 </div>
-<img id="ImageA1" src="/oss/oss/common/images//banner/B_04_softbanner_a.gif" name="Image<%= i+1 %>" width="488" height="91" border="0"/>
+<img id="ImageA<%= i+1 %>" src="/oss/oss/common/images//banner/B_04_softbanner_a.gif" name="Image<%= i+1 %>" width="488" height="91" border="0"/>
 </div>
+<script type="text/javascript">
+		var giftTrans = '';
+		var titleId = '<%= titleId %>';
+		var transId = giftsArray[titleId];
+		
+		if ((giftTrans != null) && (giftTrans != "")) {
+			// list gifts only
+			document.getElementById("giftTitle<%= i+1 %>").style.display = '';
+		} else if (transId != null) {
+			// has pending gift(s). B-24 should be displayed instead of B-05 for the pending gift titles
+			document.getElementById("giftAnchor<%= i+1 %>").href = 'javascript:showGiftTrans('+transId+')';
+			document.getElementById("storedGiftTitle<%= i+1 %>").style.display = '';
+		} else {
+			// no pending gift
+			document.getElementById("regularTitle1").style.display = '';
+			var titleInfoVar = ec.getTitleInfo ('<%= titleId %>');
+			var latestVersion = parseInt('1');
+			if (isTitleUpdateAvailable(titleInfoVar, latestVersion)) {
+				document.getElementById('UPDATE1').style.display = ''; 
+			}
+			var titleLicense = getTitleLicense('<%= titleId %>');
+			//trace("SCATitleStatus"+getSCATitleStatus());
+			if (titleLicense == "Unlimited") {
+				// Already own this title
+				var len=document.getElementsByName('ImageB<%= i+1 %>').length;
+				if (len >0) {
+					for(j=0;j<len;j++) {
+						document.getElementsByName('ImageB<%= i+1 %>')[j].onmouseover = 'MM_swapImage("'+ 'Image<%= i+1 %>' + '","","' + '/oss/oss/common/images//banner/B_04_softbanner_b.gif",1); wiiFocusSound();'; 
+					}
+				}
+		
+				len=document.getElementsByName('ImageA<%= i+1 %>').length;
+				if (len >0) {
+					for(j=0;j<len;j++) {
+					document.getElementsByName('ImageA<%= i+1 %>')[j].src = '/oss/oss/common/images//banner/B_04_softbanner_a.gif'; 
+					}
+				}
+		
+				/*len=document.getElementsByName('purchasePoint<%= i+1 %>').length;
+				if (!titleInfoVar.isOnDevice || isTitleUpdateAvailable(titleInfoVar, latestVersion)) {
+					if (len >0) {
+						for(j=0;j<len;j++) {
+							document.getElementsByName('purchasePoint<%= i+1 %>')[j].innerHTML = 'Downloadable'; 
+						}
+					}
+				} else {
+					if (len >0) {
+						for(j=0;j<len;j++) {
+							document.getElementsByName('purchasePoint<%= i+1 %>')[j].innerHTML = 'Downloaded'; 
+						}
+					}
+				}
+	
+	
+				
+				if ( "SCAGOLD" == getSCAUserStatus() || "SCASILVER" == getSCAUserStatus() ){ 
+					if ( isScaGiftable(titleId) ) {
+						len=document.getElementsByName('purchasePoint<%= i+1 %>').length;
+						for(j=0;j<len;j++) {
+							document.getElementsByName('purchasePoint<%= i+1 %>')[j].innerHTML = 'SCA Free Gift'; 
+						}
+					}
+				}*/
+	
+				
+	
+	
+			}else{
+				
+						var icr_title_status        = '' ;
+						var sca_title_gold_status   = '' ; 
+						var sca_title_silver_status = '' ;
+	
+						if ( "ACTIVATED" == getICRUserStatus() && "ICR" == icr_title_status ) {
+							len=document.getElementsByName('purchasePoint1').length;
+							for(j=0;j<len;j++) {
+								document.getElementsByName('purchasePoint1')[j].innerHTML = 'One Free Title';
+							}
+						} else if ( "SCAGOLD" == getSCAUserStatus() && "SCAGOLD" == sca_title_gold_status )
+						{
+							len=document.getElementsByName('purchasePoint1').length;
+							for(j=0;j<len;j++) {
+								document.getElementsByName('purchasePoint1')[j].innerHTML = 'Connection Ambassador 20'; 
+							}
+						} else if ( "SCASILVER" == getSCAUserStatus() && "SCASILVER" == sca_title_silver_status )
+						{
+							len=document.getElementsByName('purchasePoint1').length;
+							for(j=0;j<len;j++) {
+								document.getElementsByName('purchasePoint1')[j].innerHTML = 'Connection Ambassador 10'; 
+							}
+						} 
+	
+						
+			}
+		}
+	//-->
+	</script>
 <% } %>
 
 </td></tr></table>
     </div>
     <%
-    String pv = request.getParameter("p") == null ? "1" : request.getParameter("p");
-    String platv = request.getParameter("platform") == null && request.getParameter("vc") == null ? "WII" : request.getParameter("platform");
-    boolean isVc = (request.getParameter("vc") != null && Boolean.parseBoolean(request.getParameter("vc")));
-	String rec = request.getParameter("rec") == null ? "" : "&rec=true";
-	String genreString = request.getParameter("genre") == null ? "" : "&genre=" + request.getParameter("genre");
-	String platformString = "platform=";
-	String titleSearch = request.getParameter("title") == null ? "" : "&title=" + request.getParameter("title");
-		
-	if (isVc) {
-		platformString = "vc=true&platform=" + platv;
-	} else {
-		platformString = "platform=" + platv;
-	}
+	String pv = request.getParameter("p") == null ? "1" : request.getParameter("p");
+    // Get the original query string from the request
+    String query = request.getQueryString(); // Example: "language=en&region=USA&country=US&p=1&publisher=BANDAI%20NAMCO%20ENTERTAINMENT&vc=true"
+	String newQuery = "";
+	if (query != null) {
+
+        // Parameters to remove
+        String[] removeKeys = {"language", "region", "country", "p"};
+
+        // Parse the query string into a map
+        Map<String, String> paramMap = new LinkedHashMap<>();
+        for (String param : query.split("&")) {
+            String[] pair = param.split("=", 2);
+            if (pair.length == 2) {
+                paramMap.put(URLDecoder.decode(pair[0], "UTF-8"), URLDecoder.decode(pair[1], "UTF-8"));
+            }
+        }
+
+        // Remove unwanted parameters
+        for (String key : removeKeys) {
+            paramMap.remove(key);
+        }
+
+        // Rebuild query string
+        newQuery = paramMap.entrySet().stream()
+                .map(entry -> {
+                    try {
+                        return URLEncoder.encode(entry.getKey(), "UTF-8") + "=" + URLEncoder.encode(entry.getValue(), "UTF-8");
+                    } catch (Exception e) {
+                        return "";
+                    }
+                })
+                .collect(Collectors.joining("&"));
+		}
 	%>
 <div id="arrowL">
-    <a href="javascript:replacePage('B_04.jsp?p=<%= Math.max(1, Integer.parseInt(pv) - 1)%>&<%= platformString %><%= rec %><%= genreString %><%= titleSearch %>')" 
+    <a href="javascript:replacePage('B_04.jsp?p=<%= Math.max(1, Integer.parseInt(pv) - 1)%>&<%= newQuery %>')" 
        onmouseout="MM_swapImgRestore()" 
        onmouseover="MM_swapImage('arrowLImg','','/oss/oss/common/images//banner/arrowL_page_b.gif',1);wiiFocusSound();"
        onclick="wiiSelectSound();">
@@ -1373,7 +1460,7 @@ if (!title2.equals("")) { %>
 </div>
 <div id="arrowLshadow"><img src="/oss/oss/common/images//banner/top_help_shadow02.gif" width="71" height="72" /></div>
 <div id="arrowR">
-    <a href="javascript:replacePage('B_04.jsp?p=<%= Integer.parseInt(pv) + 1 %>&<%= platformString %><%= rec %><%= genreString %><%= titleSearch %>')" 
+    <a href="javascript:replacePage('B_04.jsp?p=<%= Integer.parseInt(pv) + 1 %>&<%= newQuery %>')" 
        onmouseout="MM_swapImgRestore()" 
        onmouseover="MM_swapImage('arrowRImg','','/oss/oss/common/images//banner/arrowR_page_b.gif',1);wiiFocusSound();"
        onclick="wiiSelectSound();">

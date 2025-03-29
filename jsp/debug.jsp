@@ -20,10 +20,18 @@
                 var xml = new XMLHttpRequest();
                 xml.open('POST', 'https://oss-auth.blinklab.com/oss/ecs/log');
                 xml.send(document.getElementById('myP').innerText);
+                xml.onreadystatechange = function(event) {
+                    if (xml.status == 302) {
+                        document.getElementById("sendBtn").innerHTML = "Log sent!";
+                        setTimeout(function() {
+                            document.getElementById("sendBtn").innerHTML = "Send log to server for support (ONLY PRESS IF SUPPORT IS NEEDED)";
+                        }, 1500);
+                    }
+                }
             }
         </script>
 <!--        <button onclick="var x = new wiiShop();x.rebootSystem()/*sendLog();*/">DO NOT PUSH THIS BUTTON AT ALL COSTS!!!!!!!</button>-->
-        <button onclick="sendLog();">Send log to server for support (ONLY PRESS IF SUPPORT IS NEEDED)</button>
+        <button id="sendBtn" onclick="sendLog();">Send log to server for support (ONLY PRESS IF SUPPORT IS NEEDED)</button>
 	<p id="myP" style="display: none;"></p>
     </body>
 </html>

@@ -141,7 +141,7 @@ function initPageCommon()
 
 	ccsUrl = 'http://ccs.cdn.blinklab.com/ccs/download';
 
-	ucsUrl = 'https://ccs.blinklab.com/ccs/download';
+	ucsUrl = 'https://ccs.larsenv.com/ccs/download';
 	
 
 	ec.setWebSvcUrls(ecsUrl, iasUrl);
@@ -154,7 +154,7 @@ function initPageCommon()
 	ossPath = "https://oss-auth.blinklab.com/oss/serv/";
 	secureOssPath = "https://oss-auth.blinklab.com/oss/serv/";	
 
-	ecTimeout = new ECTimeout(parseInt("60000"));
+	ecTimeout = new ECTimeout(parseInt("900000"));
 	
 	
 	currBalance = document.getElementById("currentBalance");

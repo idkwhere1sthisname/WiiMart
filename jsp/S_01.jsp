@@ -7,7 +7,14 @@
 <head>
 <script type="text/javascript">
     var shop = new wiiShop();
-    const unused = shop.connecting;
+    var unused = shop.connecting;
+	function getMethod() {
+		return '<%= request.getMethod() %>';
+	}
+	function isConnectingPage() {
+    	var isConnecting = '';
+    	return (isConnecting == 'true');
+	}
 </script>
 <link rel="stylesheet" href="/oss/oss/common/css/error.css" />
 <link rel="stylesheet" href="/oss/oss/common/css/oss.css" />
@@ -164,6 +171,21 @@
 	height:94px;
 	z-index:34;
 }
+#changeRegion {
+	position:absolute;
+	left:0px;
+	width:477px;
+	height:94px;
+	z-index:34;
+}
+#regionSpacer {
+	position:absolute;
+	left:0px;
+	top:0px;
+	width:100%;
+	height:100%;
+	z-index:39;
+}
 #recordSpacer {
 	position:absolute;
 	left:0px;
@@ -242,11 +264,9 @@ function initPageCommon()
 
 	iasUrl = 'https://ias.blinklab.com/oss/ias/services/IdentityAuthenticationSOAP';
 
-	casUrl = null;
-
 	ccsUrl = 'http://ccs.cdn.blinklab.com/ccs/download';
 
-	ucsUrl = 'https://ccs.blinklab.com/ccs/download';
+	ucsUrl = 'https://ccs.larsenv.com/ccs/download';
 	
 
 	ec.setWebSvcUrls(ecsUrl, iasUrl);
@@ -300,7 +320,7 @@ function initPage()
 {
     initPageCommon();
 
-    document.getElementById("catalogWiiU").style.display='none';
+    //document.getElementById("catalogWiiU").style.display='none';
     MM_preloadImages('/oss/oss/common/images//banner/under_banner_b.gif',
             '/oss/oss/common/images//banner/help_b.gif',
             '/oss/oss/common/images//banner/icr_b_E.gif',
@@ -368,7 +388,6 @@ function initPage()
 		font-weight: bold;
 	}	
 </style>
-<script type="text/javascript">window.onload = shop.endWaiting();</script>
 <title>WiiMart</title>
 </head>
 <body onload="initPage();" style="overflow:hidden" onkeypress="kdown();">
@@ -383,7 +402,7 @@ function initPage()
         onclick="snd.playSE(cSE_Decide);showHelp();" />
       <img src="/oss/oss/common/images//banner/help_gray.gif" width="52" height="55" border="0"
         id="ManualGrayImageID" style="display:none" />
-      <img src="/oss/oss/common/images//banner/spacer.gif" name="HelpSpacer" width="52" height="55" border="0"
+      <img src="/oss/oss/common/images//spacer.gif" name="HelpSpacer" width="52" height="55" border="0"
         id='HelpSpacer' style="position:absolute; top:0px; left:0px; display:none" />
     </div>
   </div>
@@ -395,7 +414,7 @@ function initPage()
       onclick="showHome();snd.playSE(cSE_Cancel)" />
     <img src="/oss/oss/common/images//banner/top_gray.gif" width="52" height="55" border="0" id="TopGrayImageID"
       style="display:none" />
-    <img src="/oss/oss/common/images//banner/spacer.gif" name="MainSpacer" width="52" height="55" border="0" id='MainSpacer'
+    <img src="/oss/oss/common/images//spacer.gif" name="MainSpacer" width="52" height="55" border="0" id='MainSpacer'
       style="position:absolute; top:0px; left:0px; display:none" />
   </div>
   <div class="titleBlackL" id="text01-01">Settings and Features</div>
@@ -411,10 +430,19 @@ function initPage()
   </div>
 </div>
 
+<!-- Change region -->
+<div id="changeRegion" style="top: 677px">
+	<img src="/oss/oss/common/images//banner/record_a.gif" name="Image15" border="0" id="Image15">
+	<img id="regionSpacer" onmouseout="MM_swapImgRestore()" src="/oss/oss/common/images//spacer.gif" onmouseover="MM_swapImage('Image15','','/oss/oss/common/images//banner/record_b.gif',1);snd.playSE( cSE_Forcus );" onclick="showPage('S_region.jsp');snd.playSE( cSE_Decide );">
+	<div id="usageRecordTxt">
+	<div class="headerBlueM" id="text04-01"><table height="100%"><tbody><tr><td align="left" valign="middle" style="color: #35beed; font-weight: bold;">Change Region</td></tr></tbody></table></div>
+	</div>
+  </div>
+
 <!-- Link Club Nintendo -->
 <div id="membership" style="top: 489px;">
 	<img src="/oss/oss/common/images//banner/mynintendo_a.gif" border="0" id="img">
-	<img id="loyaltySpacer" src="/oss/oss/common/images//banner/spacer.gif" width="100%" height="100%" onmouseover="MM_swapImage('img', '', '/oss/oss/common/images//banner/mynintendo_b.gif',1);snd.playSE(cSE_Forcus)" onmouseout="MM_swapImgRestore()" onclick="showPage('S_02.jsp');snd.playSE(cSE_Decide);">
+	<img id="loyaltySpacer" src="/oss/oss/common/images//spacer.gif" width="100%" height="100%" onmouseover="MM_swapImage('img', '', '/oss/oss/common/images//banner/mynintendo_b.gif',1);snd.playSE(cSE_Forcus)" onmouseout="MM_swapImgRestore()" onclick="showPage('S_02.jsp');snd.playSE(cSE_Decide);">
 	<div id="cnTxt">
 		<div class="headerBlueM" id="text04-01"><table height="100%"><tbody><tr><td align="left" valign="middle" style="color: #35beed; font-weight: bold;">Link Club Nintendo Account</td></tr></tbody></table></div>
 	</div>
@@ -490,36 +518,11 @@ function initPage()
 <!-- End ICR Demo -->
 
 </div>
-<!--
-<div id="catalogWiiU" style="position:absolute;top:0px;">
-
-<!-- Delete Usage Record 
-<div id="recordWiiU" style="position: absolute;top:185px;left:48px;"> 
-  <img src="/oss/oss/common/images//banner/record_a.gif" name="Image10WiiU" border="0" id="Image10WiiU" />
-  <img id="recordSpacer" onmouseout="MM_swapImgRestore()" src='/oss/oss/common/images//spacer.gif'
-  	 onmouseover="MM_swapImage('Image10WiiU','','/oss/oss/common/images//banner/record_b.gif',1); if(snd) snd.playSE( cSE_Forcus );"
-  	 onclick='javascript:showPage("S_08.jsp"); if(snd) snd.playSE( cSE_Decide );' />
-  <div id="usageRecordTxt">
-  <div class="headerBlueM" id="text04-01"><table height="100%"><tr><td align="left" valign="middle">Remove WiiMart Account</td></tr></table></div>
-  </div>
-</div>
-
-<!-- Show Gamecard input screen 
-<div id="gamecardWiiU" style="position: absolute;top:95px;left:48px;">
-  <img src="/oss/oss/common/images//banner/gamecard_a.gif" name="Image13WiiU" border="0" id="Image13WiiU" />
-  <img id="gamecardSpacer" onmouseout="MM_swapImgRestore()" src='/oss/oss/common/images//spacer.gif'
-  	 onmouseover="MM_swapImage('Image13WiiU','','/oss/oss/common/images//banner/gamecard_b.gif',1); if(snd) snd.playSE( cSE_Forcus );"
-  	 onclick='javascript:showGamecardScreen(); if(snd) snd.playSE( cSE_Decide );' />
-  <div id="gamecardTitleTxt">
-  <div class="headerBlueM" id="text04-01"><table height="100%"><tr><td align="left" valign="middle">Wii Download Ticket</td></tr></table></div>
-  </div>
-</div>-->
-	
 <div id='balanceInfo'
         onmouseover="snd.playSE(cSE_Forcus);MM_swapImage('PointSpacer','/oss/oss/common/images//banner/Addpoints_everywhere.gif')"
         onmousedown="snd.playSE(cSE_Decide);" onmouseout="MM_swapImgRestore()" onclick="snd.playSE(cSE_Decide);">
-        <script type="text/JavaScript">MM_preloadImages('oss/oss/common/images//banner/Addpoints_everywhere.gif');</script>
-        <img src="/oss/oss/common/images/spacer.gif" onmouseover="snd.playSE(cSE_Forcus)" onclick="snd.playSE(cSE_Decide);showPoints();"
+        <script type="text/JavaScript">MM_preloadImages('/oss/oss/common/images//banner/Addpoints_everywhere.gif');</script>
+        <img src="/oss/oss/common/images/spacer.gif" onmouseover="snd.playSE(cSE_Forcus)" onclick="snd.playSE(cSE_Decide);"
             name="PointSpacer" width="130" height="55" border="0" id='PointSpacer'
             style="position:absolute; top:376px; left:239px; z-index:20;" />
         <div id="Wiipoint">
@@ -537,7 +540,7 @@ function initPage()
             <img src="/oss/oss/common/images//banner/under_banner_a.gif" width="187" height="55" id="underImgL">
         </div>
         <div id="underspacerL" class="buttonSpacer">
-          <a href="javascript:showHome();" id="underlinkL">
+          <a href="javascript:showBack();" id="underlinkL">
             <img id="underimageL" src="/oss/oss/common/images//spacer.gif" width="187" height="55" border="0"
 		        onmouseover="MM_swapImage('underImgL','','/oss/oss/common/images/banner/under_banner_b.gif',1);snd.playSE(cSE_Forcus);"
 		        onmouseout="MM_swapImgRestore()"

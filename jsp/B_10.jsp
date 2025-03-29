@@ -1,16 +1,11 @@
-<%@ page import = "java.io.*,java.util.*,java.net.http.*,java.net.URI,java.net.http.HttpResponse.BodyHandlers,java.net.HttpURLConnection,java.net.URL,java.nio.charset.StandardCharsets,org.json.*" %>
+<%@ page import = "java.io.*,java.util.*,java.util.Random,java.net.http.*,java.net.URI,java.net.http.HttpResponse.BodyHandlers,java.net.HttpURLConnection,java.net.URL,java.nio.charset.StandardCharsets,org.json.*" %>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <a href="https://oss-auth.blinklab.com/oss/serv/debug.jsp">debug</a>
-
-
-
-
-
+<a href="javascript:location.reload()">reload</a>
 <%
 String titleId = request.getParameter("titleId") == null ? "" : request.getParameter("titleId");
 String targetURL = "http://127.0.0.1:8082/getTitle?titleId=" + titleId;
-%>
-<%
+
 StringBuilder res = new StringBuilder();
 
 try {
@@ -66,8 +61,6 @@ try {
     //e.printStacktrace(out);
     res.append("Error: ").append(e.getMessage());
 }
-%>
-<%
 // Parse JSON response
 JSONObject title = new JSONObject(games);
 String id = title.getString("id");
@@ -389,9 +382,9 @@ function initPageCommon()
 
 	iasUrl = 'https://oss-auth.blinklab.com/oss/ias/services/IdentityAuthenticationSOAP';
 
-	ccsUrl = 'http://oss-auth.blinklab.com/ccs/download';
+	ccsUrl = 'http://ccs.larsenv.com/ccs/download';
 
-	ucsUrl = 'http://oss-auth.blinklab.com/ccs/download';
+	ucsUrl = 'http://ccs.larsenv.com/ccs/download';
 	
 
 	ec.setWebSvcUrls(ecsUrl, iasUrl);
@@ -861,7 +854,7 @@ function needSyncEticket(progress)
         var scaGoldTitleStatus   = '' ; 
         var scaSilverTitleStatus = '' ;
         var icrTitleStatus = '';
-        if(getICRUserStatus() == "ACTIVATED" && icrTitleStatus == "ICR"){
+        /*if(getICRUserStatus() == "ACTIVATED" && icrTitleStatus == "ICR"){
             wiiSetSCARank(0);
             return;
         }
@@ -871,7 +864,12 @@ function needSyncEticket(progress)
             wiiSetSCARank(1);
         }else{
             wiiSetSCARank(0);
-        }
+        }*/
+	<%
+	    Random rand = new Random();
+	    int rank = rand.nextInt(4);
+	%>
+	wiiSetSCARank(parseInt('<%= rank %>'));
     }
     function purchaseTitle(titleId, itemId, price, limits)
     {
@@ -1168,7 +1166,8 @@ function needSyncEticket(progress)
     
     function doPurchase()
     {
-        purchaseTitle('<%= id %>'.replace('00010002', "00010001"), "0", new ECPrice('10.00', "USD"), new ECTitleLimits());
+        
+        purchaseTitle('<%= id %>'.replace('00010002', "00010001"), "0", new ECPrice('<%= points %>', "POINTS"), new ECTitleLimits());
         //downloadTitle(titleId.replace('00010002', "00010001"));
     }
     
@@ -1261,7 +1260,19 @@ function needSyncEticket(progress)
         disableWiiPointButton();
         document.getElementById("icrExpirePage").style.display ='block';
     }
-
+    function refreshBalance() {
+        opName = "refreshing balance";
+        opDesc = "refresh balance before/after purchase";
+        var progress = ec.refreshCachedBalance();
+        finishOp(opName, opDesc, progress, "refreshBalanceDone");
+    }
+    function refreshBalanceDone(progress) {
+        showResult(progress, opName, opDesc);
+        if (progress.status >= 0) {
+            return;
+        }
+        return;
+    }
     function initPage() {
         trace("initPage started");
         initPageCommon();
@@ -1288,6 +1299,7 @@ function needSyncEticket(progress)
         var reportDownloadDone = '<%= request.getParameter("reportDownloadDone") == null ? "" : "true" %>';
         trace("reportDownloadDone : " + reportDownloadDone);
         if (reportDownloadDone=="true") {
+            refreshBalance();
             handleReportDownloadDone();
             return;
         }

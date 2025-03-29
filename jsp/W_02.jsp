@@ -1,8 +1,6 @@
 <%@ page import = "java.io.*,java.util.*" %>
-<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %><a href="https://oss-auth.blinklab.com/oss/serv/debug.jsp">debug</a>
-
-
-
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
+<a href="https://oss-auth.blinklab.com/oss/serv/debug.jsp">debug</a>
 <!--  -----------------------------------------------------  -->
 <!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
 <!--  All Rights Reserved.                                   -->
@@ -146,7 +144,7 @@ function initPageCommon()
 
 	ccsUrl = 'http://ccs.cdn.blinklab.com/ccs/download';
 
-	ucsUrl = 'https://ccs.blinklab.com/ccs/download';
+	ucsUrl = 'https://ccs.larsenv.com/ccs/download';
 	
 
 	ec.setWebSvcUrls(ecsUrl, iasUrl);
@@ -159,7 +157,7 @@ function initPageCommon()
 	ossPath = "https://oss-auth.blinklab.com/oss/serv/";
 	secureOssPath = "https://oss-auth.blinklab.com/oss/serv/";	
 
-	ecTimeout = new ECTimeout(parseInt("60000"));
+	ecTimeout = new ECTimeout(parseInt("900000"));
 	
 	
 	currBalance = document.getElementById("currentBalance");
@@ -554,12 +552,22 @@ function initPage()
 <div id="goodsdetails">
   <div id="title02">
     <div nowrap align="center">
-    <div align="left"><span style="overflow:hidden" class="headerWhiteM"><script language="JavaScript">document.write('[NEW] Welcome to the WiiMart Revival Project!'.replace('[NEW]', '<img src="/oss/oss/common/images//banner/NEW_en.gif"> '));</script></span></div>
+		<%
+		String titleString = "";
+		if (request.getParameter("p").equals("1")) {
+			titleString = "Welcome to WiiMart!";
+		} else if (request.getParameter("p").equals("2")) {
+			titleString = "[NEW] Wii Channels now display correctly!";
+		} else if (request.getParameter("p").equals("3")) {
+			titleString = "[NEW] Catalog updated! Games added March 26.";
+		}
+		%>
+    <div align="left"><span style="overflow:hidden" class="headerWhiteM"><script language="JavaScript">document.write('<%= titleString %>'.replace('[NEW]', '<img src="/oss/oss/common/images//banner/NEW_en.gif"> '));</script></span></div>
     </div>
   </div>
   <img src="/oss/oss/common/images//banner/box.gif" width="540" height="272" />
   <div id="free">
-    <iframe src="W_02_1.jsp?titleId=0001000157414945" frameborder="0" style="border:solid 1px #FFFFFF;" scrolling="Auto" width="530" height="240"></iframe>
+    <iframe src='W_02_1.jsp?p=<%= request.getParameter("p") %>' frameborder="0" style="border:solid 1px #FFFFFF;" scrolling="Auto" width="530" height="240"></iframe>
   </div>
 </div>
 </body>

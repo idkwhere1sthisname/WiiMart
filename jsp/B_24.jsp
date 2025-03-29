@@ -1,22 +1,40 @@
-<%@ page import = "java.io.*,java.util.*,java.net.http.*,java.net.URI,java.net.http.HttpResponse.BodyHandlers,java.net.HttpURLConnection,java.net.URL,java.nio.charset.StandardCharsets,org.json.*" %>
+<%@ page import = "java.io.*,java.util.*,java.sql.*,java.net.http.*,java.net.URI,java.net.http.HttpResponse.BodyHandlers,java.net.HttpURLConnection,java.net.URL,java.nio.charset.StandardCharsets,org.json.*" %>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
-
-<a href="https://oss-auth.blinklab.com/oss/serv/debug.jsp">debug</a>
-<button onclick="window.location.reload()">reload</button>
 <%@ page buffer="8192kb" autoFlush="true" %>
 <%
-String titleId = request.getParameter("titleId") == null ? "" : request.getParameter("titleId");
+String url = "jdbc:postgresql://127.0.0.1/wiisoap";
+Properties props = new Properties();
+props.setProperty("user", "wiisoap");
+props.setProperty("password", "wiisoap");
+//props.setProperty("ssl", "true");
+Connection conn = DriverManager.getConnection(url, props);
+String updateSQL = "SELECT * FROM public.gifted_titles WHERE trans_id = ?";
+PreparedStatement pst = conn.prepareStatement(updateSQL);
+pst.setString(1, request.getParameter("transId"));
+
+ResultSet rs = pst.executeQuery();
+String titleId = "";
+String transactionId = "";
+String senderFC = "";
+while (rs.next()) {
+	titleId = rs.getString(1);
+    transactionId = rs.getString(2);
+    senderFC = rs.getString(3);
+}
+conn.close();
+
+//out.println("<h1>TitleId: " + titleId + " <br>transactionId: " + transactionId + " <br>sender friend code: " + senderFC + "</h1>");
+
+%>
+<%
 String targetURL = "http://127.0.0.1:8082/getTitle?titleId=" + titleId;
 %>
-<script>
-    console.log("<%= titleId %>")
-</script>
 <%
 StringBuilder res = new StringBuilder();
 
 try {
-    URL url = new URL(targetURL);
-    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+    URL url2 = new URL(targetURL);
+    HttpURLConnection connection = (HttpURLConnection) url2.openConnection();
     connection.setRequestMethod("GET");
 
     int responseCode = connection.getResponseCode();
@@ -44,8 +62,8 @@ String tmdUrl = "http://198.62.122.200/ccs/download/" + titleId + "/tmd";
 StringBuilder tmdRes = new StringBuilder();
 long tmdSize = 0;
 try {
-    URL url = new URL(tmdUrl);
-    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+    URL url3 = new URL(tmdUrl);
+    HttpURLConnection connection = (HttpURLConnection) url3.openConnection();
     connection.setRequestMethod("GET");
     tmdSize = connection.getContentLengthLong();
     int responseCode = connection.getResponseCode();
@@ -69,9 +87,6 @@ try {
     res.append("Error: ").append(e.getMessage());
 }
 %>
-<script>
-	console.log('<%= games %>');
-</script>
 <%
 // Parse JSON response
 JSONObject title = new JSONObject(games);
@@ -96,12 +111,19 @@ String controllers = title.getString("controllers");
 String size = title.getString("size");
 String latestVersion = title.getString("titleVersion");
 %>
+<a href="https://oss-auth.blinklab.com/oss/serv/debug.jsp">debug</a>
+<button onclick="window.location.reload()">reload</button>
+<!--startup?initpage=showGiftReceived&transId=7195906722-->
 <script>
-    console.log("<%= id %>")
+    var nwc24 = new wiiNwc24();
+    var senderFC = "<%= senderFC %>";
+    var senderName = "Sender Name";
+    for (var i = 0; i < nwc24.getFriendNum(); i++) {
+        if (nwc24.getFriendInfo(i, "userId") == senderFC) {
+            senderName = nwc24.getFriendInfo(i, "name");
+        }
+    }
 </script>
-
-
-
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -409,9 +431,9 @@ function initPageCommon()
 	ec.cancelOperation();
 	
 
-	ecsUrl = 'https://ecs.blinklab.com/oss/ecs/services/ECommerceSOAP';
+	ecsUrl = 'https://oss-auth.blinklab.com/oss/ecs/services/ECommerceSOAP';
 
-	iasUrl = 'https://ias.blinklab.com/oss/ias/services/IdentityAuthenticationSOAP';
+	iasUrl = 'https://oss-auth.blinklab.com/oss/ias/services/IdentityAuthenticationSOAP';
 
 	ccsUrl = 'http://ccs.cdn.blinklab.com/ccs/download';
 
@@ -684,12 +706,12 @@ function needSyncEticket(progress)
 
 </script>
 <title>Details</title>
-  <link href="/oss/oss/common/css/B_05.css" rel="stylesheet" type="text/css" />
+  <link href="/oss/oss/common/css/B_24.css" rel="stylesheet" type="text/css" />
 
 <script language="JavaScript" src="/oss/oss/common/js//shopsd.js"></script>
 <SCRIPT language="JavaScript" src="/oss/oss/common/js//title_manager.js"></SCRIPT>
-<script type="text/javascript">
-
+<script type="text/JavaScript">
+<!--
 var sdErrorMessage = ['An SD Card process failed.',
                       'An SD Card process failed.',
                       'An SD Card process failed.',
@@ -779,7 +801,7 @@ function checkSDIsInserted(){
 
 function showDetails()
 {
-    document.getElementById("heading").innerHTML = 'Details';
+    document.getElementById("heading").innerHTML = 'A gift from ' + senderName;
     hideElement("sdbuttons");
     showElement("details");
     setUnderButtonR(true);
@@ -858,50 +880,26 @@ var passChecking = false;
 var passCheckingBalance = false;
 function onBuyButtonPressed(titleId, itemId, sd)
 {
-    if (sd == null) {
-        if (!passCheckingBalance) { // if pass checking in onGiftButtonPressed, no check anymore
-            doCheckingBalance(false);
-            if (!passCheckingBalance)
-                return;
-        }
+    var bSD = sd == "Y" ? "Yes" : "No";
+    trace("buying title " + titleId + "\nwith sd: " + bSD);
+    hideElement('purchasePage');
+    setUnderButtonL(false);
 
-        if (nonSDSupport) {
-            showSDSelection();
-            onNANDButtonPressed(titleId, itemId);
-            return;
-        } else {
-            showSDSelection();
-            return;
-        }
-    }
+    hideElement('MainSpacer');
+	  hideElement('HelpSpacer');
+    hideElement('tophelpshadow');
+    document.getElementById('line01').innerHTML = "･･･････････････････････････････････････････････････････････････････････････";
+    hideElement('TopImageID');
+	  hideElement('ManualImageID');
+    var progress = ec.acceptGiftTitle(titleId, '<%= transactionId %>', true);
+    opName = "Accept Gift Title";
+    opDesc = "Accepting Gifted Title";
+    finishOp(opName, opDesc, progress, "onAcceptGiftTitleDone");
+}
 
-    if (!passChecking) { // if pass checking in onGiftButtonPressed, no check anymore
-    	doChecking(sd);
-    	if (!passChecking)
-	    	return;
-    }
-
-    var parentalControl = '';
-	var downloadTitleUrl = 'B_09.jsp';
-	var nextUrl = getCautionUrl();
-	if(nextUrl == "") {
-		nextUrl = downloadTitleUrl;
-	}
-	nextUrl = addParam(nextUrl, 'titleId', titleId);
-	nextUrl = addParam(nextUrl, 'SD', sd);
-
-	if (itemId == null) {
-	    // Always skip parental control for re-download
-	    // No need to append item id to url
-	} else {
-		// Buy item - set itemId
-  	    nextUrl = addParam(nextUrl, 'itemId', itemId);
-  	    // Show Parental Control if needed
-	    if (parentalControl || (isParentalControlPointsOn() && titlePoints > 0)) {
-	    	nextUrl = addParam('L_04.jsp', 'next', nextUrl);
-	    }
-	}
-	showPage(nextUrl);
+function onAcceptGiftTitleDone(progress) {
+  showResult(progress, opName, opDesc);
+  trace("accept gift title finished with status: " + progress.status);
 }
 
 function onGiftButtonPressed(titleId, itemId)
@@ -1132,12 +1130,6 @@ function showPurchasePage(){
 
 
 function initPurchaseButtonArea() {
-	function setFree(caption) {
-		titlePoints = "<%= points %>";
-		document.getElementById("text03-01").innerHTML = caption;
-    trace("setting caption to: " + caption)
-		//document.getElementById("price").innerHTML = '<%= points %> Wii Points';
-	}
 
 
     if(isICRExpired()){
@@ -1161,32 +1153,9 @@ function initPurchaseButtonArea() {
     var purchaseButton = statusOfPurchase();
     var giftButton = statusOfGift();
     trace("purchaseButton:::"+purchaseButton);
-    
     trace("giftButton:::"+giftButton);
     
-    if (purchaseButton == "NULL"){
-        titlePoints = 0;
-        hideElement("buyButton");
-    }else{
-        showElement("buyButton");
-        if (purchaseButton == "UPDATE"){
-			setFree('Update');
-        }else if(purchaseButton == "RE"){
-			setFree('Download');
-        }else if(purchaseButton == "ICR"){
-			setFree('One Free Title');
-            document.getElementById("BuyAnchor").href ='javascript:showICRWarningPage()';
-        }else if(purchaseButton == "SCAGOLD"){
-			setFree('Connection Ambassador');
-        }else if(purchaseButton == "SCASILVER"){
-			setFree('Connection Ambassador');
-        }else if(purchaseButton == "FREE"){
-			setFree('Free');
-        }else{//PRICE
-            trace("Price!!!");
-            document.getElementById("text03-01").innerHTML = 'Download';
-        }
-    }
+    
 
     
     if(purchaseButton == "UPDATE" || purchaseButton == "RE"){
@@ -1233,11 +1202,15 @@ function initPurchaseButtonArea() {
 
 function initPage()
 {
+    document.getElementById("heading").innerHTML = 'A gift from ' + senderName;
     initPageCommon();
     MM_preloadImages('/oss/oss/common/images//banner/under_banner_b.gif',
             '/oss/oss/common/images//banner/help_b.gif',
             '/oss/oss/common/images//banner/top_b.gif',
-            '/oss/oss/common/images//banner/buy_b.gif',
+            '/oss/oss/common/images/banner/getgift_a.png',
+            '/oss/oss/common/images/banner/getgift_b.png',
+            '/oss/oss/common/images//banner/rejectgift_a.png',
+            '/oss/oss/common/images//banner/rejectgift_b.png',
             '/oss/oss/common/images//banner/controller_msg2_E_en.gif',
             '/oss/oss/common/images//banner/B01_halfbanner_a.png',
             '/oss/oss/common/images//banner/B01_halfbanner_b.png',
@@ -1354,7 +1327,6 @@ var icrExactDiscount = '';
     icrPromoType = '';
     icrDiscountType = '';
     icrExactDiscount = '';
-    
     trace("icrDiscountAmount: " + icrDiscountAmount);
     trace("icrFinalPrice: " + icrFinalPrice);
     trace("icrCurrency: " + icrCurrency);
@@ -1375,11 +1347,12 @@ var icrExactDiscount = '';
     trace("WiFi indicator: "+wifiIndicator);
 
 	initPurchaseButtonArea();
-
+  
 
     if (ecSupportsSession()) {
         ec.setSessionValue("giftStatus", null);
     }
+    trace("buy banner src: " + document.getElementById('buyImage3').src);
 
 }
 //-->
@@ -1389,8 +1362,8 @@ var icrExactDiscount = '';
 <body onload="initPage();">
 
 <div id="constElements">
-  <div id="tophelpshadow"><img src="/oss/oss/common/images//banner/top_help_shadow01.gif" width="132" height="75" /></div>
-  <div id="help">
+  <div id="tophelpshadow" style="display:none;"><img src="/oss/oss/common/images//banner/top_help_shadow01.gif" width="132" height="75" /></div>
+  <div id="help" style="display:none;">
     <img src="/oss/oss/common/images//banner/help_a.gif" name="ManualImage"
      width="52" height="55" border="0" id="ManualImageID"  onmouseout="MM_swapImgRestore()" 
      onmouseover="MM_swapImage('ManualImage','','/oss/oss/common/images//banner/help_b.gif',1); wiiFocusSound();"
@@ -1401,7 +1374,7 @@ var icrExactDiscount = '';
      id='HelpSpacer' style="position:absolute; top:0px; left:0px; display:none"/>
   </div>
 
-  <div id="top">
+  <div id="top" style="display:none;">
     <img src="/oss/oss/common/images//banner/top_a.gif" name="TopImage" 
      width="52" height="55" border="0" id="TopImageID" onmouseout="MM_swapImgRestore()" 
      onmouseover="MM_swapImage('TopImage','','/oss/oss/common/images//banner/top_b.gif',1); wiiFocusSound();"
@@ -1412,7 +1385,7 @@ var icrExactDiscount = '';
      id='MainSpacer' style="position:absolute; top:0px; left:0px; display:none"/>
   </div>
   
-  <div class="dot" id="line01">･･･････････････････････････････････････････････････････････&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;･･</div>
+  <div class="dot" id="line01">･･･････････････････････････････････････････････････････････････････････････</div>
   <div class="dot" id="line02">･･･････････････････････････････････････････････････････････････････････････</div>
   <div class="dot" id="upperLineLong" style="display:none">･･･････････････････････････････････････････････････････････････････････････</div>
   
@@ -1490,7 +1463,7 @@ var icrExactDiscount = '';
 </div></div>
 
 <div id="text01-01">
-  <div align="left" class="titleBlackL"><span id="heading">Details</span></div>
+  <div align="left" class="titleBlackL"><span id="heading">A gift from </span></div>
 </div>
 <div id="warningMsgs">
   <div id="pointError" style="display:none">
@@ -1554,6 +1527,29 @@ var icrExactDiscount = '';
       </div>
   </div>
 </div>
+<style>
+  #TitleName1stLine {
+    position:absolute; 
+    left:64px; 
+    top:110px; 
+    width:480px; 
+    overflow:hidden; 
+    z-index:34
+  }
+  #TitleName2stline {
+    position:absolute;
+	  left:64px;
+	  top:133px;
+	  width:480px;
+	  z-index:33;
+  }
+</style>
+<div style="overflow:hidden; display:none;" nowrap="" id="TitleName1stLine">
+  <div align="center"><span class="contentsBlueM"><%= title1 %></span></div>
+</div>
+<div style="overflow:hidden; display:none;" nowrap="" id="TitleName2stLine">
+  <div align="center"><span class="contentsBlueM"><%= title2 %></span></div>
+</div>
 <div id="purchasePage">
 
 <div id="details">
@@ -1604,33 +1600,26 @@ var icrExactDiscount = '';
   <img src="/oss/oss/common/images//banner/Details.gif" width="537" height="217" />
   </div>
 <!-- ordinary pricing -->
-<div id="buyButton">
-    <div id="buybanner" style="z-index:32;"><img src="/oss/oss/common/images//banner/buy_a.gif" width="241" height="76" id="Image3" /></div>
-    <div id="text03-01" class="buttonTextWhiteL buttonText">
-      Download</div>
-    <div id="price" class="buttonTextWhiteL buttonText">
-        <%= points %> Wii Points</div>
-    <div id="buyspacer">
-      <a id="BuyAnchor" href="javascript:onBuyButtonPressed('<%= titleId %>', '')">
-        <img src="/oss/oss/common/images//spacer.gif" width="241" height="76" border="0" id="Image2" 
-         onmouseover="MM_swapImage('Image3','','/oss/oss/common/images//banner/buy_b.gif',1);wiiFocusSound();" 
-         onmouseout="MM_swapImgRestore()" 
-         onclick="wiiSelectSound();"/>
-      </a>
-    </div>
-    <div id="buyshadow">
-      <img src="/oss/oss/common/images//banner/banner03_shadow.gif" width="274" height="90" />
-    </div>
+<div id="buyButton" style="position:absolute; left:52px; top:293px; width:241px; height:76px;">
+  <div id="buybanner" style="position:absolute; width:241px; height:76px; z-index:32; ">
+    <img src="/oss/oss/common/images/banner/getgift_a.png" width="241" height="76" id="buyImage3"></div>
+  <div id="giftReceiveText" style="left:19px;" class="buttonTextWhiteL buttonText">Receive</div>
+  <div id="buySpacer" style="position:absolute; left:0px; top:0px; width:100%; height:100%; z-index:35; ">
+    <a id="buyAnchor" href="javascript:onBuyButtonPressed('<%= id %>', '')">
+      <img src="/oss/oss/common/images//spacer.gif" width="241" height="76" border="0" id="buyImage2" onmouseover="MM_swapImage('buyImage3','','/oss/oss/common/images/banner/getgift_b.png',1);wiiFocusSound();" i="" onmouseout="MM_swapImgRestore()" onclick="wiiSelectSound();">
+    </a>
   </div>
+  <div id="buyShadow" style="position:absolute; left:-17px; top:-7px; width:274px; height:90px; z-index:1; ">
+    <img src="/oss/oss/common/images//banner/banner03_shadow.gif" width="274" height="90">
+  </div>
+</div>
   <div id="giftButton" style="position:absolute; left:321px; top:293px; width:241px; height:76px;">
     <div id="giftBanner" style="position:absolute; left:0px; top:0px; width:241px; height:76px; z-index:32; ">
-      <img src="/oss/oss/common/images//banner/buy_a.gif" width="241" height="76" id="giftImage3"></div>
-    <div id="giftButtonText" class="buttonTextWhiteL buttonText">Gift</div>
-    <div id="giftPrice" class="buttonTextWhiteL buttonText">
-      <%= points %> Wii Points</div>
+      <img src="/oss/oss/common/images//banner/rejectgift_a.png" width="241" height="76" id="giftImage3"></div>
+    <div id="giftRejectText" class="buttonTextWhiteL buttonText">Return</div>
     <div id="giftSpacer" style="position:absolute; left:0px; top:0px; width:100%; height:100%; z-index:35; ">
       <a id="giftAnchor" href="javascript:onGiftButtonPressed('<%= id %>', '')">
-        <img src="/oss/oss/common/images//spacer.gif" width="241" height="76" border="0" id="giftImage2" onmouseover="MM_swapImage('giftImage3','','/oss/oss/common/images//banner/buy_b.gif',1);wiiFocusSound();" i="" onmouseout="MM_swapImgRestore()" onclick="wiiSelectSound();">
+        <img src="/oss/oss/common/images//spacer.gif" width="241" height="76" border="0" id="giftImage2" onmouseover="MM_swapImage('giftImage3','','/oss/oss/common/images//banner/rejectgift_b.png',1);wiiFocusSound();" i="" onmouseout="MM_swapImgRestore()" onclick="wiiSelectSound();">
       </a>
     </div>
     <div id="giftShadow" style="position:absolute; left:-17px; top:-7px; width:274px; height:90px; z-index:1; ">
@@ -1776,5 +1765,8 @@ var icrExactDiscount = '';
         Free Ch : <input type=text name="sderrordebugvalue7">
   </div>
 </div>
+<button onclick="hideElement('purchasePage')">hide purchase</button>
+<button onclick="showElement('purchasePage')">show purchase</button>
 </body>
+
 </html>

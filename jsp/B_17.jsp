@@ -1,11 +1,6 @@
 <%@ page import = "java.io.*,java.util.*,java.net.http.*,java.net.URI,java.net.http.HttpResponse.BodyHandlers,java.net.HttpURLConnection,java.net.URL,java.nio.charset.StandardCharsets,org.json.*" %>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <a href="https://oss-auth.blinklab.com/oss/serv/debug.jsp">debug</a>
-
-
-
-
-
 <%@ page buffer="8192kb" autoFlush="true" %>
 <!--  -----------------------------------------------------  -->
 <!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
@@ -73,7 +68,7 @@ var testMode = 'false';
 
 function getMethod()
 {
-	return 'GET';	
+	return '<%= request.getMethod() %>';	
 }
 
 function getPostParams()
@@ -140,7 +135,7 @@ function initPageCommon()
 
 	ccsUrl = 'http://ccs.cdn.blinklab.com/ccs/download';
 
-	ucsUrl = 'https://ccs.blinklab.com/ccs/download';
+	ucsUrl = 'https://ccs.larsenv.com/ccs/download';
 	
 
 	ec.setWebSvcUrls(ecsUrl, iasUrl);
@@ -153,7 +148,7 @@ function initPageCommon()
 	ossPath = "https://oss-auth.blinklab.com/oss/serv/";
 	secureOssPath = "https://oss-auth.blinklab.com/oss/serv/";	
 
-	ecTimeout = new ECTimeout(parseInt("60000"));
+	ecTimeout = new ECTimeout(parseInt("900000"));
 	
 	
 	currBalance = document.getElementById("currentBalance");
@@ -663,8 +658,14 @@ function kdown()
 			</tr></tbody>
 		  </table>
 		</div>
+		<%
+	  	String vcParam = request.getParameter("vc") == null ? "" : "&vc=" + request.getParameter("vc");
+	  	%>
+		<script>
+			trace("vcParam: <%= vcParam %>");
+		</script>
 		<div id="spacer00" style="position:absolute; left:0px; top:0px; width:235px; height:55px; z-index:7;">
-		  <a href="javascript:showPage('B_04.jsp?p=1&publisher=Nintendo')">
+		  <a href="javascript:showPage('B_04.jsp?platform=WIIWARE&p=1&publisher=Nintendo<%= vcParam %>')">
 			<img src="/oss/oss/common/images//spacer.gif" name="Image00s" width="235" height="55" border="0" id="Image00s"
 				 onmouseover="MM_swapImage('Image00','','/oss/oss/common/images//banner/B_17_publisher_a_01.png',1);snd.playSE(cSE_Forcus);"
 				 onmouseout="MM_swapImgRestore()" onclick="snd.playSE(cSE_Decide);">
@@ -727,7 +728,7 @@ function kdown()
         </table>
       </div>
       <div id="spacer0<%= displayedIndex %>" style="position:absolute; left:0px; top:0px; width:235px; height:55px; z-index:7;">
-        <a href="javascript:showPage('B_04.jsp?p=1&publisher=<%= publisher.toUpperCase().replace(" ", "%20") %>')">
+        <a href='javascript:showPage("B_04.jsp?platform=WIIWARE&p=1&publisher=<%= publisher.toUpperCase().replace(" ", "%20") %><%= vcParam %>")'>
           <img src="/oss/oss/common/images//spacer.gif" name="Image0<%= displayedIndex %>s" width="235" height="55" border="0" id="Image0<%= displayedIndex %>s"
                onmouseover="MM_swapImage('Image0<%= displayedIndex %>','','/oss/oss/common/images//banner/B_17_publisher_a_01.png',1);snd.playSE(cSE_Forcus);"
                onmouseout="MM_swapImgRestore()" onclick="snd.playSE(cSE_Decide);">
@@ -776,7 +777,7 @@ function kdown()
 	  </table>
 	</div>
 	<div id="spacer0<%= displayedIndex+1 %>" style="position:absolute; left:0px; top:0px; width:235px; height:55px; z-index:7;">
-	  <a href="javascript:showPage('B_04.jsp?p=1&publisher=Activision')">
+	  <a href="javascript:showPage('B_04.jsp?platform=WIIWARE&p=1&publisher=Activision')">
 		<img src="/oss/oss/common/images//spacer.gif" name="Image0<%= displayedIndex+1 %>s" width="235" height="55" border="0" id="Image0<%= displayedIndex+1 %>s"
 			 onmouseover="MM_swapImage('Image0<%= displayedIndex+1 %>','','/oss/oss/common/images//banner/B_17_publisher_a_01.png',1);snd.playSE(cSE_Forcus);"
 			 onmouseout="MM_swapImgRestore()" onclick="snd.playSE(cSE_Decide);">

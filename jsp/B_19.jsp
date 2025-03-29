@@ -1,13 +1,5 @@
-<%@ page import = "java.io.*,java.util.*,javax.servlet.*" %>
-<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %><a href="https://oss-auth.blinklab.com/oss/serv/debug.jsp">debug</a>
-
-
-
-<%
-    String param = request.getParameter("titleId");
-    RequestDispatcher dispatcher = request.getRequestDispatcher("/serv/titleId/" + param + "/B_19.jsp");
-    dispatcher.forward(request, response);
-%>
+<%@ page import = "java.io.*,java.util.*,java.net.http.*,java.net.URI,java.net.http.HttpResponse.BodyHandlers,java.net.HttpURLConnection,java.net.URL,java.nio.charset.StandardCharsets,org.json.*" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <!--  -----------------------------------------------------  -->
 <!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
 <!--  All Rights Reserved.                                   -->
@@ -47,7 +39,8 @@
 <!-- Release Date -->	
 <!-- Number of players -->
 <!-- Title Rating Images -->
-<html>
+<!-- Use bilingual icons if language is french or country is canada -->
+		<html>
 <head>
   <!--  -----------------------------------------------------  -->
 <!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
@@ -150,9 +143,9 @@ function initPageCommon()
 	ec.cancelOperation();
 	
 
-	ecsUrl = 'https://ecs.blinklab.com/oss/ecs/services/ECommerceSOAP';
+	ecsUrl = 'https://ecs.blinklab.com/ecs/services/ECommerceSOAP';
 
-	iasUrl = 'https://ias.blinklab.com/oss/ias/services/IdentityAuthenticationSOAP';
+	iasUrl = 'https://ias.blinklab.com/ias/services/IdentityAuthenticationSOAP';
 
 	ccsUrl = 'http://ccs.cdn.blinklab.com/ccs/download';
 
@@ -190,7 +183,7 @@ function initPageCommon()
 
 	
 	MM_preloadImages('/oss/oss/common/images//banner/under_banner_a.gif');
-	var supportsCreditCard = 'true';
+	var supportsCreditCard = 'false';
 	if (ecSupportsSession()) {
         	ec.setSessionValue("supportsCreditCard", supportsCreditCard);
     	}
@@ -337,15 +330,15 @@ function getWebServiceErrorMsg(errCode, errInfo)
 	
 	// More IAS Errors
 	a[1401] = "An error occurred while linking the Username. Please check the Username and password and try again.<BR><BR>If you have forgotten your Username or password, please visit club.nintendo.com.";
-	a[1402] = "Due to restrictions on your Club Nintendo Membership, it cannot be linked to this WiiMart account.<BR><BR>Visit support.nintendo.com for assistance.";
-        a[1403] = "Due to restrictions on your Club Nintendo Membership, it cannot be linked to this WiiMart account.<BR><BR>Visit support.nintendo.com for assistance.";
+	a[1402] = "Due to restrictions on your Club Nintendo Membership, it cannot be linked to this Wii Shop Channel account.<BR><BR>Visit support.nintendo.com for assistance.";
+        a[1403] = "Due to restrictions on your Club Nintendo Membership, it cannot be linked to this Wii Shop Channel account.<BR><BR>Visit support.nintendo.com for assistance.";
 	a[1499] = "Unable to confirm the Username at this time. The server is currently undergoing maintenance.<BR><BR>Sorry for the inconvenience. Please try again later.";
 	
 	// OSS Errors
 	a[1610]	= "The Wii Download Ticket you entered has expired.";
 	a[1611]	= "The Wii Download Ticket code you entered is incorrect.<BR><BR>Visit support.nintendo.com for assistance.";
 	a[1612] = "This Wii Download Ticket cannot be used in your country.<BR><BR>Visit support.nintendo.com for assistance.";
-	a[1613] = "There is no software available at this time for the Wii Download Ticket code you entered. Please check that you have entered the correct code.<BR><BR>NOTE: If you have activated Parental Controls, you may not be able to view all available software in the WiiMart. Please check your Parental Controls settings.";
+	a[1613] = "There is no software available at this time for the Wii Download Ticket code you entered. Please check that you have entered the correct code.<BR><BR>NOTE: If you have activated Parental Controls, you may not be able to view all available software in the Wii Shop Channel. Please check your Parental Controls settings.";
 	
 	
 	var msg = a[errCode];
@@ -840,23 +833,23 @@ function needSyncEticket(progress)
 <script type="text/JavaScript" src="/oss/oss/common/js/miiselector.js"></script>
 <script type="text/JavaScript">
 <!--
-var checking = '';
+var checking = 'true';
 trace(checking);
 
 function giveGift()
 {
-	var nextUrl = 'B_21.jsp?titleId=0001000157414945%7d&itemId=&recipient=';
+	var nextUrl = 'B_21.jsp?titleId=<%= request.getParameter("titleId") == null ? "" : request.getParameter("titleId") %>&itemId=101449&recipient=<%= request.getParameter("recipient") == null ? "" : request.getParameter("recipient") %>';
 	var messageElem = document.getElementById("message");
 	var msg = messageElem.value;
 	var transId = "";
 	var giftStatus;
 	var selectedMiiIdx;
-	var mesSendHeader = 'You have been sent a gift containing\nnull\nthrough the WiiMart. \n\n';
+	var mesSendHeader = 'You have been sent a gift containing\nWave Race® 64\nthrough the Wii Shop Channel. \n\n';
 	var mesSendFooter = '【How to Get Your Gift】\nSelect the Start icon in the lower\nright to jump to the gift-receiving\npage. At that page, select the Receive\nicon. (If you do not see the Start\nicon, you will need to perform a\nsystem update before receiving your\ngift.) \nIf you do not choose to receive or\nreturn a gift within 45 days of the\ntime it was sent to you, it will be\nautomatically returned to the sender.';
 	var mesSendHeadLi = '【Message】\n';
 	var mesSendFootLi = '\n\n';
-	var mesRecvAccept = 'The gift you sent containing\nnull\nhas been received. ';
-	var mesRecvReject = 'The gift you sent containing\nnull\nhas been returned. ';
+	var mesRecvAccept = 'The gift you sent containing\nWave Race® 64\nhas been received. ';
+	var mesRecvReject = 'The gift you sent containing\nWave Race® 64\nhas been returned. ';
 	if (ecSupportsSession()) {
 		selectedMiiIdx = window.miiSelector.selectedMiiIdx;
 		trace("selectedMiiIdx::::"+selectedMiiIdx);
@@ -890,8 +883,8 @@ function giveGift()
 		showPage(nextUrl);
 	    }
 	} else {
-		var titleId = '0001000157414945}';
-		var recipient = '';
+		var titleId = '<%= request.getParameter("titleId") == null ? "" : request.getParameter("titleId") %>';
+		var recipient = '<%= request.getParameter("recipient") == null ? "" : request.getParameter("recipient") %>';
 		showGiftMessageSent(titleId, recipient);
 	}
 }
@@ -911,7 +904,7 @@ function initPage()
       '/oss/oss/common/images/banner/B_20_MiiSelect_btn_b.png');
 	var nwc24 = new wiiNwc24 ;
 	if(!nwc24.sendable) nwc24.dispError();
-	var friendIndex = parseInt( '' ) ;
+	var friendIndex = parseInt('<%= request.getParameter("recipient") == null ? "" : request.getParameter("recipient") %>');
 	var friendName = null;
 	friendName = nwc24.getFriendInfo(friendIndex, "name");
 	if (friendName != null)
@@ -1014,12 +1007,19 @@ function kdown()
 		    break;
 	}
 }
+
+function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    var results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+};
 //-->
 </script>
 <script type="text/JavaScript" src='/oss/oss/common/js//keyboard.js'></script>
 </head>
 
-<body onkeypress="kdown();" onload="initPage(); message.focus();var shop = new wiiShop();var unused = shop.connecting;">
+<body onkeypress="kdown();" onload="initPage(); message.focus();">
 <!--  -----------------------------------------------------  -->
 <!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
 <!--  All Rights Reserved.                                   -->
@@ -1058,9 +1058,7 @@ function kdown()
   <div class="dot" id="line02">･･･････････････････････････････････････････････････････････････････････････</div>
   <div class="dot" id="upperLineLong" style="display:none">･･･････････････････････････････････････････････････････････････････････････</div>
   
-  <div id='balanceInfo' onclick="showPoints(); wiiSelectSound();" 
-   onmouseover="MM_swapImage('PointSpacer','','/oss/oss/common/images//banner/Addpoints_everywhere.gif',1);wiiFocusSound();" 
-   onmouseout="MM_swapImgRestore();">
+  <div id='balanceInfo'>
     <script type="text/JavaScript">MM_preloadImages('/oss/oss/common/images//banner/Addpoints_everywhere.gif');</script>
     <img src="/oss/oss/common/images//spacer.gif" name="PointSpacer" width="130" height="55" border="0"
      id='PointSpacer' style="position:absolute; top:376px; left:239px; z-index:20;"/>

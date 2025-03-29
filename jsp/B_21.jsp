@@ -1,13 +1,11 @@
-<%@ page import = "java.io.*,java.util.*,javax.servlet.*" %>
-<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %><a href="https://oss-auth.blinklab.com/oss/serv/debug.jsp">debug</a>
+<%@ page import = "java.io.*,java.util.*,java.sql.*,java.net.http.*,java.net.URI,java.net.http.HttpResponse.BodyHandlers,java.net.HttpURLConnection,java.net.URL,java.nio.charset.StandardCharsets,org.json.*" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
+<%@ page buffer="8192kb" autoFlush="true" %>
+<a href="https://oss-auth.blinklab.com/oss/serv/debug.jsp">debug</a>
+<button onclick="window.location.reload()">reload</button>
+<script>debugger</script>
 
 
-
-<%
-    String param = request.getParameter("titleId");
-    RequestDispatcher dispatcher = request.getRequestDispatcher("/serv/titleId/" + param + "/B_28.jsp");
-    dispatcher.forward(request, response);
-%>
 <!--  -----------------------------------------------------  -->
 <!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
 <!--  All Rights Reserved.                                   -->
@@ -47,7 +45,8 @@
 <!-- Release Date -->	
 <!-- Number of players -->
 <!-- Title Rating Images -->
-<html>
+<!-- Use bilingual icons if language is french or country is canada -->
+		<html>
 <head>
   <!--  -----------------------------------------------------  -->
 <!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
@@ -150,13 +149,13 @@ function initPageCommon()
 	ec.cancelOperation();
 	
 
-	ecsUrl = 'https://ecs.blinklab.com/oss/ecs/services/ECommerceSOAP';
+	ecsUrl = 'https://ecs.blinklab.com/ecs/services/ECommerceSOAP';
 
-	iasUrl = 'https://ias.blinklab.com/oss/ias/services/IdentityAuthenticationSOAP';
+	iasUrl = 'https://ias.blinklab.com/ias/services/IdentityAuthenticationSOAP';
 
 	ccsUrl = 'http://ccs.cdn.blinklab.com/ccs/download';
 
-	ucsUrl = 'https://ccs.larsenv.com/ccs/download';
+	ucsUrl = 'https://ccs.blinklab.com/ccs/download';
 	
 
 	ec.setWebSvcUrls(ecsUrl, iasUrl);
@@ -169,7 +168,7 @@ function initPageCommon()
 	ossPath = "https://oss-auth.blinklab.com/oss/serv/";
 	secureOssPath = "https://oss-auth.blinklab.com/oss/serv/";	
 
-	ecTimeout = new ECTimeout(parseInt("900000"));
+	ecTimeout = new ECTimeout(parseInt("60000"));
 	
 	
 	currBalance = document.getElementById("currentBalance");
@@ -190,7 +189,7 @@ function initPageCommon()
 
 	
 	MM_preloadImages('/oss/oss/common/images//banner/under_banner_a.gif');
-	var supportsCreditCard = 'true';
+	var supportsCreditCard = 'false';
 	if (ecSupportsSession()) {
         	ec.setSessionValue("supportsCreditCard", supportsCreditCard);
     	}
@@ -337,15 +336,15 @@ function getWebServiceErrorMsg(errCode, errInfo)
 	
 	// More IAS Errors
 	a[1401] = "An error occurred while linking the Username. Please check the Username and password and try again.<BR><BR>If you have forgotten your Username or password, please visit club.nintendo.com.";
-	a[1402] = "Due to restrictions on your Club Nintendo Membership, it cannot be linked to this WiiMart account.<BR><BR>Visit support.nintendo.com for assistance.";
-        a[1403] = "Due to restrictions on your Club Nintendo Membership, it cannot be linked to this WiiMart account.<BR><BR>Visit support.nintendo.com for assistance.";
+	a[1402] = "Due to restrictions on your Club Nintendo Membership, it cannot be linked to this Wii Shop Channel account.<BR><BR>Visit support.nintendo.com for assistance.";
+        a[1403] = "Due to restrictions on your Club Nintendo Membership, it cannot be linked to this Wii Shop Channel account.<BR><BR>Visit support.nintendo.com for assistance.";
 	a[1499] = "Unable to confirm the Username at this time. The server is currently undergoing maintenance.<BR><BR>Sorry for the inconvenience. Please try again later.";
 	
 	// OSS Errors
 	a[1610]	= "The Wii Download Ticket you entered has expired.";
 	a[1611]	= "The Wii Download Ticket code you entered is incorrect.<BR><BR>Visit support.nintendo.com for assistance.";
 	a[1612] = "This Wii Download Ticket cannot be used in your country.<BR><BR>Visit support.nintendo.com for assistance.";
-	a[1613] = "There is no software available at this time for the Wii Download Ticket code you entered. Please check that you have entered the correct code.<BR><BR>NOTE: If you have activated Parental Controls, you may not be able to view all available software in the WiiMart. Please check your Parental Controls settings.";
+	a[1613] = "There is no software available at this time for the Wii Download Ticket code you entered. Please check that you have entered the correct code.<BR><BR>NOTE: If you have activated Parental Controls, you may not be able to view all available software in the Wii Shop Channel. Please check your Parental Controls settings.";
 	
 	
 	var msg = a[errCode];
@@ -433,9 +432,9 @@ function needSyncEticket(progress)
 //-->
 
 </script>
-<title>Selection Confirmation</title>
+<title>Gift Confirmation</title>
 <style type="text/css">
-  /* B_08:  Caution Items */
+  /* B_09:  Confirm Software Purchase */
 
 
 #text01-01 {
@@ -444,189 +443,575 @@ function needSyncEticket(progress)
 	top:28px;
 	width:442px;
 	height:28px;
-	z-index:32;
+	z-index:28;
 }
-#text02-01 {
+#goodsconfirmation {
 	position:absolute;
-	left:64px;
-	top:142px;
-	width:480px;
-	height:18px;
-	z-index:37
+	left:36px;
+	top:85px;
+	width:537px;
+	height:225px;
+	z-index:30;
 }
 #text03-01 {
 	position:absolute;
-	left:64px;
-	top:216px;
-	width:480px;
-	height:60px;
-	z-index:38;
-	line-height:20px;
+	left:40px;
+	top:141px;
+	width:293px;
+	height:18px;
+	z-index:58;
 }
 #text04-01 {
 	position:absolute;
-	left:64px;
-	top:300px;
-	width:480px;
-	height:60px;
-	z-index:38;
-	line-height:20px;
-}
-#text04-02 {
-	position:absolute;
-	left:64px;
-	top:216px;
-	width:480px;
-	height:144px;
-	z-index:38;
-	line-height:20px;
-}
-#cautionArea {
-	position:absolute;
-	left:64px;
-	top:137px;
-	width:490px;
-	height:227px;
-	z-index:38;
-	line-height:20px;
-	overflow:auto;
-}
-#frame {
-	position:absolute;
-	left:34px;
-	top:84px;
-	width:540px;
-	height:275px;
-	z-index:27;
-}
-#GC {
-	position:absolute;
-	left:343px;
+	left:40px;
 	top:160px;
-	width:60px;
-	height:60px;
+	width:293px;
+	height:18px;
+	z-index:55;
+}
+#text05-01 {
+	position:absolute;
+	left:40px;
+	top:182px;
+	width:293px;
+	height:18px;
+	z-index:51;
+}
+#text06-01 {
+	position:absolute;
+	left:40px;
+	top:206px;
+	width:293px;
+	height:18px;
+	z-index:45;
+}
+#text07-01 {
+	position:absolute;
+	left:40px;
+	top:225px;
+	width:293px;
+	height:18px;
+	z-index:42;
+}
+#text08-01 {
+	position:absolute;
+	left:40px;
+	top:247px;
+	width:293px;
+	height:18px;
+	z-index:39;
+}
+#pointcost01 {
+	position:absolute;
+	left:340px;
+	top:141px;
+	width:90px;
+	height:18px;
+	z-index:57;
+}
+#confirmation {
+	position:absolute;
+	left:36px;
+	top:320px;
+	width:538px;
+	height:30px;
+	z-index:60;
+}
+#pointword02 {
+	position:absolute;
+	left:340px;
+	top:160px;
+	width:90px;
+	height:18px;
+	z-index:54;
+}
+#pointword03 {
+	position:absolute;
+	left:340px;
+	top:182px;
+	width:90px;
+	height:18px;
+	z-index:50;
+}
+#blockcost01 {
+	position:absolute;
+	left:340px;
+	top:206px;
+	width:90px;
+	height:18px;
+	z-index:44;
+}
+#blockcost02 {
+	position:absolute;
+	left:340px;
+	top:225px;
+	width:90px;
+	height:18px;
+	z-index:41;
+}
+#blockcost03 {
+	position:absolute;
+	left:340px;
+	top:247px;
+	width:90px;
+	height:18px;
+	z-index:38;
+}
+#text02-01 {
+	position:absolute;
+	left:40px;
+	top:270px;
+	width:528px;
+	height:20px;
+	z-index:59;
+}
+#pointword01 {
+	position:absolute;
+	left:437px;
+	top:141px;
+	width:130px;
+	height:18px;
+	z-index:56;
+}
+#points02 {
+	position:absolute;
+	left:437px;
+	top:160px;
+	width:130px;
+	height:18px;
+	z-index:53;
+}
+#pointos03 {
+	position:absolute;
+	left:437px;
+	top:182px;
+	width:130px;
+	height:18px;
+	z-index:46;
+}
+#blockword01 {
+	position:absolute;
+	left:437px;
+	top:206px;
+	width:130px;
+	height:18px;
+	z-index:43;
+}
+#blockword02 {
+	position:absolute;
+	left:437px;
+	top:225px;
+	width:130px;
+	height:18px;
+	z-index:40;
+}
+#blockword03 {
+	position:absolute;
+	left:437px;
+	top:247px;
+	width:130px;
+	height:18px;
+	z-index:34;
+}
+#TitleName1stline {	position:absolute;
+	left:64px;
+	top:88px;
+	width:480px;
+	z-index:37;
+}
+#TitleName2stline {	position:absolute;
+	left:64px;
+	top:112px;
+	width:480px;
 	z-index:36;
 }
-#controller {
-	position:absolute;
-	left:64px;
-	top:164px;
-	width:480px;
-	height:51px;
-	z-index:35;
+#selectionMessage {
+    position:absolute;
+    left:46px;
+    top:71px;
+    width:517px;
+    height:98px;
+}
+#nandDLButton {
+    position:absolute;
+    left:46px;
+    top:169px;
+    width:236px;
+    height:184px;
+}
+#banner01 {
+    position:absolute;
+    left:0px;
+    top:0px;
+    width:100%;
+    height:100%;
+    z-index:28;
+}
+#text01 {
+    position:absolute;
+    left:8px;
+    top:116px;
+    width:220px;
+    height:54px;
+    z-index:29;
+}
+#spacer01 {
+    position:absolute;
+    left:0px;
+    top:0px;
+    width:100%;
+    height:100%;
+    z-index:30;
 }
 
-#TitleName1stline {
+
+#sdDLButton {
+    position:absolute;
+    left:326px;
+    top:169px;
+    width:236px;
+    height:184px;
+}
+#banner02 {
+    position:absolute;
+    left:0px;
+    top:0px;
+    width:100%;
+    height:100%;
+    z-index:28;
+}
+#text02 {
+    position:absolute;
+    left:8px;
+    top:116px;
+    width:220px;
+    height:54px;
+    z-index:29;
+}
+#spacer02 {
+    position:absolute;
+    left:0px;
+    top:0px;
+    width:100%;
+    height:100%;
+    z-index:30;
+}
+#sdDisable {
 	position:absolute;
-	left:64px;
-	top:87px;
-	width:480px;
-	overflow:hidden;
-	z-index:34
+	left:0px;
+	top:0px;
+	width:100%;
+	height:100%;
+	z-index:40;
 }
 
-#TitleName2stline {
+#coolingoff {
 	position:absolute;
-	left:64px;
-	top:110px;
-	width:480px;
-	z-index:33;
-}
-body {
-	background-repeat: no-repeat;
-}
-</style>
+	left:34px;
+	top:94px;
+	width:542px;
+	height:81px;
+	z-index:28;
+}</style>
+
+<!--  -----------------------------------------------------  -->
+<!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
+<!--  All Rights Reserved.                                   -->
+<!--                                                         -->
+<!--  This software contains confidential information and    -->
+<!--  trade secrets of Acer Cloud Technology, Inc.           -->
+<!--  Use, disclosure or reproduction is prohibited without  -->
+<!--  the prior express written permission of Acer Cloud     -->
+<!--  Technology, Inc.                                       -->
+<!--  -----------------------------------------------------  -->
 <script type="text/JavaScript">
 <!--
+
+function getSCAUserStatus(){
+  var isSilverSCA = "";
+  var isGoldSCA = "";
+  if(ecSupportsSession()){
+    isSilverSCA = ec.getSessionValue("silverStatus");
+            isGoldSCA = ec.getSessionValue("goldStatus");
+  }
+  if(isGoldSCA == "ACTIVATED"){
+      return "SCAGOLD";
+  }else if(isSilverSCA == "ACTIVATED"){
+      return "SCASILVER";
+  }else{
+      return "";
+  }
+}
+function getSCAUserDiscountType(){
+  var status = getSCAUserStatus();
+  if(status == "SCAGOLD") {
+      return ec.getSessionValue("goldDiscountType");
+  }else if(status == "SCASILVER"){
+      return ec.getSessionValue("silverDiscountType");
+  }else{
+      return "";
+  }
+}
+
+//-->
+</script>
+<!--  -----------------------------------------------------  -->
+<!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
+<!--  All Rights Reserved.                                   -->
+<!--                                                         -->
+<!--  This software contains confidential information and    -->
+<!--  trade secrets of Acer Cloud Technology, Inc.           -->
+<!--  Use, disclosure or reproduction is prohibited without  -->
+<!--  the prior express written permission of Acer Cloud     -->
+<!--  Technology, Inc.                                       -->
+<!--  -----------------------------------------------------  -->
+<script type="text/JavaScript">
+<!--
+
+var supportSCA = ("false" == "true");
+
+function isScaGiftable(titleId) {
+	if(!supportSCA) {
+		return false;
+	}
+	if(titleId == null || titleId == "") {
+		return false;
+	}
+	if(getSCAUserStatus() == "") {
+		return false;
+	}
+
+	var scaGiftableTitlesString = ec.getSessionValue("scaGiftableList"); 
+	trace("giftTitle " + titleId); 
+	trace("scaGiftableList: " + scaGiftableTitlesString); 
+
+	if(scaGiftableTitlesString == null) {
+		return false;
+	}
+	
+	var scaGiftableTitleArray = scaGiftableTitlesString.split(","); 
+	var size = scaGiftableTitleArray.length; 
+	for(i=0; i<size; i++) { 
+		if(scaGiftableTitleArray[i] == titleId) { 
+			return true;
+		} 
+	} 
+
+	return false;
+}
+
+function getScaDiscount() {
+	if(!supportSCA) {
+		return "0";
+	}
+	var discountList = new Array(); 
+	discountList['SCA10']  = ec.getSessionValue("sca10DiscountAmount");
+	discountList['SCA20']  = ec.getSessionValue("sca20DiscountAmount");
+	discountList['SCA20B'] = ec.getSessionValue("sca20BDiscountAmount");
+
+	var discount = discountList[getSCAUserDiscountType()]; 
+	trace("SCA discount: " + discount); 
+	if((typeof(discount) != 'undefined') && (discount != "") && (discount != null)) {
+		return discount;
+	} else {
+		return "0";
+	}
+}
+
+function getScaPurchaseInfo(){
+	if(!supportSCA) {
+		return "";
+	}
+
+	var purchaseInfoList = new Array(); 
+	purchaseInfoList['SCA10']  = ec.getSessionValue("sca10DiscountXml");
+	purchaseInfoList['SCA20']  = ec.getSessionValue("sca20DiscountXml");
+	purchaseInfoList['SCA20B'] = ec.getSessionValue("sca20BDiscountXml");
+   
+	var purchaseInfo = purchaseInfoList[getSCAUserDiscountType()]; 
+	trace("SCA purchaseInfo: " + purchaseInfo);	
+	if((typeof(purchaseInfo) != 'undefined') && (purchaseInfo != null)) {
+		return purchaseInfo;
+	} else {
+		return "";
+	}
+}
+
+function getScaGiftDiscount(titleId) {
+	if(isScaGiftable(titleId)) {
+        return getScaDiscount();
+	 } else {
+		return "0";
+	}	
+}
+
+function getScaGiftPurchaseInfo(titleId) {
+	if(isScaGiftable(titleId)) {
+        return getScaPurchaseInfo();
+	} else {
+		return "";
+	}
+}
+
+function removeScaGiftableTitle(titleId) {
+	var scaGiftableTitlesString = ec.getSessionValue("scaGiftableList"); 
+	trace("scaGiftableList(old): " + scaGiftableTitlesString); 
+    if(scaGiftableTitlesString != null){
+	    scaGiftableTitlesString = scaGiftableTitlesString.replace(titleId, "").replace(",,", ",");
+    }
+	trace("scaGiftableList(new): " + scaGiftableTitlesString); 
+	ec.setSessionValue("scaGiftableList", scaGiftableTitlesString);
+}
+
+function getIcrDiscount() {
+    if(getICRUserDiscountType() == "ICR1"){
+        return ec.getSessionValue("icrDiscountAmount");
+    }else{
+        return "0";
+    }
+}
+
+function getIcrPurchaseInfo() {
+    if(getICRUserDiscountType() == "ICR1"){
+        return ec.getSessionValue("icrDiscountXml");
+    }else{
+        return "";
+    }
+}
+//-->
+</script>
+<%
+String titleId = request.getParameter("titleId") == null ? "" : request.getParameter("titleId");
+String targetURL = "http://127.0.0.1:8082/getTitle?titleId=" + titleId;
+%>
+<%
+StringBuilder res = new StringBuilder();
+
+try {
+    URL url2 = new URL(targetURL);
+    HttpURLConnection connection = (HttpURLConnection) url2.openConnection();
+    connection.setRequestMethod("GET");
+
+    int responseCode = connection.getResponseCode();
+    BufferedReader reader;
+
+    if (responseCode == HttpURLConnection.HTTP_OK) {
+        reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+    } else {
+        reader = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
+    }
+
+    String line;
+    while ((line = reader.readLine()) != null) {
+        res.append(line);
+    }
+    reader.close();
+} catch (Exception e) {
+    e.printStackTrace();
+    res.append("Error: ").append(e.getMessage());
+}
+
+String games = res.toString();
+//Tmd size stuff
+String tmdUrl = "http://198.62.122.200/ccs/download/" + titleId + "/tmd";
+StringBuilder tmdRes = new StringBuilder();
+long tmdSize = 0;
+try {
+    URL url3 = new URL(tmdUrl);
+    HttpURLConnection connection = (HttpURLConnection) url3.openConnection();
+    connection.setRequestMethod("GET");
+    tmdSize = connection.getContentLengthLong();
+    int responseCode = connection.getResponseCode();
+    BufferedReader reader;
+
+    if (responseCode == HttpURLConnection.HTTP_OK) {
+        reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+    } else {
+        reader = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
+    }
+
+    String line;
+    //String contentLength = connection.getHeaderField("Content-Length");
+    //tmdSize = contentLength;
+    while ((line = reader.readLine()) != null) {
+        tmdRes.append(line);
+    }
+    reader.close();
+} catch (Exception e) {
+    //e.printStacktrace(out);
+    res.append("Error: ").append(e.getMessage());
+}
+%>
+<%
+// Parse JSON response
+JSONObject title = new JSONObject(games);
+String id = title.getString("id").replace("00010002", "00010001");
+String title1 = title.getString("title1");
+String title2 = title.getString("title2");
+String platform = title.getString("console");
+if (platform.equals("WII")) {
+    platform = "Wii Channels";
+} else if (platform.equals("WIIWARE")) {
+    platform = "WiiWare";
+};
+String releaseDate = title.getString("date");
+String genre = title.getString("genre");
+String publisher = title.getString("publisher");
+String points = title.getString("points");
+String latestVersion = title.getString("titleVersion");
+String size = title.getString("size");
+%>
+<script type="text/JavaScript">
+<!--
+var titleId = '<%= request.getParameter("titleId") == null ? "" : request.getParameter("titleId") %>';
+var titleSize = '<%= size %>';
+var titlePoints = '<%= points %>';
+
+
+
+var nwc24 = new wiiNwc24 ;
+var friendIndex = parseInt('request.getParameter("recipient") == null ? "" : request.getParameter("recipient")');
+var friendName = nwc24.getFriendInfo(friendIndex, "name");
+friendName = encodeHTML(friendName);
+var friendCode = nwc24.getFriendInfo(friendIndex, "userId");
+
 function initPage()
 {
 	initPageCommon();
-	MM_preloadImages('/oss/oss/common/images//banner/help_b.gif','/oss/oss/common/images//banner/top_b.gif','/oss/oss/common/images//banner/under_banner_b.gif');
-	
-	if (ecSupportsSession()) {
-		var giftStatus = ec.getSessionValue("giftStatus");
-		trace("giftStatus: " + giftStatus);
-		var transId = ec.getSessionValue("transId");
-		trace("transId: " + transId);
-		var useCampaignCode = ec.getSessionValue("useCampaignCode");
-		trace("useCampaignCode: " + useCampaignCode);
-		/* var redownloadFlag = ec.getSessionValue("redownloadFlag");
-		trace("redownloadFlag: "+redownloadFlag); */
-		var hasCautionItem3 = 'false';
-		var genreWifiPay = "true";
-		var wifiIndicator = parseInt('1');
-		trace("wifiIndicator: "+wifiIndicator);
-		if (genreWifiPay == "true") {
-			if (wifiIndicator == WIFI_PARTIALLY_CHARGED) {
-				if (document.getElementById("wifiPartiallyCharged") != null)
-					document.getElementById("wifiPartiallyCharged").style.display='';
-			} else if (wifiIndicator == WIFI_ALL_CHARGED) {
-				if (document.getElementById("wifiAllCharged") != null)
-					document.getElementById("wifiAllCharged").style.display='';
-			} else if (wifiIndicator == WIFI_FREE_INPUT) {
-				if (document.getElementById("wifiInputText") != null)
-					document.getElementById("wifiInputText").style.display='';
-			}
-		}
-		
-		if (giftStatus == "sending") {
-			setUnderButtonL(true, "Back", "javascript:showBack()", "snd.playSE(cSE_Cancel)");
-
-			if (hasCautionItem3 == "true") {
-				setUnderButtonR(true, "OK", "javascript:showPage('B_29.jsp?titleId=000100057752584A&itemId=&campaignCode=&SD=')", "snd.playSE(cSE_Decide)");
-			} else {
-				setUnderButtonR(true, "OK", "javascript:showPage('B_18.jsp?titleId=000100057752584a&itemId=&SD=')", "snd.playSE(cSE_Decide)");
-			}
-		} else if (giftStatus == "receiving") {
-			// setUnderButtonL(true, "Back", "javascript:showGiftTrans("+transId+")", "snd.playSE(cSE_Cancel)");
-			if (hasCautionItem3 == "true") {
-				setUnderButtonR(true, "OK", "javascript:showPage('B_29.jsp?titleId=000100057752584A&itemId=&campaignCode=&SD=')", "snd.playSE(cSE_Decide)");
-			} else {
-				setUnderButtonR(true, "OK", "javascript:showPage('B_09.jsp?titleId=000100057752584A&SD=')", "snd.playSE(cSE_Decide)");
-			}
-			document.getElementById("constElements").style.display='none';
-			document.getElementById("giftline").style.display='';
-			document.getElementById("giftcurrentBalance").innerHTML = getBalance();
-		/* } else if (redownloadFlag == "true") {
-			setUnderButtonL(true, "Back", "javascript:showGiftTrans("+transId+")", "snd.playSE(cSE_Cancel)");
-			setUnderButtonR(true, "OK", "javascript:showPage('B_09.jsp?titleId=000100057752584A&SD=')", "snd.playSE(cSE_Decide)");
-		*/
-		} else {
-			setUnderButtonL(true, "Back", "javascript:showBack()", "snd.playSE(cSE_Cancel)");
-			if (useCampaignCode == "true") {
-				disableWiiPointButton();
-			}
-			if (hasCautionItem3 == "true") {
-				setUnderButtonR(true, "OK", "javascript:showPage('B_29.jsp?titleId=000100057752584A&itemId=&campaignCode=&SD=')", "snd.playSE(cSE_Decide)");
-			} else {
-				setUnderButtonR(true, "OK", "javascript:showPage('B_09.jsp?titleId=000100057752584A&SD=')", "snd.playSE(cSE_Decide)");
-			}
-		}
-	}		
+	var giftTitleUrl = 'B_22.jsp?titleId=<%= id %>&itemId=101449&recipient=<%= request.getParameter("recipient") %>';
+	MM_preloadImages('/oss/oss/common/images//banner/under_banner_b.gif','/oss/oss/common/images//banner/help_b.gif','/oss/oss/common/images//banner/top_b.gif');
+	setUnderButtonL(true, 'Yes', "javascript:showPage('" + giftTitleUrl + "')", "wiiSelectSound()");
+	setUnderButtonR(true, 'No', "javascript:showBack()", "wiiCancelSound()");
+	// show points
+	var t = ec.getTitleInfo (titleId);	
+	var latestVersion = parseInt('<%= latestVersion %>');
+	var currentBalance = getBalance();
+	var remainingBalance = currentBalance - titlePoints;
+	document.getElementById("pointcost01").innerHTML = 
+		'<div align="right" class="catalogTitleBlack_01">' + currentBalance + '</div>';
+	document.getElementById("pointword02").innerHTML = 
+		'<div align="right" class="contentsRedM">' + titlePoints + '</div>';
+	document.getElementById("pointword03").innerHTML =
+		'<div align="right" class="catalogTitleBlack_01">' + remainingBalance + '</div>';
+	var recipientName = document.getElementById("recipientName");
+	if (recipientName != null) {
+		recipientName.innerHTML = friendName;
+	}
+  var selectedMiiIdx = ec.getSessionValue("selectedMiiIdx");
+  trace("selectedMiiIdx::::"+selectedMiiIdx);
 }
 
-var scroll_step = 30;
-function kdown()
-{
-    var _code = event.keyCode;
-	var _obj = document.getElementById('cautionArea');
-	switch(_code)
-	{
-	    case 175:    //up
-		case  38:
-		    _obj.scrollTop -= scroll_step;
-			break;
-		case 176:    //down
-		case  40:
-		    _obj.scrollTop += scroll_step;
-		    break;
-	}
+function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    var results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
 }
 //-->
 </script>
 </head>
 
-<body onkeypress="kdown();" onload="initPage(); cautionArea.focus();var shop = new wiiShop();var unused = shop.connecting;">
+<body onload="initPage();">
 <!--  -----------------------------------------------------  -->
 <!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
 <!--  All Rights Reserved.                                   -->
@@ -665,9 +1050,7 @@ function kdown()
   <div class="dot" id="line02">･･･････････････････････････････････････････････････････････････････････････</div>
   <div class="dot" id="upperLineLong" style="display:none">･･･････････････････････････････････････････････････････････････････････････</div>
   
-  <div id='balanceInfo' onclick="showPoints(); wiiSelectSound();" 
-   onmouseover="MM_swapImage('PointSpacer','','/oss/oss/common/images//banner/Addpoints_everywhere.gif',1);wiiFocusSound();" 
-   onmouseout="MM_swapImgRestore();">
+  <div id='balanceInfo'>
     <script type="text/JavaScript">MM_preloadImages('/oss/oss/common/images//banner/Addpoints_everywhere.gif');</script>
     <img src="/oss/oss/common/images//spacer.gif" name="PointSpacer" width="130" height="55" border="0"
      id='PointSpacer' style="position:absolute; top:376px; left:239px; z-index:20;"/>
@@ -740,48 +1123,75 @@ function kdown()
 </div>
 
 
-<div style="position:absolute; left:0px; top:0px; width:1px; height:1px; z-index:6;">
-  <img src="/oss/oss/common/images//spacer.gif" name="ktouch" width="1" height="1" border="0" id="ktouch"/>
-</div>
+<div id="goodsconfirmation"><img src="/oss/oss/common/images//banner/goods_confirmation.gif" width="537" height="225" /></div>
 
-<div id="giftline" style="display: none;">
-  <div class="dot" id="line02">･･･････････････････････････････････････････････････････････････････････････</div>
-  <div class="dot" id="line01">･･･････････････････････････････････････････････････････････････････････････</div>
-  <div id="Wiipoint">
-    <div align="center" class="buttonTextBlackM">Wii Points</div>
+<div id="text03-01">
+  <div align="center" class="catalogTitleBlack_01">
+    <div align="right">Current Wii Points:</div>
   </div>
-  <div id="point">
-    <div align="center" class="wiiPoint"><span id="giftcurrentBalance"></span></div>
+</div>
+<div id="text04-01">
+  <div align="center" class="contentsRedM">
+    <div align="right">Wii Points to give gift:</div>
   </div>
 </div>
 <div id="text01-01">
-  <div align="left" class="titleBlackL">Selection Confirmation</div>
+  <div align="left" class="titleBlackL">Gift Confirmation</div>
 </div>
-<div id="frame">
-  <div align="center" ><img src="/oss/oss/common/images//banner/Purchasing_frame01.gif" width="500" height="280" /> </div>
+<div id="confirmation">
+  <div align="center" ><span class="headerBlueL">Give this software now?</span></div>
 </div>
-<div id="TitleName1stline" nowrap>
-  <div align="center" class="contentsBlueM">ロックマン10 追加コンテンツ</div>
-</div>
-<div style="position:absolute; left:64px; top:137px; width:480px; height:1px; z-index:39;"><img src="/oss/oss/common/images//banner/Purchasing_line01.gif" width="480" height="1" /></div>
-<div style="position:absolute; left:64px; top:363px; width:480px; height:1px; z-index:39;"><img src="/oss/oss/common/images//banner/Purchasing_line01.gif" width="480" height="1" /></div>
-<div id="cautionArea">
-  <div align="center" style="height:300px;">
-    <div id="wifiPartiallyCharged" style="padding:7px; display:none" align="center">
-      <img src="/oss/oss/common/images//banner/B_28_WIFIPAY_J.gif" width="429" height="75" />
-      <div align="center" style="position:absolute; left:77px; top:12px; width:348px; height:65px;" class="contentsOrangeM"><table height="100%"><tr><td align="left" valign="middle">Wii Points are required to access portions of the additional content or services associated with this game.</td></tr></table></div>
-    </div>
-    <div id="wifiAllCharged" style="padding:7px; display:none" align="center">
-      <img src="/oss/oss/common/images//banner/B_28_WIFIPAY_J.gif" width="429" height="75" />
-      <div align="center" style="position:absolute; left:77px; top:12px; width:348px; height:65px;" class="contentsOrangeM"><table height="100%"><tr><td align="left" valign="middle">Wii Points are required to access<BR>the additional content or services associated with this game.</td></tr></table></div>
-    </div>
-    <div id="wifiInputText" style="padding:7px; display:none" align="center">
-      <img src="/oss/oss/common/images//banner/B_28_WIFIPAY_J.gif" width="429" height="75" />
-      <div align="center" style="position:absolute; left:77px; top:12px; width:348px; height:65px;" class="contentsOrangeM"><table height="100%"><tr><td align="left" valign="middle"></td></tr></table></div>
-    </div>
-  <table align="center" cellpadding="4"><tr><td align="left"><span class="contentsBlackS"></span></td></tr></table>
+<div id="text05-01">
+  <div align="center" class="catalogTitleBlack_01">
+    <div align="right">Wii Points after gift:</div>
   </div>
 </div>
-
+<div id="pointcost01">
+  <div align="right" class="catalogTitleBlack_01"></div>
+</div>
+<div id="pointword02">
+  <div align="right" class="contentsRedM"></div>
+</div>
+<div id="pointword03">
+  <div align="right" class="catalogTitleBlack_01"></div>
+</div>
+<div id="blockcost02">
+  <div align="right" class="contentsRedM"></div>
+</div>
+<div id="blockcost01">
+  <div align="right" class="catalogTitleBlack_01"></div>
+</div>
+<div id="blockcost03">
+  <div align="right" class="catalogTitleBlack_01"></div>
+</div>
+<div id="pointword01">
+  <div align="center">
+    <div align="center" class="catalogTitleBlack_01">Wii Points</div>
+  </div>
+</div>
+<div id="points02">
+  <div align="center">
+    <div align="center" class="contentsRedM">Wii Points</div>
+  </div>
+</div>
+<div id="pointos03">
+  <div align="center">
+    <div align="center" class="catalogTitleBlack_01">Wii Points</div>
+  </div>
+</div>
+<div id="text02-01">
+  <div align="center">
+    <div id="BuyMsg" align="left" class="buttonTextWhiteS_01">
+      You are going to give this software to <span id="recipientName"></span>.</div>
+  </div>
+</div>
+<div style="overflow:hidden" nowrap id="TitleName1stline">
+  <div align="center" class="contentsBlueM"><%= title1 %></div>
+</div>
+<% if (title2 != "") { %>
+<div style="overflow:hidden" nowrap id="TitleName2ndline">
+	<div align="center" class="contentsBlueM"><%= title2 %></div>
+  </div>
+<% } %>
 </body>
 </html>

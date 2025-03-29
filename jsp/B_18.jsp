@@ -1,47 +1,14 @@
 <%@ page import = "java.io.*,java.util.*,java.net.http.*,java.net.URI,java.net.http.HttpResponse.BodyHandlers,java.net.HttpURLConnection,java.net.URL,java.nio.charset.StandardCharsets,org.json.*" %>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <a href="https://oss-auth.blinklab.com/oss/serv/debug.jsp">debug</a>
-
-
-
-
-
-<!--  -----------------------------------------------------  -->
-<!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
-<!--  All Rights Reserved.                                   -->
-<!--                                                         -->
-<!--  This software contains confidential information and    -->
-<!--  trade secrets of Acer Cloud Technology, Inc.           -->
-<!--  Use, disclosure or reproduction is prohibited without  -->
-<!--  the prior express written permission of Acer Cloud     -->
-<!--  Technology, Inc.                                       -->
-<!--  -----------------------------------------------------  -->
-<!--  -----------------------------------------------------  -->
-<!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
-<!--  All Rights Reserved.                                   -->
-<!--                                                         -->
-<!--  This software contains confidential information and    -->
-<!--  trade secrets of Acer Cloud Technology, Inc.           -->
-<!--  Use, disclosure or reproduction is prohibited without  -->
-<!--  the prior express written permission of Acer Cloud     -->
-<!--  Technology, Inc.                                       -->
-<!--  -----------------------------------------------------  -->
+<button onclick="window.location.reload()">reload</button>
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <!-- Flush buffer before setting locale to ensure encoding is preserved -->
 <html>
 <head>
-  <!--  -----------------------------------------------------  -->
-<!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
-<!--  All Rights Reserved.                                   -->
-<!--                                                         -->
-<!--  This software contains confidential information and    -->
-<!--  trade secrets of Acer Cloud Technology, Inc.           -->
-<!--  Use, disclosure or reproduction is prohibited without  -->
-<!--  the prior express written permission of Acer Cloud     -->
-<!--  Technology, Inc.                                       -->
-<!--  -----------------------------------------------------  -->
+  
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 <link rel="shortcut icon" href="/oss/favicon.ico" /> 
 <link href="/oss/oss/common/css/oss.css" rel="stylesheet" type="text/css" />
@@ -72,7 +39,7 @@ var testMode = 'false';
 
 function getMethod()
 {
-	return '<%= request.getMethod() %>';	
+	return 'GET';	
 }
 
 function getPostParams()
@@ -144,6 +111,8 @@ function initPageCommon()
 
 	ec.setWebSvcUrls(ecsUrl, iasUrl);
 	ec.setContentUrls (ccsUrl, ucsUrl);
+	ec.setSessionValue("giftStatus", "sending");
+	ec.checkDeviceStatus();
 	
 	
 
@@ -189,16 +158,7 @@ function initPageCommon()
 	}
 }
 
-<!--  -----------------------------------------------------  -->
-<!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
-<!--  All Rights Reserved.                                   -->
-<!--                                                         -->
-<!--  This software contains confidential information and    -->
-<!--  trade secrets of Acer Cloud Technology, Inc.           -->
-<!--  Use, disclosure or reproduction is prohibited without  -->
-<!--  the prior express written permission of Acer Cloud     -->
-<!--  Technology, Inc.                                       -->
-<!--  -----------------------------------------------------  -->
+
 
 
 // Takes a progress object and returns the OSS error message to be displayed to the user
@@ -320,15 +280,15 @@ function getWebServiceErrorMsg(errCode, errInfo)
 	
 	// More IAS Errors
 	a[1401] = "An error occurred while linking the Username. Please check the Username and password and try again.<BR><BR>If you have forgotten your Username or password, please visit club.nintendo.com.";
-	a[1402] = "Due to restrictions on your Club Nintendo Membership, it cannot be linked to this WiiMart account.<BR><BR>Visit support.nintendo.com for assistance.";
-        a[1403] = "Due to restrictions on your Club Nintendo Membership, it cannot be linked to this WiiMart account.<BR><BR>Visit support.nintendo.com for assistance.";
+	a[1402] = "Due to restrictions on your Club Nintendo Membership, it cannot be linked to this Wii Shop Channel account.<BR><BR>Visit support.nintendo.com for assistance.";
+        a[1403] = "Due to restrictions on your Club Nintendo Membership, it cannot be linked to this Wii Shop Channel account.<BR><BR>Visit support.nintendo.com for assistance.";
 	a[1499] = "Unable to confirm the Username at this time. The server is currently undergoing maintenance.<BR><BR>Sorry for the inconvenience. Please try again later.";
 	
 	// OSS Errors
 	a[1610]	= "The Wii Download Ticket you entered has expired.";
 	a[1611]	= "The Wii Download Ticket code you entered is incorrect.<BR><BR>Visit support.nintendo.com for assistance.";
 	a[1612] = "This Wii Download Ticket cannot be used in your country.<BR><BR>Visit support.nintendo.com for assistance.";
-	a[1613] = "There is no software available at this time for the Wii Download Ticket code you entered. Please check that you have entered the correct code.<BR><BR>NOTE: If you have activated Parental Controls, you may not be able to view all available software in the WiiMart. Please check your Parental Controls settings.";
+	a[1613] = "There is no software available at this time for the Wii Download Ticket code you entered. Please check that you have entered the correct code.<BR><BR>NOTE: If you have activated Parental Controls, you may not be able to view all available software in the Wii Shop Channel. Please check your Parental Controls settings.";
 	
 	
 	var msg = a[errCode];
@@ -526,29 +486,35 @@ function needSyncEticket(progress)
 </style>
 <script type="text/JavaScript" src='/oss/oss/common/js//njsl.js'></script>
 <script type="text/JavaScript" src='/oss/oss/common/js//friendselector.js'></script>
-<script type="text/javascript">
-
+<script type="text/JavaScript">
+<!--
 
 var titleId = '<%= request.getParameter("titleId") == null ? "" : request.getParameter("titleId") %>';
-var itemId = '';
+var itemId = '101449';
 var nwc24 = new wiiNwc24 ;
 
-function giveGift(friendIndex)
-{
-    var to = parseInt( friendIndex ) ;
+function giveGift(friendIndex) {
+    var to = parseInt(friendIndex);
     var friendCode = nwc24.getFriendInfo(to, "userId");
-    // Use HTTPS
+
+    // Validate inputs
+    if (isNaN(to) || !titleId || !itemId || !friendCode) {
+        trace("Invalid parameters.");
+        return;
+    }
+
     trace("giveGift");
 
-    var inputHTML = "";
-    inputHTML += '<input type="hidden" name="titleId" value="'+ titleId + '"/>';
-    inputHTML += '<input type="hidden" name="itemId" value="'+ itemId + '"/>';
-    inputHTML += '<input type="hidden" name="recipient" value="'+ to + '"/>';
-    inputHTML += '<input type="hidden" name="recipientDeviceCode" value="'+ friendCode + '"/>';
+    // Construct the URL with query parameters
+    var url = "B_19.jsp?" +
+        "titleId=" + encodeURIComponent(titleId) + 
+        "&itemId=" + encodeURIComponent(itemId) + 
+        "&recipient=" + encodeURIComponent(to) + 
+        "&recipientDeviceCode=" + encodeURIComponent(friendCode);
 
     wiiSelectSound();
     
-    var form = createPostForm("GiveGiftForm", "B_19.jsp", true, inputHTML);
+    var form = createPostForm("GiveGiftForm", url, true, ""); // No inputHTML needed
     form.submit();
 }
 
@@ -577,27 +543,26 @@ function initPage()
     if( nwc24.sendable ){
       initFriendSelector();
     } else {
-      //nwc24.dispError();
+      nwc24.dispError();
     }
 
     var noWiiFriend = document.getElementById("noWiiFriend");
     if( noWiiFriend ) noWiiFriend.innerHTML = "You haven&rsquo;t registered any Wii Friends.";
 }
+
+
+function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    var results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+};
 //-->
 </script>
 </head>
 
 <body onload="initPage();">
-<!--  -----------------------------------------------------  -->
-<!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
-<!--  All Rights Reserved.                                   -->
-<!--                                                         -->
-<!--  This software contains confidential information and    -->
-<!--  trade secrets of Acer Cloud Technology, Inc.           -->
-<!--  Use, disclosure or reproduction is prohibited without  -->
-<!--  the prior express written permission of Acer Cloud     -->
-<!--  Technology, Inc.                                       -->
-<!--  -----------------------------------------------------  -->
+
 <div id="constElements">
   <div id="tophelpshadow"><img src="/oss/oss/common/images//banner/top_help_shadow01.gif" width="132" height="75" /></div>
   <div id="help">
@@ -636,16 +601,7 @@ function initPage()
     <div id="point" class="wiiPoint"><span id="currentBalance"></span></div>
   </div>
 </div>
-<!--  -----------------------------------------------------  -->
-<!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
-<!--  All Rights Reserved.                                   -->
-<!--                                                         -->
-<!--  This software contains confidential information and    -->
-<!--  trade secrets of Acer Cloud Technology, Inc.           -->
-<!--  Use, disclosure or reproduction is prohibited without  -->
-<!--  the prior express written permission of Acer Cloud     -->
-<!--  Technology, Inc.                                       -->
-<!--  -----------------------------------------------------  -->
+
 <script language="JavaScript">MM_preloadImages('/oss/oss/common/images//banner/under_banner_b.gif');</script>
 <div id="underButtonL" style="display:none">
     <div id="underbannershadowL" class="buttonBannerShadow">

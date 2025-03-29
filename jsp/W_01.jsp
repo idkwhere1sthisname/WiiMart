@@ -1,43 +1,18 @@
 <%@ page import = "java.io.*,java.util.*" %>
-<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %><a href="https://oss-auth.blinklab.com/oss/serv/debug.jsp">debug</a>
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
+<a href="https://oss-auth.blinklab.com/oss/serv/debug.jsp">debug</a>
+<button onclick="window.location.reload()">reload</button>
 
 
 
-<!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
-<!--  All Rights Reserved.                                   -->
-<!--                                                         -->
-<!--  This software contains confidential information and    -->
-<!--  trade secrets of Acer Cloud Technology, Inc.           -->
-<!--  Use, disclosure or reproduction is prohibited without  -->
-<!--  the prior express written permission of Acer Cloud     -->
-<!--  Technology, Inc.                                       -->
-<!--  -----------------------------------------------------  -->
-<!--  -----------------------------------------------------  -->
-<!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
-<!--  All Rights Reserved.                                   -->
-<!--                                                         -->
-<!--  This software contains confidential information and    -->
-<!--  trade secrets of Acer Cloud Technology, Inc.           -->
-<!--  Use, disclosure or reproduction is prohibited without  -->
-<!--  the prior express written permission of Acer Cloud     -->
-<!--  Technology, Inc.                                       -->
-<!--  -----------------------------------------------------  -->
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <!-- Flush buffer before setting locale to ensure encoding is preserved -->
 <html>
 <head>
-  <!--  -----------------------------------------------------  -->
-<!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
-<!--  All Rights Reserved.                                   -->
-<!--                                                         -->
-<!--  This software contains confidential information and    -->
-<!--  trade secrets of Acer Cloud Technology, Inc.           -->
-<!--  Use, disclosure or reproduction is prohibited without  -->
-<!--  the prior express written permission of Acer Cloud     -->
-<!--  Technology, Inc.                                       -->
-<!--  -----------------------------------------------------  -->
+  
+
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 <link rel="shortcut icon" href="/oss/favicon.ico" /> 
 <link href="/oss/oss/common/css/oss.css" rel="stylesheet" type="text/css" />
@@ -135,7 +110,7 @@ function initPageCommon()
 
 	ccsUrl = 'http://ccs.cdn.blinklab.com/ccs/download';
 
-	ucsUrl = 'https://ccs.blinklab.com/ccs/download';
+	ucsUrl = 'https://ccs.larsenv.com/ccs/download';
 	
 
 	ec.setWebSvcUrls(ecsUrl, iasUrl);
@@ -148,7 +123,7 @@ function initPageCommon()
 	ossPath = "https://oss-auth.blinklab.com/oss/serv/";
 	secureOssPath = "https://oss-auth.blinklab.com/oss/serv/";	
 
-	ecTimeout = new ECTimeout(parseInt("60000"));
+	ecTimeout = new ECTimeout(parseInt("900000"));
 	
 	
 	currBalance = document.getElementById("currentBalance");
@@ -185,16 +160,8 @@ function initPageCommon()
 	}
 }
 
-<!--  -----------------------------------------------------  -->
-<!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
-<!--  All Rights Reserved.                                   -->
-<!--                                                         -->
-<!--  This software contains confidential information and    -->
-<!--  trade secrets of Acer Cloud Technology, Inc.           -->
-<!--  Use, disclosure or reproduction is prohibited without  -->
-<!--  the prior express written permission of Acer Cloud     -->
-<!--  Technology, Inc.                                       -->
-<!--  -----------------------------------------------------  -->
+
+
 
 
 // Takes a progress object and returns the OSS error message to be displayed to the user
@@ -412,7 +379,7 @@ function needSyncEticket(progress)
 //-->
 
 </script>
-<title>Welcome to the WiiMart</title>
+<title>Welcome to WiiMart</title>
 <style type="text/css">
   /* W_01: Welcome Page */
 .invisible {
@@ -931,16 +898,8 @@ function needSyncEticket(progress)
 </style>
 
 
-<!--  -----------------------------------------------------  -->
-<!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
-<!--  All Rights Reserved.                                   -->
-<!--                                                         -->
-<!--  This software contains confidential information and    -->
-<!--  trade secrets of Acer Cloud Technology, Inc.           -->
-<!--  Use, disclosure or reproduction is prohibited without  -->
-<!--  the prior express written permission of Acer Cloud     -->
-<!--  Technology, Inc.                                       -->
-<!--  -----------------------------------------------------  -->
+
+
 <script type="text/JavaScript">
 <!--
 
@@ -981,18 +940,9 @@ function isICRExpired(){
 //-->
 </script>
 
-<!--  -----------------------------------------------------  -->
-<!--  Copyright 2005-2014 Acer Cloud Technology, Inc.        -->
-<!--  All Rights Reserved.                                   -->
-<!--                                                         -->
-<!--  This software contains confidential information and    -->
-<!--  trade secrets of Acer Cloud Technology, Inc.           -->
-<!--  Use, disclosure or reproduction is prohibited without  -->
-<!--  the prior express written permission of Acer Cloud     -->
-<!--  Technology, Inc.                                       -->
-<!--  -----------------------------------------------------  -->
-<script type="text/JavaScript">
-<!--
+
+
+<script type="text/javascript">
 function TitleInfo()
 {
 }
@@ -1352,344 +1302,73 @@ function initRecommendedTitles()
   var title;
   
       title = new TitleInfo();
-      title.titleId = '0001000148435745';
+      title.titleId = '000100014642324A';
 
-      title.nameFirstLine = 'Amazon Instant Video';
-      title.nameSecondLine = '';
+      title.nameFirstLine = 'Super Mario Bros. 2:';
+      title.nameSecondLine = 'The Lost Levels';
 
 	  title.titleImage = null;
     
-      title.titleImage = '/oss/ccs/0001000148435745/FFFD0000';
-      MM_preloadImages('/oss/ccs/0001000148435745/FFFD0000');
+      title.titleImage = '/oss/ccs/000100014642324A/FFFD0001';
+      MM_preloadImages('/oss/ccs/000100014642324A/FFFD0001');
     
-      title.isNew = 'false';
-      title.price = '0';
+      title.isNew = 'true';
+      title.price = '500';
       title.titleLicense = getTitleLicense(title.titleId);
 
       recList[1] = title;
   
       title = new TitleInfo();
-      title.titleId = '0001000148435145';
+      title.titleId = '000100014A385745';
 
-      title.nameFirstLine = 'Hulu Plus';
-      title.nameSecondLine = '';
+      title.nameFirstLine = 'Super Mario All-Stars';
+      title.nameSecondLine = '+ Super Mario World';
 
 	  title.titleImage = null;
     
-      title.titleImage = '/oss/ccs/0001000148435145/FFFD000F';
-      MM_preloadImages('/oss/ccs/0001000148435145/FFFD000F');
+      title.titleImage = '/oss/ccs/000100014A385745/FFFD0001';
+      MM_preloadImages('/oss/ccs/000100014A385745/FFFD0001');
     
-      title.isNew = 'false';
-      title.price = '0';
+      title.isNew = 'true';
+      title.price = '800';
       title.titleLicense = getTitleLicense(title.titleId);
 
       recList[2] = title;
   
       title = new TitleInfo();
-      title.titleId = '0001000148434C45';
+      title.titleId = '000100014F484243';
 
-      title.nameFirstLine = 'Netflix';
-      title.nameSecondLine = '';
+      title.nameFirstLine = 'The Homebrew Channel';
+      title.nameSecondLine = 'Open Source Edition';
 
 	  title.titleImage = null;
     
-      title.titleImage = '/oss/ccs/0001000148434C45/FFFD0004';
-      MM_preloadImages('/oss/ccs/0001000148434C45/FFFD0004');
+      title.titleImage = '/oss/ccs/000100014F484243/FFFD0001';
+      MM_preloadImages('/oss/ccs/000100014F484243/FFFD0001');
     
-      title.isNew = 'false';
+      title.isNew = 'true';
       title.price = '0';
       title.titleLicense = getTitleLicense(title.titleId);
 
       recList[3] = title;
   
       title = new TitleInfo();
-      title.titleId = '000100014E414C45';
+      title.titleId = '000100014E414545';
 
-      title.nameFirstLine = 'Super Smash Bros.';
+      title.nameFirstLine = 'Paper Mario';
       title.nameSecondLine = '';
 
 	  title.titleImage = null;
     
-      title.titleImage = '/oss/ccs/000100014E414C45/FFFD0000';
-      MM_preloadImages('/oss/ccs/000100014E414C45/FFFD0000');
+      //title.titleImage = '/oss/ccs/000100014A385745/FFFD0001';
+      title.titleImage = '/oss/ccs/000100014E414545/FFFD0001';
+      MM_preloadImages('/oss/ccs/000100014E414545/FFFD0001');
     
       title.isNew = 'false';
       title.price = '1000';
       title.titleLicense = getTitleLicense(title.titleId);
 
       recList[4] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '000100014E414245';
-
-      title.nameFirstLine = 'Mario Kart 64';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/000100014E414245/FFFD0000';
-      MM_preloadImages('/oss/ccs/000100014E414245/FFFD0000');
-    
-      title.isNew = 'false';
-      title.price = '1000';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[5] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000157505345';
-
-      title.nameFirstLine = 'Pokémon Rumble';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000157505345/FFFD0001';
-      MM_preloadImages('/oss/ccs/0001000157505345/FFFD0001');
-    
-      title.isNew = 'false';
-      title.price = '1500';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[6] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000146414745';
-
-      title.nameFirstLine = 'Super Mario Bros.';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000146414745/FFFD0004';
-      MM_preloadImages('/oss/ccs/0001000146414745/FFFD0004');
-    
-      title.isNew = 'false';
-      title.price = '500';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[7] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000146413945';
-
-      title.nameFirstLine = 'Zelda II - ';
-      title.nameSecondLine = 'The Adventure of Link';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000146413945/FFFD0000';
-      MM_preloadImages('/oss/ccs/0001000146413945/FFFD0000');
-    
-      title.isNew = 'false';
-      title.price = '500';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[8] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '000100014D424D45';
-
-      title.nameFirstLine = 'Sonic The Hedgehog 3';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/000100014D424D45/FFFD0000';
-      MM_preloadImages('/oss/ccs/000100014D424D45/FFFD0000');
-    
-      title.isNew = 'false';
-      title.price = '800';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[9] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000157545045';
-
-      title.nameFirstLine = 'Tetris Party';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000157545045/FFFD0001';
-      MM_preloadImages('/oss/ccs/0001000157545045/FFFD0001');
-    
-      title.isNew = 'false';
-      title.price = '1200';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[10] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '000100014A435745';
-
-      title.nameFirstLine = 'Super Mario Kart';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/000100014A435745/FFFD0000';
-      MM_preloadImages('/oss/ccs/000100014A435745/FFFD0000');
-    
-      title.isNew = 'false';
-      title.price = '800';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[11] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000157525545';
-
-      title.nameFirstLine = 'BIT.TRIP RUNNER';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000157525545/FFFD0001';
-      MM_preloadImages('/oss/ccs/0001000157525545/FFFD0001');
-    
-      title.isNew = 'false';
-      title.price = '800';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[12] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '000100014A414545';
-
-      title.nameFirstLine = 'Donkey Kong Country';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/000100014A414545/FFFD0000';
-      MM_preloadImages('/oss/ccs/000100014A414545/FFFD0000');
-    
-      title.isNew = 'false';
-      title.price = '800';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[13] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000146424345';
-
-      title.nameFirstLine = 'Excitebike';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000146424345/FFFD0000';
-      MM_preloadImages('/oss/ccs/0001000146424345/FFFD0000');
-    
-      title.isNew = 'false';
-      title.price = '500';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[14] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000157464745';
-
-      title.nameFirstLine = 'Frogger Returns';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000157464745/FFFD0001';
-      MM_preloadImages('/oss/ccs/0001000157464745/FFFD0001');
-    
-      title.isNew = 'false';
-      title.price = '500';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[15] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '000100014E414445';
-
-      title.nameFirstLine = 'Star Fox 64';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/000100014E414445/FFFD0000';
-      MM_preloadImages('/oss/ccs/000100014E414445/FFFD0000');
-    
-      title.isNew = 'false';
-      title.price = '1000';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[16] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000157464345';
-
-      title.nameFirstLine = 'FFCC:';
-      title.nameSecondLine = 'My Life as a King';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000157464345/FFFD0001';
-      MM_preloadImages('/oss/ccs/0001000157464345/FFFD0001');
-    
-      title.isNew = 'false';
-      title.price = '1500';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[17] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000146435745';
-
-      title.nameFirstLine = 'Super Mario Bros. 3';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000146435745/FFFD0004';
-      MM_preloadImages('/oss/ccs/0001000146435745/FFFD0004');
-    
-      title.isNew = 'false';
-      title.price = '500';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[18] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000146424945';
-
-      title.nameFirstLine = 'Punch-Out!!';
-      title.nameSecondLine = 'Featuring Mr. Dream';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000146424945/FFFD0000';
-      MM_preloadImages('/oss/ccs/0001000146424945/FFFD0000');
-    
-      title.isNew = 'false';
-      title.price = '500';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[19] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '000100014D414545';
-
-      title.nameFirstLine = 'Golden Axe';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/000100014D414545/FFFD0000';
-      MM_preloadImages('/oss/ccs/000100014D414545/FFFD0000');
-    
-      title.isNew = 'false';
-      title.price = '800';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[20] = title;
   
   return recList;
 }
@@ -1767,23 +1446,6 @@ function inittitlelist1()
 
       recList[4] = title;
   
-      title = new TitleInfo();
-      title.titleId = '0001000158484145';
-
-      title.nameFirstLine = 'Pokémon Rumble';
-      title.nameSecondLine = 'Demo';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000158484145/FFFD0001';
-      MM_preloadImages('/oss/ccs/0001000158484145/FFFD0001');
-    
-      title.isNew = 'false';
-      title.price = '0';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[5] = title;
-  
   return recList;
 }
 function inittitlelist2()
@@ -1858,279 +1520,7 @@ function inittitlelist2()
       title.titleLicense = getTitleLicense(title.titleId);
 
       recList[4] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '000100014A414D45';
 
-      title.nameFirstLine = 'Gradius III';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/000100014A414D45/FFFD0000';
-      MM_preloadImages('/oss/ccs/000100014A414D45/FFFD0000');
-    
-      title.isNew = 'false';
-      title.price = '800';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[5] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '000100014645444E';
-
-      title.nameFirstLine = 'DIG DUG';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/000100014645444E/FFFD0000';
-      MM_preloadImages('/oss/ccs/000100014645444E/FFFD0000');
-    
-      title.isNew = 'false';
-      title.price = '600';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[6] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '000100014D414245';
-
-      title.nameFirstLine = 'Columns';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/000100014D414245/FFFD0000';
-      MM_preloadImages('/oss/ccs/000100014D414245/FFFD0000');
-    
-      title.isNew = 'false';
-      title.price = '800';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[7] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '000100014A444945';
-
-      title.nameFirstLine = 'Super Star Wars';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/000100014A444945/FFFD0000';
-      MM_preloadImages('/oss/ccs/000100014A444945/FFFD0000');
-    
-      title.isNew = 'false';
-      title.price = '800';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[8] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000146414745';
-
-      title.nameFirstLine = 'Super Mario Bros.';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000146414745/FFFD0004';
-      MM_preloadImages('/oss/ccs/0001000146414745/FFFD0004');
-    
-      title.isNew = 'false';
-      title.price = '500';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[9] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '000100014E415545';
-
-      title.nameFirstLine = 'Mario Golf';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/000100014E415545/FFFD0000';
-      MM_preloadImages('/oss/ccs/000100014E415545/FFFD0000');
-    
-      title.isNew = 'false';
-      title.price = '1000';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[10] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000150414345';
-
-      title.nameFirstLine = 'Dungeon Explorer';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000150414345/FFFD0004';
-      MM_preloadImages('/oss/ccs/0001000150414345/FFFD0004');
-    
-      title.isNew = 'false';
-      title.price = '600';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[11] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '000100014A434345';
-
-      title.nameFirstLine = 'Kirby Super Star';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/000100014A434345/FFFD0000';
-      MM_preloadImages('/oss/ccs/000100014A434345/FFFD0000');
-    
-      title.isNew = 'false';
-      title.price = '800';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[12] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '000100014D423645';
-
-      title.nameFirstLine = 'Shining Force II';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/000100014D423645/FFFD0000';
-      MM_preloadImages('/oss/ccs/000100014D423645/FFFD0000');
-    
-      title.isNew = 'false';
-      title.price = '800';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[13] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '000100014C414D45';
-
-      title.nameFirstLine = 'Sonic Chaos';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/000100014C414D45/FFFD0000';
-      MM_preloadImages('/oss/ccs/000100014C414D45/FFFD0000');
-    
-      title.isNew = 'false';
-      title.price = '500';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[14] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '000100014E414F45';
-
-      title.nameFirstLine = '1080° SNOWBOARDING';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/000100014E414F45/FFFD0000';
-      MM_preloadImages('/oss/ccs/000100014E414F45/FFFD0000');
-    
-      title.isNew = 'false';
-      title.price = '1000';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[15] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000146415245';
-
-      title.nameFirstLine = 'Gradius';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000146415245/FFFD0000';
-      MM_preloadImages('/oss/ccs/0001000146415245/FFFD0000');
-    
-      title.isNew = 'false';
-      title.price = '500';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[16] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '000100014A434B45';
-
-      title.nameFirstLine = 'SPACE INVADERS:';
-      title.nameSecondLine = 'The Original Game';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/000100014A434B45/FFFD0000';
-      MM_preloadImages('/oss/ccs/000100014A434B45/FFFD0000');
-    
-      title.isNew = 'false';
-      title.price = '800';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[17] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000146464D45';
-
-      title.nameFirstLine = 'Blaster Master';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000146464D45/FFFD0000';
-      MM_preloadImages('/oss/ccs/0001000146464D45/FFFD0000');
-    
-      title.isNew = 'false';
-      title.price = '500';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[18] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000146425545';
-
-      title.nameFirstLine = 'ADVENTURES OF LOLO';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000146425545/FFFD0000';
-      MM_preloadImages('/oss/ccs/0001000146425545/FFFD0000');
-    
-      title.isNew = 'false';
-      title.price = '500';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[19] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000146435145';
-
-      title.nameFirstLine = 'Ninja Gaiden II';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000146435145/FFFD0000';
-      MM_preloadImages('/oss/ccs/0001000146435145/FFFD0000');
-    
-      title.isNew = 'false';
-      title.price = '500';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[20] = title;
-  
   return recList;
 }
 function inittitlelist3()
@@ -2205,279 +1595,7 @@ function inittitlelist3()
       title.titleLicense = getTitleLicense(title.titleId);
 
       recList[4] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000157424D45';
 
-      title.nameFirstLine = 'My Pokémon Ranch';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000157424D45/FFFD0000';
-      MM_preloadImages('/oss/ccs/0001000157424D45/FFFD0000');
-    
-      title.isNew = 'false';
-      title.price = '1000';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[5] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000157464345';
-
-      title.nameFirstLine = 'FFCC:';
-      title.nameSecondLine = 'My Life as a King';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000157464345/FFFD0001';
-      MM_preloadImages('/oss/ccs/0001000157464345/FFFD0001');
-    
-      title.isNew = 'false';
-      title.price = '1500';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[6] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000157523945';
-
-      title.nameFirstLine = 'Mega Man 9';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000157523945/FFFD0001';
-      MM_preloadImages('/oss/ccs/0001000157523945/FFFD0001');
-    
-      title.isNew = 'false';
-      title.price = '1000';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[7] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000157534E45';
-
-      title.nameFirstLine = 'Sonic The Hedgehog 4';
-      title.nameSecondLine = 'Episode I';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000157534E45/FFFD0001';
-      MM_preloadImages('/oss/ccs/0001000157534E45/FFFD0001');
-    
-      title.isNew = 'false';
-      title.price = '1500';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[8] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000157455245';
-
-      title.nameFirstLine = 'My Aquarium';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000157455245/FFFD0002';
-      MM_preloadImages('/oss/ccs/0001000157455245/FFFD0002');
-    
-      title.isNew = 'false';
-      title.price = '500';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[9] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000157464745';
-
-      title.nameFirstLine = 'Frogger Returns';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000157464745/FFFD0001';
-      MM_preloadImages('/oss/ccs/0001000157464745/FFFD0001');
-    
-      title.isNew = 'false';
-      title.price = '500';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[10] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000157423645';
-
-      title.nameFirstLine = 'TV Show King';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000157423645/FFFD0001';
-      MM_preloadImages('/oss/ccs/0001000157423645/FFFD0001');
-    
-      title.isNew = 'false';
-      title.price = '1000';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[11] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '00010001574C5745';
-
-      title.nameFirstLine = 'LostWinds';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/00010001574C5745/FFFD0001';
-      MM_preloadImages('/oss/ccs/00010001574C5745/FFFD0001');
-    
-      title.isNew = 'false';
-      title.price = '1000';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[12] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '00010001574D3845';
-
-      title.nameFirstLine = 'Bomberman Blast';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/00010001574D3845/FFFD0001';
-      MM_preloadImages('/oss/ccs/00010001574D3845/FFFD0001');
-    
-      title.isNew = 'false';
-      title.price = '1000';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[13] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000157444645';
-
-      title.nameFirstLine = 'Defend your Castle';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000157444645/FFFD0001';
-      MM_preloadImages('/oss/ccs/0001000157444645/FFFD0001');
-    
-      title.isNew = 'false';
-      title.price = '500';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[14] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000157324345';
-
-      title.nameFirstLine = 'Brain Challenge';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000157324345/FFFD0001';
-      MM_preloadImages('/oss/ccs/0001000157324345/FFFD0001');
-    
-      title.isNew = 'false';
-      title.price = '1000';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[15] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000157525845';
-
-      title.nameFirstLine = 'Mega Man 10';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000157525845/FFFD0000';
-      MM_preloadImages('/oss/ccs/0001000157525845/FFFD0000');
-    
-      title.isNew = 'false';
-      title.price = '1000';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[16] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000157464B45';
-
-      title.nameFirstLine = 'Family Go-Kart';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000157464B45/FFFD0001';
-      MM_preloadImages('/oss/ccs/0001000157464B45/FFFD0001');
-    
-      title.isNew = 'false';
-      title.price = '500';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[17] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '00010001574A5745';
-
-      title.nameFirstLine = 'Bejeweled 2';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/00010001574A5745/FFFD0001';
-      MM_preloadImages('/oss/ccs/00010001574A5745/FFFD0001');
-    
-      title.isNew = 'false';
-      title.price = '1000';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[18] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000157535745';
-
-      title.nameFirstLine = 'Swords & Soldiers';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000157535745/FFFD0001';
-      MM_preloadImages('/oss/ccs/0001000157535745/FFFD0001');
-    
-      title.isNew = 'false';
-      title.price = '1000';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[19] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000157424245';
-
-      title.nameFirstLine = 'Snowboard Riot';
-      title.nameSecondLine = '';
-
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000157424245/FFFD0001';
-      MM_preloadImages('/oss/ccs/0001000157424245/FFFD0001');
-    
-      title.isNew = 'false';
-      title.price = '1000';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[20] = title;
-  
   return recList;
 }
 function inittitlelist4()
@@ -2552,278 +1670,6 @@ function inittitlelist4()
       title.titleLicense = getTitleLicense(title.titleId);
 
       recList[4] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '00010001584A4745';
-
-      title.nameFirstLine = 'Gnomz';
-      title.nameSecondLine = 'Demo';
-      MM_preloadImages('/oss/ccs/00010001584A4745/FFFD0001');
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/00010001584A4745/FFFD0001';
-
-    
-      title.isNew = 'false';
-      title.price = '0';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[5] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000158485945';
-
-      title.nameFirstLine = 'BIT.TRIP FATE';
-      title.nameSecondLine = 'Demo';
-      MM_preloadImages('/oss/ccs/0001000158485945/FFFD0000');
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000158485945/FFFD0000';
-
-    
-      title.isNew = 'false';
-      title.price = '0';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[6] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000158495445';
-
-      title.nameFirstLine = 'Fast Draw Showdown';
-      title.nameSecondLine = 'Demo';
-      MM_preloadImages('/oss/ccs/0001000158495445/FFFD0001');
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000158495445/FFFD0001';
-
-    
-      title.isNew = 'false';
-      title.price = '0';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[7] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000158494245';
-
-      title.nameFirstLine = 'Fish\'em All!';
-      title.nameSecondLine = 'Demo';
-      MM_preloadImages('/oss/ccs/0001000158494245/FFFD0001');
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000158494245/FFFD0001';
-
-    
-      title.isNew = 'false';
-      title.price = '0';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[8] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000158494345';
-
-      title.nameFirstLine = 'Gods vs Humans';
-      title.nameSecondLine = 'Demo';
-      MM_preloadImages('/oss/ccs/0001000158494345/FFFD0007');
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000158494345/FFFD0007';
-
-    
-      title.isNew = 'false';
-      title.price = '0';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[9] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000158493745';
-
-      title.nameFirstLine = 'Liight';
-      title.nameSecondLine = 'Demo';
-      MM_preloadImages('/oss/ccs/0001000158493745/FFFD0000');
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000158493745/FFFD0000';
-
-    
-      title.isNew = 'false';
-      title.price = '0';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[10] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000158484645';
-
-      title.nameFirstLine = 'World of Goo';
-      title.nameSecondLine = 'Demo';
-      MM_preloadImages('/oss/ccs/0001000158484645/FFFD0001');
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000158484645/FFFD0001';
-
-    
-      title.isNew = 'false';
-      title.price = '0';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[11] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000158483545';
-
-      title.nameFirstLine = 'And Yet It Moves';
-      title.nameSecondLine = 'Demo';
-      MM_preloadImages('/oss/ccs/0001000158483545/FFFD0001');
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000158483545/FFFD0001';
-
-    
-      title.isNew = 'false';
-      title.price = '0';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[12] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000158495645';
-
-      title.nameFirstLine = 'Mix Superstar';
-      title.nameSecondLine = 'Demo';
-      MM_preloadImages('/oss/ccs/0001000158495645/FFFD0001');
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000158495645/FFFD0001';
-
-    
-      title.isNew = 'false';
-      title.price = '0';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[13] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000158483845';
-
-      title.nameFirstLine = 'Lead the Meerkats';
-      title.nameSecondLine = 'Demo';
-      MM_preloadImages('/oss/ccs/0001000158483845/FFFD0000');
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000158483845/FFFD0000';
-
-    
-      title.isNew = 'false';
-      title.price = '0';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[14] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000158485A45';
-
-      title.nameFirstLine = 'Chronos Twins DX';
-      title.nameSecondLine = 'Demo';
-      MM_preloadImages('/oss/ccs/0001000158485A45/FFFD0001');
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000158485A45/FFFD0001';
-
-    
-      title.isNew = 'false';
-      title.price = '0';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[15] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000158494745';
-
-      title.nameFirstLine = 'Urbanix';
-      title.nameSecondLine = 'Demo';
-      MM_preloadImages('/oss/ccs/0001000158494745/FFFD0001');
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000158494745/FFFD0001';
-
-    
-      title.isNew = 'false';
-      title.price = '0';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[16] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000158483745';
-
-      title.nameFirstLine = 'LIT';
-      title.nameSecondLine = 'Demo';
-      MM_preloadImages('/oss/ccs/0001000158483745/FFFD0001');
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000158483745/FFFD0001';
-
-    
-      title.isNew = 'false';
-      title.price = '0';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[17] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000158495345';
-
-      title.nameFirstLine = 'BIT.TRIP FLUX';
-      title.nameSecondLine = 'Demo';
-      MM_preloadImages('/oss/ccs/0001000158495345/FFFD0001');
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000158495345/FFFD0001';
-
-    
-      title.isNew = 'false';
-      title.price = '0';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[18] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000158485645';
-
-      title.nameFirstLine = 'BIT.TRIP CORE';
-      title.nameSecondLine = 'Demo';
-      MM_preloadImages('/oss/ccs/0001000158485645/FFFD0000');
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000158485645/FFFD0000';
-
-    
-      title.isNew = 'false';
-      title.price = '0';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[19] = title;
-  
-      title = new TitleInfo();
-      title.titleId = '0001000158494145';
-
-      title.nameFirstLine = 'lilt line';
-      title.nameSecondLine = 'Demo';
-      MM_preloadImages('/oss/ccs/0001000158494145/FFFD0001');
-	  title.titleImage = null;
-    
-      title.titleImage = '/oss/ccs/0001000158494145/FFFD0001';
-
-    
-      title.isNew = 'false';
-      title.price = '0';
-      title.titleLicense = getTitleLicense(title.titleId);
-
-      recList[20] = title;
   
   return recList;
 }
@@ -3816,11 +2662,33 @@ function add_scroll_counter()
       </div>
       <div id="info01">
         <div nowrap align="left" class="txt_info">
-          <script language="JavaScript">document.write('[NEW] Welcome to the WiiMart Revival Project!'.replace('[NEW]', ''));</script>
+          <script language="JavaScript">document.write('Catalog updated! Games added March 26.'.replace('[NEW]', ''));</script>
         </div>
       </div>
       <div id="infoShadow01"><img src="/oss/oss/common/images//spacer.gif" border="0" name="info01s" /></div>
-      <div id="infoSpacer01"><a href="javascript:showPage('W_02.jsp?p=1')"><img src="/oss/oss/common/images//spacer.gif" width="514" height="25" border="0" onMouseDown="MM_swapImage('info01s','','/oss/oss/common/images//banner/GifA_News_Press.png',1);" onMouseUp="MM_swapImage('info01s','','/oss/oss/common/images//banner/GifA_News_Over.png',1)" onClick="snd.playSE(cSE_Decide);" onmouseover="snd.playSE( cSE_Forcus ); MM_swapImage('info01s','','/oss/oss/common/images//banner/GifA_News_Over.png',1);move_fleeze_cursor();" onMouseOut="MM_swapImage('info01s','','/oss/oss/common/images//banner/GifA_News_noAction.png',1);" /></a></div>
+      <div id="infoSpacer01"><a href="javascript:showPage('W_02.jsp?p=3')"><img src="/oss/oss/common/images//spacer.gif" width="514" height="25" border="0" onMouseDown="MM_swapImage('info01s','','/oss/oss/common/images//banner/GifA_News_Press.png',1);" onMouseUp="MM_swapImage('info01s','','/oss/oss/common/images//banner/GifA_News_Over.png',1)" onClick="snd.playSE(cSE_Decide);" onmouseover="snd.playSE( cSE_Forcus ); MM_swapImage('info01s','','/oss/oss/common/images//banner/GifA_News_Over.png',1);move_fleeze_cursor();" onMouseOut="MM_swapImage('info01s','','/oss/oss/common/images//banner/GifA_News_noAction.png',1);" /></a></div>
+
+      <div id="info02n" align="center">
+        <!--<script language="JavaScript">if ('[NEW]Reminder: Wii Shop Closes Jan. 30, 2019'.indexOf('[NEW]', 0) != -1) {document.write('<img src="/oss/oss/common/images//banner/NEW_en.gif"> ');};</script>-->
+      </div>
+      <div id="info02">
+        <div nowrap align="left" class="txt_info">
+          <script language="JavaScript">document.write('[NEW] Welcome to WiiMart!'.replace('[NEW]', ''));</script>
+        </div>
+      </div>
+      <div id="infoShadow02"><img src="/oss/oss/common/images//spacer.gif" border="0" name="info02s" /></div>
+      <div id="infoSpacer02"><a href="javascript:showPage('W_02.jsp?p=1')"><img src="/oss/oss/common/images//spacer.gif" width="514" height="25" border="0" onMouseDown="MM_swapImage('info02s','','/oss/oss/common/images//banner/GifA_News_Press.png',1);" onMouseUp="MM_swapImage('info02s','','/oss/oss/common/images//banner/GifA_News_Over.png',1)" onClick="snd.playSE(cSE_Decide);" onmouseover="snd.playSE( cSE_Forcus ); MM_swapImage('info02s','','/oss/oss/common/images//banner/GifA_News_Over.png',1);move_fleeze_cursor();" onMouseOut="MM_swapImage('info02s','','/oss/oss/common/images//banner/GifA_News_noAction.png',1);" /></a></div>
+
+      <!--<div id="info03n" align="center">
+        <script language="JavaScript">if ('[NEW]Reminder: Wii Shop Closes Jan. 30, 2019'.indexOf('[NEW]', 0) != -1) {document.write('<img src="/oss/oss/common/images//banner/NEW_en.gif"> ');};</script>
+      </div>
+      <div id="info03">
+        <div nowrap align="left" class="txt_info">
+          <script language="JavaScript">document.write('[NEW] Catalog fully updated!'.replace('[NEW]', ''));</script>
+        </div>
+      </div>
+      <div id="infoShadow03"><img src="/oss/oss/common/images//spacer.gif" border="0" name="info03s" /></div>
+      <div id="infoSpacer03"><a href="javascript:showPage('W_02.jsp?p=3')"><img src="/oss/oss/common/images//spacer.gif" width="514" height="25" border="0" onMouseDown="MM_swapImage('info03s','','/oss/oss/common/images//banner/GifA_News_Press.png',1);" onMouseUp="MM_swapImage('info03s','','/oss/oss/common/images//banner/GifA_News_Over.png',1)" onClick="snd.playSE(cSE_Decide);" onmouseover="snd.playSE( cSE_Forcus ); MM_swapImage('info03s','','/oss/oss/common/images//banner/GifA_News_Over.png',1);move_fleeze_cursor();" onMouseOut="MM_swapImage('info03s','','/oss/oss/common/images//banner/GifA_News_noAction.png',1);" /></a></div>-->
     <div id="SofList01"><img src="/oss/oss/common/images//banner/GifA_SoftList_noAction.png" name="SofList"/></div>
 <div id="txtSoftList" align="center">
     <span class="style1">WiiMart</span>

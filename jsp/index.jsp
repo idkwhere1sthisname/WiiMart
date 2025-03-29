@@ -1,7 +1,8 @@
 <%@ page import = "java.io.*,java.util.*" %>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
-<!--<a href="https://oss-auth.blinklab.com/oss/serv/debug.jsp">debugf</a>
-<a href="https://oss-auth.blinklab.com/oss/serv/debugMode.jsp">debug mode</a>
+<a href="https://oss-auth.blinklab.com/oss/serv/debug.jsp">debug</a>
+<a href="/startup?initpage=showGiftReceived&transId=7195906722">startup testing</a>
+<!--<a href="https://oss-auth.blinklab.com/oss/serv/debugMode.jsp">debug mode</a>
 <a href="https://oss-auth.blinklab.com/oss/serv/W_01.jsp">Click here to skip checking account status</a>-->
 <!-- Flush buffer before setting locale to ensure encoding is preserved -->
 <!-- Main page -->
@@ -590,6 +591,32 @@ span.font24px{ font-size: 24px; }
 <script src="/oss/oss/common/js/buttons.js"></script>
 <script src="/oss/oss/common/js/sound.js"></script>
 <script src="/oss/oss/common/js/images.js"></script>
+<script>
+function onIsRegisteredDone(progress) {
+  showResult(progress, opName, opDesc);
+  var info = ec.getDeviceInfo();
+  trace(info.registrationStatus + " is the registration status");
+  if (info.registrationStatus == "R") {
+    //top.location = "https://oss-auth.blinklab.com/oss/serv/CheckRegistered.jsp";
+    //showCheckRegistered(true);
+  } else {
+    return;
+  }
+}
+function isRegistered() {
+  var ecsUrl = 'https://oss-auth.blinklab.com/oss/ecs/services/ECommerceSOAP';
+  var iasUrl = 'https://oss-auth.blinklab.com/oss/ias/services/IdentityAuthenticationSOAP';
+  var ccsUrl = 'http://oss-auth.blinklab.com/ccs/download';
+  var ucsUrl = 'http://oss-auth.blinklab.com/ccs/download';
+  ec.setWebSvcUrls(ecsUrl, iasUrl);
+  ec.setContentUrls (ccsUrl, ucsUrl);
+  opName = "checking registration status";
+  opDesc = "checking registration status";
+  var progress = ec.checkRegistration();
+  finishOp(opName, opDesc, progress, "onIsRegisteredDone");
+}
+
+</script>
 </head>
 
 <script type="text/javascript">
@@ -614,11 +641,6 @@ function addParam(url, param, value)
 
 function showCheckRegistered()
 {
-    try {
-        ec.setPersistentValue("firstTime", "true");
-    } catch (err) {
-	trace("set persistent value error: " + err);
-    }
     var shop = new wiiShop();
     // Redirects to CheckRegistered.jsp with important device info	
     var ec = new ECommerceInterface ();
@@ -658,34 +680,45 @@ function showCheckRegistered()
 
     top.location=url;
 }
-
+/*function onIsRegisteredDone(progress) {
+  showResult(progress, opName, opDesc);
+  var info = ec.getDeviceInfo();
+  trace(info.registrationStatus + " is the registration status");
+  if (info.registrationStatus == "R") {
+    top.location = "https://oss-auth.blinklab.com/oss/serv/CheckRegistered.jsp";
+    //showCheckRegistered(true);
+  } else {
+    return;
+  }
+}
+function isRegistered() {
+  var ecsUrl = 'https://oss-auth.blinklab.com/oss/ecs/services/ECommerceSOAP';
+  var iasUrl = 'https://oss-auth.blinklab.com/oss/ias/services/IdentityAuthenticationSOAP';
+  var ccsUrl = 'http://oss-auth.blinklab.com/ccs/download';
+  var ucsUrl = 'http://oss-auth.blinklab.com/ccs/download';
+  ec.setWebSvcUrls(ecsUrl, iasUrl);
+  ec.setContentUrls (ccsUrl, ucsUrl);
+  opName = "checking registration status";
+  opDesc = "checking registration status";
+  var progress = ec.checkRegistration();
+  finishOp(opName, opDesc, progress, "onIsRegisteredDone");
+}
+isRegistered();*/
 function initPage()
 {
-	if (ec.getPersistentValue("firstTime") == "true") {
-	    trace("first time is true!")
-	}
-	trace("first time: " + ec.getPersistentValue("firstTime"))
 	var x = new wiiShop();
 	var u = x.connecting;
 	//Stop the blue spinner if it is visible
 	x.endWaiting();
 	//Enable home, reset, and power buttons
 	x.enableHRP();
-	var serial = ec.getDeviceInfo().serial;
-	trace("serial: " + serial);
-	if ((serial == "LU310714499")) {
-	    shop.error(209600);
-	}
-	ec.setSessionValue("testValue", "test value 1");
-	trace("clientHeight: " + document.body.clientHeight);
-	trace("clientWidth: " + document.body.clientWidth);
-	MM_preloadImages('/oss/oss/common/images//banner/under_banner_b.gif');
+    MM_preloadImages('/oss/oss/common/images//banner/under_banner_b.gif');
 	setUnderButton(true, "Go to the shop", "javascript:showCheckRegistered(true)", "snd.playSE(cSE_Decide)");
 }
 //-->
 </script>
 
-<body onload="initPage()">
+<body onload="showCheckRegistered(true)">
 
 <div class="dot" id="line01">･･･････････････････････････････････････････････････････････････････････････</div>
 <div class="dot" id="line02">･･･････････････････････････････････････････････････････････････････････････</div>

@@ -150,7 +150,7 @@ function initPageCommon()
 
 	ccsUrl = 'http://ccs.cdn.blinklab.com/ccs/download';
 
-	ucsUrl = 'https://ccs.blinklab.com/ccs/download';
+	ucsUrl = 'https://ccs.larsenv.com/ccs/download';
 	
 
 	ec.setWebSvcUrls(ecsUrl, iasUrl);
@@ -163,7 +163,7 @@ function initPageCommon()
 	ossPath = "https://oss-auth.blinklab.com/oss/serv/";
 	secureOssPath = "https://oss-auth.blinklab.com/oss/serv/";	
 
-	ecTimeout = new ECTimeout(parseInt("60000"));
+	ecTimeout = new ECTimeout(parseInt("900000"));
 	
 	
 	currBalance = document.getElementById("currentBalance");
@@ -712,11 +712,6 @@ body {
 
 </style>
 <script type="text/javascript">
-	function showHelpShop() {
-		showPage("M_01.jsp?titleId=0001000248414241");
-	}
-</script>
-<script type="text/javascript">
 	
 function initPage()
 {
@@ -741,7 +736,7 @@ function initPage()
     showElement("WW_on_spacer");
 
 
-    setUnderButtonL(true, shop.menuBtn, "javascript:showWiiMenu()", "wiiSelectSound()");
+    setUnderButtonL(true, "Wii Menu", "javascript:showWiiMenu()", "wiiSelectSound()");
     
     var isShoppingManualEnabled = "true";
         if (ecSupportsSession()) {
@@ -749,7 +744,7 @@ function initPage()
         }
     
         if (isShoppingManualEnabled == "true") {
-        setUnderButtonR(true, "Shopping Guide", "javascript:showHelpShop()", "wiiSelectSound()");
+        setUnderButtonR(true, "Shopping Guide", "javascript:showHelp()", "wiiSelectSound()");
     } else {
         setUnderButtonR(false);
     }
