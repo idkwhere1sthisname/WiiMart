@@ -692,7 +692,7 @@ function initPage()
     	<img src="/oss/oss/common/images//banner/under_banner_a.gif" width="187" height="55" id="underImgL" />
     </div>
     <div id="underspacerL" class="buttonSpacer">
-	  <a href="javascript:showBack()" id="underlinkL">
+	  <a href="javascript:showHome()" id="underlinkL">
     	<img id="underimageL" src="/oss/oss/common/images//spacer.gif" width="187" height="55" border="0"  
     	onmouseover="MM_swapImage('underImgL','','/oss/oss/common/images//banner/under_banner_b.gif',1); snd.playSE( cSE_Forcus );" 
     	onmouseout="MM_swapImgRestore()"/>
@@ -732,6 +732,18 @@ function initPage()
     	</a>
     </div>
     <div id="underword" align="center" class="buttonTextBlackM buttonWord"></div>
+</div>
+
+<div id='balanceInfo' onclick="showPoints(); wiiSelectSound();" 
+ onmouseover="MM_swapImage('PointSpacer','','/oss/oss/common/images//banner/Addpoints_everywhere.gif',1);wiiFocusSound();" 
+ onmouseout="MM_swapImgRestore();">
+  <script type="text/JavaScript">MM_preloadImages('/oss/oss/common/images//banner/Addpoints_everywhere.gif');</script>
+  <img src="/oss/oss/common/images//spacer.gif" name="PointSpacer" width="130" height="55" border="0"
+     id='PointSpacer' style="position:absolute; top:376px; left:239px; z-index:20;"/>
+  <div id="Wiipoint">
+    <div align="center" class="buttonTextBlackM">Wii Points</div>
+  </div>
+  <div id="point" class="wiiPoint"><span id="currentBalance"></span></div>
 </div>
 
 
@@ -801,7 +813,7 @@ function initPage()
       <div id="row02">
         <div class="contentsBlack" id="date">
           <div align="center">
-            <?=date("m/d/y")?></div>
+            dateofactivity</div>
         </div>
 
         <div class="contentsBlack" id="type02" style="position:absolute;left:89px;top:12px;width:136px;height:18px;z-index:82;">
@@ -909,9 +921,7 @@ function initPage()
       </div>
     <div id="cost">
           <div align="right" class="contentsBlack">
-            <div align="center">
-                  
-                    points+or-</div>
+            <div align="center">points+or-</div>
           </div>
         </div>
         <div id="balance">
@@ -988,7 +998,7 @@ function initPage()
       <div id="row02">
         <div class="contentsBlack" id="date">
           <div align="center">
-            <?=date("m/d/y")?></div>
+            dateofactivity</div>
         </div>
 
         <div class="contentsBlack" id="type02" style="position:absolute;left:89px;top:12px;width:136px;height:18px;z-index:82;">
